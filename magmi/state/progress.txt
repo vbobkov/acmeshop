@@ -1,0 +1,54 @@
+title:MAGMI by dweeves - version:0.7.18
+startup:Running Magmi Product Import Engine v1.7.1 by dweeves
+startup:Import Profile:default
+startup:Import Mode:create
+step:step:0.5%
+plugin;Magmi_CSVDataSource;pluginhello:CSV Datasource-1.3-Dweeves- 
+plugin;Magmi_ImportUrlPlugin;pluginhello:Magmi Import Url UI-1.0.3-Dweeves-http://sourceforge.net/apps/mediawiki/magmi/index.php?title=Magmi_Import_Url_UI 
+plugin;Magmi_ReindexingPlugin;pluginhello:Magmi Magento Reindexer-1.0.2-Dweeves-http://sourceforge.net/apps/mediawiki/magmi/index.php?title=Magmi_Magento_Reindexer 
+plugin;CategoryImporter;pluginhello:On the fly category creator/importer-0.1.7-Dweeves-http://sourceforge.net/apps/mediawiki/magmi/index.php?title=On_the_fly_category_creator/importer 
+plugin;ProductDeleter;pluginhello:Product Deleter-0.0.2-Dweeves-http://sourceforge.net/apps/mediawiki/magmi/index.php?title=Product_Deleter 
+plugin;GenericMapperProcessor;pluginhello:Generic mapper-0.0.6a-Dweeves-http://sourceforge.net/apps/mediawiki/magmi/index.php?title=Generic_mapper 
+plugin;GenericMapperProcessor;startup:Generic mapper v0.0.6a - No custom mapping found
+plugin;Magmi_DefaultAttributeItemProcessor;pluginhello:Standard Attribute Import-1.0.5-Dweeves- 
+plugin;Magmi_CSVDataSource;startup:CSV Datasource v1.3 - Importing CSV : /users/vic/downloads/testmag.csv using separator [ , ] enclosing [ " ]
+startup:Performing Datasouce Lookup...
+lookup:1:0.00054788589477539
+startup:Found 1 records, took 0.00054788589477539 sec
+plugin;Magmi_CSVDataSource;startup:CSV Datasource v1.3 - No BOM detected, assuming File is UTF8 without BOM...
+plugin;Magmi_CSVDataSource;startup:CSV Datasource v1.3 - 19 CSV headers columns found
+columns:19
+plugin;Magmi_DefaultAttributeItemProcessor;startup:Standard Attribute Import v1.0.5 - Newly created items will have default values for columns:page_layout
+startup:Ajusted processed columns:21
+itime:1 - 8.702278137207E-5 - 8.702278137207E-5
+dbtime:0 - 0 - 0 - 0
+itime:1 - 0.066268920898438 - 0.063704967498779
+dbtime:21 - 0.020802974700928 - 0.020802974700928 - 21
+info:Skus imported OK:1/1
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - Cleaning flat tables before reindex...
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - running indexer
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - Reindexing catalog_product_attribute....
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - Product Attributes index was rebuilt successfully<br>
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - done in 1.18 secs
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - Reindexing catalog_product_price....
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - Product Prices index was rebuilt successfully<br>
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - done in 1.61 secs
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - Reindexing catalog_product_flat....
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - Product Flat Data index was rebuilt successfully<br>
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - done in 10.03 secs
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - Reindexing catalog_category_flat....
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - Category Flat Data index was rebuilt successfully<br>
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - done in 2.41 secs
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - Reindexing catalog_category_product....
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - Category Products index was rebuilt successfully<br>
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - done in 0.83 secs
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - Reindexing cataloginventory_stock....
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - Stock Status index was rebuilt successfully<br>
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - done in 0.5 secs
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - Reindexing catalog_url....
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - Catalog URL Rewrites index was rebuilt successfully<br>
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - done in 0.98 secs
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - Reindexing catalogsearch_fulltext....
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - Catalog Search Index index was rebuilt successfully<br>
+plugin;Magmi_ReindexingPlugin;info:Magmi Magento Reindexer v1.0.2 - done in 0.77 secs
+end:Import Ended

@@ -1,0 +1,13 @@
+magmi/.htaccess
+magmi/.htpasswd
+
+var/cache/
+var/session/
+var/log/
+var/locks/
+var/report/
+media/catalog/product/cache/
+media/js/
+media/css/
+errors/local.xml
+app/etc/local.xml
