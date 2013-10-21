@@ -7,6 +7,7 @@ var/log/
 var/locks/
 var/report/
 media/catalog/product/cache/
+media/catalog/product/img/
 media/js/
 media/css/
 errors/local.xml
