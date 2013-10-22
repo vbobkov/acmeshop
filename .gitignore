@@ -1,5 +1,6 @@
 magmi/.htaccess
 magmi/.htpasswd
+magmi/state/*
 
 var/cache/
 var/session/
