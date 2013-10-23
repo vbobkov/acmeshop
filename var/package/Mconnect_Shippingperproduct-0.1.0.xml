@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package>
+    <name>Mconnect_Shippingperproduct</name>
+    <version>0.1.0</version>
+    <stability>beta</stability>
+    <license uri="http://opensource.org/licenses/osl-3.0.php">OSL v3.0</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>M-Connect Shipping Per Product extension provides you the flexibility to specify a Shipping Rate for each product individually.</summary>
+    <description>Features: &#xD;
+&#x2022; Specify a Shipping rate for all products in your catalog.&#xD;
+&#x2022; Compatible with Bundled Products, Configurable products, and other product types&#xD;
+&#x2022; It is possible to set individual shipping rate for each product.&#xD;
+&#x2022; You can specify default shipping rate.(applicable to all products in general)&#xD;
+&#x2022; You can Display Error Message if Method is not applicable.</description>
+    <notes>This is beta version release</notes>
+    <authors><author><name>M-connect  Solutions</name><user>auto-converted</user><email>darshit@mconnectsolutions.com</email></author></authors>
+    <date>2013-10-10</date>
+    <time>07:10:38</time>
+    <contents><target name="magecommunity"><dir name="Mconnect"><dir name="Shippingperproduct"><dir name="Block"><file name="Shippingperproduct.php" hash="6ede0c6fa26b382b4b68040370772ea3"/></dir><dir name="Helper"><file name="Data.php" hash="ed01744bdec186a316f3034862e274e4"/></dir><dir name="Model"><dir name="Carrier"><file name="ShippingMethod.php~" hash="0ac1570827b9fc6d6c3299df93ca0ee0"/><file name="Shippingperproduct.php" hash="aebcbd3f1e2da22baf760497e41ec3a9"/></dir><dir name="Mysql4"><dir name="Shippingperproduct"><file name="Collection.php" hash="d3a832274e59c59324a5df7fd39c4f7a"/></dir><file name="Shippingperproduct.php" hash="195e71ab5f508d46f4190ddc780c0207"/></dir><file name="Shippingperproduct.php" hash="d0f3f07b983ea98cbf44222cd2d2c1f2"/></dir><dir name="controllers"><dir name="Adminhtml"><file name="ShippingperproductController.php" hash="e8e51304db7b6c6cef32cf4b43257aab"/></dir><file name="IndexController.php" hash="32cf5bc9bdcc067a79cc5d20d035c637"/></dir><dir name="etc"><file name="config.xml" hash="5decee33f793cfb779324d3c1d7d3b79"/><file name="system.xml" hash="ef4ad06fa59d1c3971dbf6eee260ed51"/></dir><dir name="sql"><dir name="shippingperproduct_setup"><file name="mysql4-install-0.1.0.php" hash="f1e6eee95218434b235627303c36f16b"/></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Mconnect_Shippingperproduct.xml" hash="f5df2fee72c435583b69526d6c7c93f9"/></dir></target><target name="magedesign"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="layout"><file name="shippingperproduct.xml" hash="30231396bb6fd1eb1c6ba6ac3a1636da"/></dir></dir></dir></dir><dir name="frontend"><dir name="default"><dir name="default"><dir name="layout"><file name="shippingperproduct.xml" hash="2a28d5aa12e4f91022ef5d328b5770ba"/></dir><dir name="template"><dir name="shippingperproduct"><file name="shippingperproduct.phtml" hash="d9814a1daf36ecd6a2debd08038f12ef"/></dir></dir></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies/>
+</package>
