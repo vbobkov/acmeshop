@@ -1,15 +1,21 @@
+app/etc/local.xml
+
+downloader/.cache/
+
+errors/local.xml
+
 magmi/.htaccess
 magmi/.htpasswd
 magmi/state/*
+
+media/catalog/product/cache/
+media/catalog/product/img/
+media/js/
+media/css/
 
 var/cache/
 var/session/
 var/log/
 var/locks/
+var/package/tmp/
 var/report/
-media/catalog/product/cache/
-media/catalog/product/img/
-media/js/
-media/css/
-errors/local.xml
-app/etc/local.xml
