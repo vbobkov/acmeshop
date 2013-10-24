@@ -1,5 +1,7 @@
 #app/etc/local.xml
 
+cgi-bin/
+
 downloader/.cache/
 
 errors/local.xml
