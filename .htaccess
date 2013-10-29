@@ -121,7 +121,6 @@
 ## path relative to web root
 
     #RewriteBase /magento/
-	RewriteRule ^magmi/ - [L,NC]
 	RewriteBase /
 
 ############################################
