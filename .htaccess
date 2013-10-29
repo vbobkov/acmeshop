@@ -121,8 +121,8 @@
 ## path relative to web root
 
     #RewriteBase /magento/
-	RewriteBase /
 	RewriteRule ^magmi/ - [L,NC]
+	RewriteBase /
 
 ############################################
 ## uncomment next line to enable light API calls processing
