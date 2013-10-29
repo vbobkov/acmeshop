@@ -611,7 +611,11 @@ tr.summary-details-excluded { font-style:italic; }
 	border-top:0.25em solid #7d7e7d;
 }
 .header { width:930px; margin:0 auto; padding:10px; text-align:right; position:relative; z-index:10; }
-.header .logo { float:left; margin:3px 0 10px 12px; text-decoration:none !important; }
+.header .logo {
+	float:left;
+	margin:2em 0em 1em 1em;
+	text-decoration:none !important;
+}
 .header .logo strong { position:absolute; top:-999em; left:-999em; width:0; height:0; font-size:0; line-height:0; text-indent:-999em; overflow:hidden; }
 .header h1.logo { margin:0; }
 .header .quick-access { float:right; width:600px; padding:28px 10px 0 0; }
