@@ -122,6 +122,7 @@
 
     #RewriteBase /magento/
 	RewriteBase /
+	RewriteRule ^magmi/ - [L,NC]
 
 ############################################
 ## uncomment next line to enable light API calls processing
