@@ -760,14 +760,14 @@ tr.summary-details-excluded { font-style:italic; }
 	padding:5px 9px;
 }
 .block .block-content {
-	background:#fffffe;
+	background:#f9f9f9;
 }
 .block .block-content li.item { padding:7px 9px; }
 .block .block-content .product-name { color:#1e7ec8; }
 .block .btn-remove,
 .block .btn-edit { float:right; margin:1px 0 2px 5px; }
 .block .actions {
-	background:#fffffe;
+	background:#f9f9f9;
 	padding:6px 9px;
 	text-align:right;
 }
@@ -779,7 +779,7 @@ tr.summary-details-excluded { font-style:italic; }
 	background-color:#f9f9f9;
 }
 .block li.even {
-	background-color:#f0f0f0;
+	background-color:#e9e9e9;
 }
 
 /* Mini Blocks */
@@ -836,7 +836,7 @@ tr.summary-details-excluded { font-style:italic; }
 .block-layered-nav { border:0; }
 .block-layered-nav .block-title { border:0; padding:0; height:24px; background:url(../images/bkg_block-layered-title.gif) 0 0 no-repeat; text-indent:-999em; overflow:hidden; }
 .block-layered-nav .block-subtitle { line-height:1.35; background:#d5e8ff; padding:3px 9px; border:1px solid #b9ccdd; border-width:1px 0; text-transform:uppercase; color:#1f5070; }
-.block-layered-nav .block-content { border:1px solid #a0b3c3; background:#e7f1f4; }
+.block-layered-nav .block-content { border:1px solid #a0b3c3; }
 .block-layered-nav dt { background:url(../images/bkg_block-layered-dt.gif) 9px 11px no-repeat; padding:7px 10px 0 25px; font-weight:bold; text-transform:uppercase; }
 .block-layered-nav dd { padding:0 12px 12px; background:#a0b3c3; }
 .block-layered-nav dd.last { background:none; }
@@ -1554,7 +1554,7 @@ tr.summary-details-excluded { font-style:italic; }
 .block-progress .block-content { background:none; }
 .block-progress dt { font-size:13px; font-weight:bold; line-height:1.35; background:#eee; border:1px solid #a3aeb3; margin:0 0 6px; padding:2px 8px; color:#999; }
 .block-progress dd {
-	background:#fffffe;
+	background:#f9f9f9;
 	border:1px solid #aaaaaa;
 	border-top:0;
 	margin:0 0 6px;
@@ -1640,7 +1640,7 @@ tr.summary-details-excluded { font-style:italic; }
 /*.opc .active .step-title a { display:none; }*/
 
 .opc .step {
-	background:#fffffe;
+	background:#f9f9f9;
 	border:1px solid #aaaaaa;
 	border-top:0;
 	padding:15px 30px;
