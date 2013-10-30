@@ -2141,3 +2141,33 @@ tr.summary-details-excluded { font-style:italic; }
 .totals .paypal-logo:after {
 	margin-right:5em;
 }
+
+#electrode1,
+#electrode2 {
+	background:#00ffff;
+	height:8px;
+	position:relative;
+	width:8px;
+
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+}
+
+#electrode1 {
+	float:left;
+	left:8px;
+	top:8px;
+}
+
+#electrode2 {
+	float:right;
+	left:8px;
+	top:-24px;
+}
+
+#electrodes-lightning-corona {
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+}

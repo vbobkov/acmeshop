@@ -1,0 +1,435 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+<div class="header-container">
+    <div class="header">
+        <?php if ($this->getIsHomePage()):?>
+        <h1 class="logo">
+			<strong><?php echo $this->getLogoAlt() ?></strong>
+			<a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo">
+				<img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" />
+				<div id="electrode1"></div>
+				<div id="electrode2"></div>
+			</a>
+		</h1>
+        <?php else:?>
+        <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo">
+			<strong><?php echo $this->getLogoAlt() ?></strong>
+			<img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" />
+			<div id="electrode1"></div>
+			<div id="electrode2"></div>
+		</a>
+        <?php endif?>
+        <div class="quick-access">
+            <?php echo $this->getChildHtml('topSearch') ?>
+            <p class="welcome-msg"><?php echo $this->getChildHtml('welcome') ?> <?php echo $this->getAdditionalHtml() ?></p>
+            <?php echo $this->getChildHtml('topLinks') ?>
+            <?php echo $this->getChildHtml('store_language') ?>
+        </div>
+        <?php echo $this->getChildHtml('topContainer'); ?>
+    </div>
+</div>
+<?php echo $this->getChildHtml('topMenu') ?>
+
+<script type="text/javascript">
+jQuery(document).ready(function() {
+	var AE = {
+		combatWindow: '.logo[title="ACMElectronics"]',
+		zIndexPlayer: 1337,
+		lightning: function (pos_x0, pos_y0, pos_x, pos_y, flare_rgb, flare_opacity, max_distance) {
+			var sprite_id = 'electrodes';
+			var sprite_div = '#' + sprite_id;
+			var sprite_radius = 16;
+			if(max_distance != -1) {
+				var angle = this.getAngle(pos_x0, pos_y0, pos_x, pos_y);
+				if(this.getDistance(pos_x0, pos_y0, pos_x, pos_y) > (this.screenWidth + this.screenHeight) * 0.25) {
+					pos_x = pos_x0 + (Math.cos(angle) * max_distance);
+					pos_y = pos_y0 + (Math.sin(angle) * max_distance);
+					pos_x = pos_x - (jQuery(sprite_div).outerWidth() * 0.5);
+					pos_y = pos_y - (jQuery(sprite_div).outerHeight() * 0.5);
+				}
+			}
+
+			this.createFlareCircle(
+				sprite_id + "-origin",
+				1, 1, 1,
+				pos_x0, pos_y0,
+				this.zIndexPlayer + 10,
+				4, 4,
+				1000, 50,
+				1.0, 0.0, "255,255,255", "255,255,255",
+				1.0, 0.0, "255,255,255", "255,255,255");
+			this.createFlareCircle(
+				sprite_id + "-destination",
+				1, 1, 1,
+				pos_x, pos_y,
+				this.zIndexPlayer + 10,
+				4, 4,
+				1000, 50,
+				1.0, 0.0, "255,255,255", "255,255,255",
+				1.0, 0.0, "255,255,255", "255,255,255");
+
+			this.createLineXY(
+				sprite_id + "-lightning-corona",
+				16,
+				pos_x0 - 16, pos_y0,
+				pos_x + 16, pos_y,
+				this.zIndexPlayer + 10,
+				16, 16,
+				500, 50, 0.2, 0.1);
+
+			this.createLightning(
+				sprite_id + "-lightning",
+				3, 10,
+				1,
+				pos_x0, pos_y0,
+				pos_x, pos_y,
+				this.zIndexPlayer + 10,
+				0, 0,
+				500, 25, 1.0, 0.5, "255,255,255", "128,128,255", "255,255,255", "128,128,255");
+		},
+
+
+
+		addOrShowExistingDiv: function(div_id, div_class, style, extra_properties) {
+			div = "#" + div_id;
+			if(jQuery(div).length < 1) {
+				jQuery(this.combatWindow).append("<div id='" + div_id + "' class='" + div_class + "' style='" + style + "' " + extra_properties + "></div>");
+			}
+			else {
+				jQuery(div).css('visibility', 'visible');
+			}
+		},
+
+		createLightning: function(
+			div_id,
+			bolts, segments,
+			width,
+			x1, y1,
+			x2, y2,
+			z_index,
+			blur, spread,
+			duration, duration_delta, opacity_start, opacity_end, rgb_start, rgb_end) {
+
+			var current_x;
+			var current_y;
+			var next_x;
+			var next_y;
+			for (var bolt_count = 0; bolt_count < bolts; bolt_count++) {
+				current_x = x1;
+				current_y = y1;
+				for (var segment_count = 0; segment_count < segments; segment_count++) {
+					if(segment_count < segments - 1) {
+						next_x = current_x + ((x2 - x1) / segments);
+						next_y = current_y + ((y2 - y1) / segments);
+						// next_x += this.rand(0, next_x * 0.1 * ((Math.round(Math.random()) * 2) - 1));
+						// next_y += this.rand(0, next_y * 0.1 * ((Math.round(Math.random()) * 2) - 1));
+						next_x += this.rand(0, next_x * 0.1 * ((Math.round(Math.random()) * 4) - 2));
+						next_y += this.rand(0, next_y * 0.1 * ((Math.round(Math.random()) * 4) - 2));
+					}
+					else {
+						next_x = x2;
+						next_y = y2;
+					}
+
+					this.createLineXY(
+						div_id + bolt_count + segment_count,
+						width,
+						current_x, current_y,
+						next_x, next_y,
+						z_index,
+						blur, spread,
+						duration, duration_delta, opacity_start, opacity_end, rgb_start, rgb_end, rgb_start, rgb_end
+					);
+
+					current_x = next_x;
+					current_y = next_y;
+				}
+			}
+		},
+
+		createFlareCircle: function(
+			div_id,
+			radius, width, height,
+			pos_x, pos_y,
+			z_index,
+			blur, spread,
+			duration, duration_delta,
+			opacity_start, opacity_end, rgb_start, rgb_end,
+			box_shadow_opacity_start, box_shadow_opacity_end, rgb_box_shadow_start, rgb_box_shadow_end,
+			scale_duration, scale_duration_delta, radius_start, width_start, height_start, radius_end, width_end, height_end) {
+
+			var flare_container = "#" + div_id;
+			var z_index = this.parseUndefined(z_index, 1);
+
+			this.addOrShowExistingDiv(div_id, "flare-circle", "position:absolute;z-index:" + z_index);
+			jQuery(flare_container).css('width', width + "px");
+			jQuery(flare_container).css('height', height + "px");
+			jQuery(flare_container).css('left', pos_x + "px");
+			jQuery(flare_container).css('top', pos_y + "px");
+			jQuery(flare_container).css('background-color', "rgba(" + rgb_start + "," + opacity_start + ")");
+			this.setCSS3Property("border-radius", flare_container, "50%");
+			this.setCSS3Property("box-shadow", flare_container, '0px 0px ' + blur + 'px ' + spread + 'px rgba(' + rgb_box_shadow_start + ',' + box_shadow_opacity_start + ')');
+
+			var duration = this.parseUndefined(duration, -1);
+			if(duration != -1) {
+				this.animateTransitionRGBA(
+					flare_container,
+					blur, spread,
+					duration, duration_delta,
+					opacity_start, opacity_end, rgb_start, rgb_end,
+					box_shadow_opacity_start, box_shadow_opacity_end, rgb_box_shadow_start, rgb_box_shadow_end);
+			}
+
+			var scale_duration = this.parseUndefined(scale_duration, -1);
+			if(scale_duration != -1) {
+				this.animateScale(
+					flare_container,
+					scale_duration, scale_duration_delta,
+					radius_start, width_start, height_start,
+					radius_end, width_end, height_end);
+			}
+		},
+
+		createLineXY: function(
+			div_id,
+			width,
+			x1, y1,
+			x2, y2,
+			z_index,
+			blur, spread,
+			duration, duration_delta, opacity_start, opacity_end, rgb_start, rgb_end, rgb_box_shadow_start, rgb_box_shadow_end) {
+
+			this.createLine(
+				div_id, width, x1, y1, this.getDistance(x1, y1, x2, y2), 180 * (this.getAngle(x1, y1, x2, y2) / Math.PI), z_index,
+				blur, spread,
+				duration, duration_delta, opacity_start, opacity_end, rgb_start, rgb_end);
+		},
+
+		createLine: function(
+			div_id,
+			width,
+			x1, y1,
+			length, angle,
+			z_index,
+			blur, spread,
+			duration, duration_delta, opacity_start, opacity_end, rgb_start, rgb_end) {
+
+			var duration = this.parseUndefined(duration, -1);
+			var line_container = "#" + div_id;
+			var z_index = this.parseUndefined(z_index, 1);
+
+			this.addOrShowExistingDiv(div_id, "line", "position:absolute;");
+
+			jQuery(line_container).css('z-index', z_index);
+			jQuery(line_container).css('height', width + "px");
+			jQuery(line_container).css('width', length + "px");
+			jQuery(line_container).css('left', x1 + "px");
+			jQuery(line_container).css('top', (y1 - (width * 0.5)) + "px");
+			jQuery(line_container).css('background-color', "rgba(" + rgb_start + "," + opacity_start + ")");
+
+			this.setCSS3Property("transform-origin", line_container, "0% 50%");
+			this.setRotation(line_container, angle);
+
+			if(duration != -1) {
+				this.animateTransitionRGBA(
+					line_container,
+					blur, spread,
+					duration, duration_delta,
+					opacity_start, opacity_end, rgb_start, rgb_end,
+					opacity_start, opacity_end, rgb_start, rgb_end);
+			}
+		},
+
+		animateTransitionRGBA: function(
+			div,
+			blur, spread,
+			duration, duration_delta,
+			opacity_start, opacity_end, rgb_start, rgb_end,
+			box_shadow_opacity_start, box_shadow_opacity_end, rgb_box_shadow_start, rgb_box_shadow_end) {
+
+			var blur = this.parseUndefined(blur, 0);
+			var spread = this.parseUndefined(spread, 0);
+
+			var duration_delta = this.parseUndefined(duration_delta, 50);
+			var opacity_start = this.parseUndefined(opacity_start, 1.0);
+			var opacity_end = this.parseUndefined(opacity_end, 0.0);
+			var rgb_start = this.parseUndefined(rgb_start, "128,128,255");
+			var rgb_end = this.parseUndefined(rgb_end, "128,128,255");
+
+			var box_shadow_opacity_start = this.parseUndefined(box_shadow_opacity_start, 1.0);
+			var box_shadow_opacity_end = this.parseUndefined(box_shadow_opacity_end, 0.0);
+			var rgb_box_shadow_start = this.parseUndefined(rgb_box_shadow_start, "128,128,255");
+			var rgb_box_shadow_end = this.parseUndefined(rgb_box_shadow_end, "128,128,255");
+
+			var step_count = duration / duration_delta;
+			var op_bg = opacity_start;
+			var opacity_increment_bg = (opacity_start - opacity_end) / step_count;
+			var op_box = box_shadow_opacity_start;
+			var opacity_increment_box = (box_shadow_opacity_start - box_shadow_opacity_end) / step_count;
+
+			var is_rgb_changed = false;
+			if(rgb_start != rgb_end) {
+				var is_rgb_changed = true;
+				var rgb_start_values = rgb_start.split(",");
+				var rgb_end_values = rgb_end.split(",");
+				var rgb_increments = new Array();
+
+				jQuery.each(rgb_start_values, function(i, entry) {
+					rgb_increments.push((rgb_start_values[i] - rgb_end_values[i]) / step_count);
+				});
+			}
+
+			var is_rgb_box_shadow_changed = false;
+			if(rgb_box_shadow_start != rgb_box_shadow_end && (blur > 0 || spread > 0)) {
+				var is_rgb_box_shadow_changed = true;
+				var rgb_box_shadow_start_values = rgb_box_shadow_start.split(",");
+				var rgb_box_shadow_end_values = rgb_box_shadow_end.split(",");
+				var rgb_box_shadow_increments = new Array();
+
+				jQuery.each(rgb_box_shadow_start_values, function(i, entry) {
+					rgb_box_shadow_increments.push((rgb_box_shadow_start_values[i] - rgb_box_shadow_end_values[i]) / step_count);
+				});
+			}
+
+			var transition_rgba_interval = setInterval(function() {
+				if(is_rgb_changed) {
+					jQuery(div).css('background-color', 'rgba(' + rgb_start_values.join(',') + ',' + op_bg + ')');
+					jQuery.each(rgb_start_values, function(i, entry) {
+						rgb_start_values[i] = parseInt(rgb_start_values[i] - rgb_increments[i]);
+					});
+				}
+
+				if(is_rgb_box_shadow_changed) {
+					jQuery(div).css('box-shadow', '0px 0px ' + blur + 'px ' + spread + 'px rgba(' + rgb_box_shadow_start_values.join(',') + ',' + op_box + ')');
+					jQuery.each(rgb_start_values, function(i, entry) {
+						rgb_box_shadow_start_values[i] = parseInt(rgb_box_shadow_start_values[i] - rgb_box_shadow_increments[i]);
+					});
+				}
+
+				else {
+					jQuery(div).css('background-color', 'rgba(' + rgb_start + ',' + op_bg + ')');
+					if(blur > 0 || spread > 0) {
+						jQuery(div).css('box-shadow', '0px 0px ' + blur + 'px ' + spread + 'px rgba(' + rgb_box_shadow_start + ',' + op_box + ')');
+					}
+				 }
+
+				op_bg -= opacity_increment_bg;
+				op_box -= opacity_increment_box;
+	 
+				if(op_bg < opacity_end || op_box < box_shadow_opacity_end) {
+					jQuery(div).css('visibility', 'hidden');
+					clearInterval(transition_rgba_interval);
+				}
+			}, duration_delta);
+		},
+
+		animateScale: function(
+			div,
+			scale_duration, scale_duration_delta,
+			radius_start, width_start, height_start,
+			radius_end, width_end, height_end) {
+
+			var step_count = scale_duration / scale_duration_delta;
+			var sr = radius_start;
+			var sw = width_start;
+			var sh = height_start;
+			var sr_increment = (radius_start - radius_end) / step_count;
+			var sw_increment = (width_start - width_end) / step_count;
+			var sh_increment = (height_start - height_end) / step_count;
+
+			var transition_scale_interval = setInterval(function() {
+				sr -= sr_increment;
+				sw -= sw_increment;
+				sh -= sh_increment;
+
+				jQuery(div).css('width', sw);
+				jQuery(div).css('height', sh);
+				jQuery(div).css('left', parseFloat(jQuery(div).css('left')) + (sw_increment * 0.5));
+				jQuery(div).css('top', parseFloat(jQuery(div).css('top')) + (sh_increment * 0.5));
+
+				if((radius_start > radius_end && sr < radius_end) || (radius_start <= radius_end && sr > radius_end)) {
+					jQuery(div).css('visibility', 'hidden');
+					clearInterval(transition_scale_interval);
+				}
+			}, scale_duration_delta);
+		},
+
+
+
+		rand: function (min, max) {
+			return Math.random() * (max - min) + min;
+		},
+
+		/*
+		* 1337 tr1g h4x, YEABOI
+		*/
+		getAngle: function(x1, y1, x2, y2) {
+			return Math.atan2(y2 - y1, x2 - x1);
+		},
+
+		polarDegsToXY: function(degs, slope) {
+			return this.polarRadsToXY(degs * this.deg2rad, slope);
+		},
+
+		polarRadsToXY: function(rads, slope) {
+			return [slope * Math.cos(rads), slope * Math.sin(rads)];
+		},
+
+		getDistance: function(x1, y1, x2, y2) {
+			return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+		},
+
+		setCSS3Property: function(property_name, div, value) {
+			jQuery(div).css('-webkit-' + property_name, value);
+			jQuery(div).css('-moz-' + property_name, value);
+			jQuery(div).css('-ms-' + property_name, value);
+			jQuery(div).css(property_name, value);
+		},
+
+		// will need to rewrite to replace rotate() inside the transform property, if there's other transforms on the element
+		setRotation: function(div, value) {
+			this.setCSS3Property("transform", div, "rotate(" + value + "deg)");
+		},
+
+		parseUndefined: function(param, default_value) {
+			if(typeof(param)==='undefined') {
+				return default_value;
+			}
+			return param;
+		}
+	};
+
+	var l337 = setInterval(function() {
+		AE.lightning(jQuery('#electrode1').position().left + 4, jQuery('#electrode1').position().top + 4, jQuery('#electrode2').position().left + 4, jQuery('#electrode2').position().top + 4, 'rgb(0,0,255)', 0.5, 10);
+		// AE.lightning(jQuery('#electrode1').position().left + ((Math.random()*100) - 50), jQuery('#electrode1').position().top + ((Math.random()*50) - 25), jQuery('#electrode2').position().left + ((Math.random()*100) - 50), jQuery('#electrode2').position().top + ((Math.random()*50) - 25), 'rgb(0,0,255)', 0.5, 10);
+		// AE.lightning(jQuery('#electrode1').position().left, jQuery('#electrode1').position().top, jQuery('#electrode2').position().left, jQuery('#electrode2').position().top, 'rgb(0,0,255)', 0.5, 10);
+	}, 5000);
+});
+</script>
