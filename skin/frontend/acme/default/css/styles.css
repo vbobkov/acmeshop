@@ -2145,6 +2145,7 @@ tr.summary-details-excluded { font-style:italic; }
 #electrode1,
 #electrode2 {
 	background:#00ffff;
+	display:inline;
 	height:8px;
 	position:relative;
 	width:8px;
@@ -2156,14 +2157,14 @@ tr.summary-details-excluded { font-style:italic; }
 
 #electrode1 {
 	float:left;
-	left:8px;
-	top:8px;
+	left:-4px;
+	top:12px;
 }
 
 #electrode2 {
 	float:right;
-	left:8px;
-	top:-24px;
+	left:4px;
+	top:12px;
 }
 
 #electrodes-lightning-corona {
