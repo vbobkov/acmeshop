@@ -633,7 +633,7 @@ tr.summary-details-excluded { font-style:italic; }
 .header { width:930px; margin:0 auto; padding:10px; text-align:right; position:relative; z-index:10; }
 .header .logo {
 	float:left;
-	margin:2em 0em 1em 1em;
+	margin:1em 0em -2em 1em;
 	text-decoration:none !important;
 }
 .header .logo strong { position:absolute; top:-999em; left:-999em; width:0; height:0; font-size:0; line-height:0; text-indent:-999em; overflow:hidden; }
@@ -2149,10 +2149,15 @@ tr.summary-details-excluded { font-style:italic; }
 	margin-right:5em;
 }
 
+.logo img,
+#electrode1,
+#electrode2 {
+	display:block;
+}
+
 #electrode1,
 #electrode2 {
 	background:#00ffff;
-	display:inline;
 	height:8px;
 	position:relative;
 	width:8px;
@@ -2165,12 +2170,14 @@ tr.summary-details-excluded { font-style:italic; }
 #electrode1 {
 	float:left;
 	left:-4px;
+	margin:-32px 0px 0px -4px;
 	top:12px;
 }
 
 #electrode2 {
 	float:right;
 	left:4px;
+	margin:-32px -4px 0px 0px;
 	top:12px;
 }
 
