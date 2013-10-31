@@ -2095,11 +2095,16 @@ tr.summary-details-excluded { font-style:italic; }
 	margin:2px 0px 2px 0px;
 }
 
-.checkoutbyamazon-badge img,
-.paypal-logo img {
+.checkoutbyamazon-badge img {
 	-webkit-border-radius: 1em;
 	-moz-border-radius: 1em;
 	border-radius: 1em;
+}
+
+.paypal-logo img {
+	-webkit-border-radius: 2em 0em 2em 0em;
+	-moz-border-radius: 2em 0em 2em 0em;
+	border-radius: 2em 0em 2em 0em;
 }
 
 .checkoutbyamazon-badge img {
