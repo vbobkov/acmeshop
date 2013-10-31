@@ -2090,14 +2090,22 @@ tr.summary-details-excluded { font-style:italic; }
 .guest-select {width:305px !important;}
 
 #AmazonInlineWidget img,
+.checkoutbyamazon-badge img,
 .paypal-logo img {
 	margin:2px 0px 2px 0px;
 }
 
+.checkoutbyamazon-badge img,
 .paypal-logo img {
 	-webkit-border-radius: 1em;
 	-moz-border-radius: 1em;
 	border-radius: 1em;
+}
+
+.checkoutbyamazon-badge img {
+	/*background: #ffeecc;*/
+	/*#fedd9f*/
+	border: 1px solid #faa819;
 }
 
 #AmazonInlineWidget img:hover,
