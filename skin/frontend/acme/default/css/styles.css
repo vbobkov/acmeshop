@@ -1016,13 +1016,11 @@ tr.summary-details-excluded { font-style:italic; }
 }
 
 .products-grid .product-image {
-	/*display: block;*/
+	display: block;
 	height: 135px;
 	margin: 0 0 10px;
 	outline: 1px solid #1e7ec8;
 	width: 135px;
-
-	display: table-cell;
 	vertical-align: middle;
 }
 .products-grid .product-name { /*min-height:2.7em;*/ margin:0 0 5px; font-weight:bold; font-size:13px; color:#203548; }
