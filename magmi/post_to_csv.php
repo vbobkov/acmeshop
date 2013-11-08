@@ -3,6 +3,7 @@
 // print_r($_POST);
 $content = $_POST['file_content'];
 // $content = '@C:\sites\acmedb\public_html\assets/uploads/magmi_import.csv';
+print_r($_POST);
 print_r($content);
 print_r('wtf');
 return;
