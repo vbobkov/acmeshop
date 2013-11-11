@@ -2100,6 +2100,24 @@ tr.summary-details-excluded { font-style:italic; }
 
 .guest-select {width:305px !important;}
 
+
+
+.product-view .product-img-box .product-image img[src=""],
+.products-grid .product-image img[src=""] {
+	color: rgba(0,0,0,0);
+	width: 100%;
+}
+
+.product-view .product-img-box .product-image img[src=""] {
+	background: url(../images/catalog/product/placeholder/image.png) no-repeat;
+	height: 267px;
+}
+
+.products-grid .product-image img[src=""] {
+	background: url(../images/catalog/product/placeholder/small_image.png) no-repeat;
+	height: 100%;
+}
+
 #AmazonInlineWidget img,
 .checkoutbyamazon-badge img,
 .paypal-logo img {

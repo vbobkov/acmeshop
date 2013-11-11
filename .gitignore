@@ -10,8 +10,9 @@ magmi/.htaccess
 magmi/.htpasswd
 magmi/state/*
 
-media/catalog/product/cache/
-media/catalog/product/img/
+media/catalog/product/
+#media/catalog/product/cache/
+#media/catalog/product/img/
 media/js/
 media/css/
 
