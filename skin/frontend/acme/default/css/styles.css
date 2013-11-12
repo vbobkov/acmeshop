@@ -2103,18 +2103,24 @@ tr.summary-details-excluded { font-style:italic; }
 
 
 .product-view .product-img-box .product-image img[src=""],
-.products-grid .product-image img[src=""] {
+.product-view .product-img-box .product-image img[src="none"],
+.products-grid .product-image img[src=""],
+.products-grid .product-image img[src="none"] {
 	color: rgba(0,0,0,0);
 	width: 100%;
 }
 
-.product-view .product-img-box .product-image img[src=""] {
-	background: url(../images/catalog/product/placeholder/image.png) no-repeat;
+.product-view .product-img-box .product-image img[src=""],
+.product-view .product-img-box .product-image img[src="none"] {
+	background-image: url(../images/catalog/product/placeholder/image.png) no-repeat;
+	content: url(../images/catalog/product/placeholder/image.png) no-repeat;
 	height: 267px;
 }
 
-.products-grid .product-image img[src=""] {
-	background: url(../images/catalog/product/placeholder/small_image.png) no-repeat;
+.products-grid .product-image img[src=""],
+.products-grid .product-image img[src="none"] {
+	background-image: url(../images/catalog/product/placeholder/small_image.png) no-repeat;
+	content: url(../images/catalog/product/placeholder/small_image.png) no-repeat;
 	height: 100%;
 }
 
