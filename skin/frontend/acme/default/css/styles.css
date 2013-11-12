@@ -2152,11 +2152,13 @@ tr.summary-details-excluded { font-style:italic; }
 	border-radius: 1em;
 }
 
+/*
 .paypal-logo img {
 	-webkit-border-radius: 2em 0em 2em 0em;
 	-moz-border-radius: 2em 0em 2em 0em;
 	border-radius: 2em 0em 2em 0em;
 }
+*/
 
 .checkoutbyamazon-badge img {
 	/*background: #ffeecc;*/
