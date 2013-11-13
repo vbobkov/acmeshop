@@ -49,19 +49,55 @@
             <shippingperproduct>
                 <class>Mconnect_Shippingperproduct_Helper</class>
             </shippingperproduct>
+            <shippingperproduct2>
+                <class>Mconnect_Shippingperproduct_Helper</class>
+            </shippingperproduct2>
+            <shippingperproduct3>
+                <class>Mconnect_Shippingperproduct_Helper</class>
+            </shippingperproduct3>
+            <shippingperproduct4>
+                <class>Mconnect_Shippingperproduct_Helper</class>
+            </shippingperproduct4>
         </helpers>
     </global>
     <default>   
         <carriers>
-            <shippingperproduct>                                    
+            <shippingperproduct>
                 <active>0</active>
                 <sallowspecific></sallowspecific>
                 <model>shippingperproduct/carrier_shippingperproduct</model>
-                <name>Shipping Cost</name>
-                <title>Product Rate</title>
+                <name>Shipping Cost 1</name>
+                <title>Standard (3-5 business days)</title>
                 <default_shipping_cost>0</default_shipping_cost>
-                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>                 
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
             </shippingperproduct>
+            <shippingperproduct2>
+                <active>0</active>
+                <sallowspecific></sallowspecific>
+                <model>shippingperproduct/carrier_shippingperproduct</model>
+                <name>Shipping Cost 2</name>
+                <title>Expedited (3 business days)</title>
+                <default_shipping_cost>0</default_shipping_cost>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+            </shippingperproduct2>
+            <shippingperproduct3>
+                <active>0</active>
+                <sallowspecific></sallowspecific>
+                <model>shippingperproduct/carrier_shippingperproduct</model>
+                <name>Shipping Cost 3</name>
+                <title>Two-Day Shipping (2 business days)</title>
+                <default_shipping_cost>0</default_shipping_cost>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+            </shippingperproduct3>
+            <shippingperproduct4>
+                <active>0</active>
+                <sallowspecific></sallowspecific>
+                <model>shippingperproduct/carrier_shippingperproduct</model>
+                <name>Shipping Cost 4</name>
+                <title>One-Day Shipping (1 business day)</title>
+                <default_shipping_cost>0</default_shipping_cost>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+            </shippingperproduct4>
         </carriers>
     </default>
 </config>

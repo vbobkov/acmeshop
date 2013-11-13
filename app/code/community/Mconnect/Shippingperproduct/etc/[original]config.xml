@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category   Catalog
+ * @package    Mconnect_Shippingperproduct
+ * @author     M-Connect Solutions (http://www.mconnectsolutions.com, http://www.mconnectmedia.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Mconnect_Shippingperproduct>
+            <version>0.1.0</version>
+            <depends>
+                <Mage_Shipping/>
+            </depends>
+        </Mconnect_Shippingperproduct>
+    </modules>
+   
+    <global>
+        <models>
+            <shippingperproduct>
+                <class>Mconnect_Shippingperproduct_Model</class>
+                <resourceModel>shippingperproduct_mysql4</resourceModel>
+            </shippingperproduct>
+            <shippingperproduct_mysql4>
+                <class>Mconnect_Shippingperproduct_Model_Mysql4</class>
+                <entities>
+                    <shippingperproduct>
+                        <table>shippingperproduct</table>
+                    </shippingperproduct>
+                </entities>
+            </shippingperproduct_mysql4>
+        </models>
+        <resources>
+            <shippingperproduct_setup>
+                <setup>
+                    <module>Mconnect_Shippingperproduct</module>
+                    <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                </setup>
+                
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </shippingperproduct_setup>
+       </resources>
+      
+        <helpers>
+            <shippingperproduct>
+                <class>Mconnect_Shippingperproduct_Helper</class>
+            </shippingperproduct>
+        </helpers>
+    </global>
+    <default>   
+        <carriers>
+            <shippingperproduct>                                    
+                <active>0</active>
+                <sallowspecific></sallowspecific>
+                <model>shippingperproduct/carrier_shippingperproduct</model>
+                <name>Shipping Cost</name>
+                <title>Product Rate</title>
+                <default_shipping_cost>0</default_shipping_cost>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>                 
+            </shippingperproduct>
+        </carriers>
+    </default>
+</config>

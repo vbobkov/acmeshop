@@ -28,16 +28,9 @@ implements Mage_Shipping_Model_Carrier_Interface
          $multiplication_qty = 0;
          $_qouteitem_main_qty = 1;
          $_qouteitemCnt = 1;
-		 $_total_weight = 0;
-        //echo "<pre>";
-		// print_r(get_class_methods(Mage::getSingleton('checkout/session')->getQuote()));
-		//echo "</pre>";
+        //echo "<pre>";         print_r(get_class_methods(Mage::getSingleton('checkout/session')->getQuote()));
          foreach($items as $item) {
-			if($item->getWeight() > 0) {
-				$_total_weight += $item->getWeight();
-			}
-
-			$type_id = Mage::getModel('catalog/product')->load($item->getProductId())->getTypeId();
+             $type_id = Mage::getModel('catalog/product')->load($item->getProductId())->getTypeId();
          
              if($item->getParentItemId() == NULL && $type_id != 'downloadable'){
                 $multiplication_qty += $_qouteitem_main_qty * $_quoteitem_qty_rate;
@@ -87,44 +80,27 @@ implements Mage_Shipping_Model_Carrier_Interface
 		$result->append($error);
                 return $result;
 	}else{
-
-	/*
-	$method = Mage::getModel('shipping/rate_result_method');
-	$method->setCarrier($this->_code);
+        
+        $method = Mage::getModel('shipping/rate_result_method');
+			
+	$method->setCarrier('shippingperproduct');
 	$method->setCarrierTitle($this->getConfigData('name'));
-	$method->setMethod($this->_code);
+			
+	$method->setMethod('shippingperproduct');
 	$method->setMethodTitle($this->getConfigData('title'));
-	$method->setPrice($multiplication_qty);
+        
+        $method->setPrice($multiplication_qty);
 	$method->setCost($multiplication_qty);
+			
 	$result->append($method);
-	*/
-	$result->append($this->createMethod('shippingperproduct', $multiplication_qty, 'Standard (3-5 business days)'));
-	$result->append($this->createMethod('shippingperproduct2', $multiplication_qty + ($_total_weight * 3.14) + 19.95, 'Expedited (3 business days)'));
-	$result->append($this->createMethod('shippingperproduct3', $multiplication_qty + ($_total_weight * 4.19) + 29.95, 'Two-Day Shipping (2 business days)'));
-	$result->append($this->createMethod('shippingperproduct4', $multiplication_qty + ($_total_weight * 5.24) + 49.95, 'One-Day Shipping (1 business day)'));
         return $result;
          } }
        }
     }
     
-    public function getAllowedMethods() {
-        // return array('shippingperproduct'=>$this->getConfigData('name'));
-		return array(
-			'shippingperproduct' => $this->getConfigData('name'),
-			'shippingperproduct2' => 'Expedited (3 business days)',
-			'shippingperproduct3' => 'Two-Day Shipping (2 business days)',
-			'shippingperproduct4' => 'One-Day Shipping (1 business day)'
-		);
+    public function getAllowedMethods()
+    {
+        return array('shippingperproduct'=>$this->getConfigData('name'));
     }
 
-	private function createMethod($method_id, $price, $title) {
-		$new_method = Mage::getModel('shipping/rate_result_method');
-		$new_method->setCarrier($method_id);
-		$new_method->setCarrierTitle($title);
-		$new_method->setMethod($method_id);
-		$new_method->setMethodTitle($title);
-		$new_method->setPrice($price);
-		$new_method->setCost($price);
-		return $new_method;
-	}
 }

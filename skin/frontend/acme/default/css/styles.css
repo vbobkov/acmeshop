@@ -2217,6 +2217,10 @@ tr.summary-details-excluded { font-style:italic; }
 	margin-right:5em;
 }
 
+.sp-methods dt {
+	display: none;
+}
+
 .logo img,
 #electrode1,
 #electrode2 {
