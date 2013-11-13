@@ -1227,9 +1227,17 @@ tr.summary-details-excluded { font-style:italic; }
 .product-collateral .box-collateral { margin:0 0 25px; }
 
 /* Product Images */
-.product-view .product-img-box { float:left; width:267px; }
+.product-view .product-img-box {
+	float: left;
+	height: 267px;
+	width: 267px;
+}
 .col3-layout .product-view .product-img-box { float:none; margin:0 auto; }
-.product-view .product-img-box .product-image { margin:0 0 13px; }
+.product-view .product-img-box .product-image {
+	margin:0 0 13px;
+	height: 100%;
+	width: 100%;
+}
 .product-view .product-img-box .product-image-zoom { position:relative; width:265px; height:265px; overflow:hidden; z-index:9; }
 .product-view .product-img-box .product-image-zoom img {
 	/*cursor:move;*/
@@ -2107,6 +2115,10 @@ tr.summary-details-excluded { font-style:italic; }
 
 
 
+a.product-image {
+	text-decoration: none;
+}
+
 .product-view .product-img-box .product-image a,
 .products-grid .product-image a {
 	height: 100%;
@@ -2123,22 +2135,29 @@ tr.summary-details-excluded { font-style:italic; }
 .products-grid .product-image img[src=""],
 .products-grid .product-image img[src="none"] {
 	color: rgba(0,0,0,0);
-	width: 100%;
-}
-
-.product-view .product-img-box .product-image img[src=""],
-.product-view .product-img-box .product-image img[src="none"] {
-	background-image: url(../images/catalog/product/placeholder/image.png) no-repeat;
-	content: url(../images/catalog/product/placeholder/image.png) no-repeat;
-	height: 267px;
 }
 
 .products-grid .product-image img[src=""],
-.products-grid .product-image img[src="none"] {
-	background-image: url(../images/catalog/product/placeholder/small_image.png) no-repeat;
-	content: url(../images/catalog/product/placeholder/small_image.png) no-repeat;
+.products-grid .product-image img[src="none"],
+.product-view .product-img-box .product-image img[src=""],
+.product-view .product-img-box .product-image img[src="none"] {
+	background: url(../images/catalog/product/placeholder/image.png) no-repeat;
+	-webkit-background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	-o-background-size: 100% 100%;
+	background-size: 100% 100%;
+	display: block;
 	height: 100%;
+	width: 100%;
 }
+
+/*
+.products-grid .product-image img[src=""]:after,
+.products-grid .product-image img[src="none"]:after {
+	content: url(../images/catalog/product/placeholder/small_image.png) no-repeat;
+	display: block;
+}
+*/
 
 #AmazonInlineWidget img,
 .checkoutbyamazon-badge img,
