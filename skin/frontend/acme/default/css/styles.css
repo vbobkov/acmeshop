@@ -2236,6 +2236,7 @@ a.product-image {
 	margin-right:5em;
 }
 
+.shipping-form #co-shipping-method-form  .sp-methods dt,
 #checkout-step-shipping_method .sp-methods dt {
 	display: none;
 }
