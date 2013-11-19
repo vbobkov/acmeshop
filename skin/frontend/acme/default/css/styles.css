@@ -2236,7 +2236,7 @@ a.product-image {
 	margin-right:5em;
 }
 
-.sp-methods dt {
+#checkout-step-shipping_method .sp-methods dt {
 	display: none;
 }
 
