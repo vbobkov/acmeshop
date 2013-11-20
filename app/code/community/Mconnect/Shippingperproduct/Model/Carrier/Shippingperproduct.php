@@ -99,9 +99,9 @@ implements Mage_Shipping_Model_Carrier_Interface
 	$result->append($method);
 	*/
 	$result->append($this->createMethod('shippingperproduct', $multiplication_qty, 'Standard (3-5 business days)'));
-	$result->append($this->createMethod('shippingperproduct2', $multiplication_qty + ($_qouteitem_main_qty * (($_total_weight * 3.14) + 19.95)), 'Expedited (3 business days)'));
-	$result->append($this->createMethod('shippingperproduct3', $multiplication_qty + ($_qouteitem_main_qty * (($_total_weight * 4.19) + 29.95)), 'Two-Day Shipping (2 business days)'));
-	$result->append($this->createMethod('shippingperproduct4', $multiplication_qty + ($_qouteitem_main_qty * (($_total_weight * 5.24) + 49.95)), 'One-Day Shipping (1 business day)'));
+	$result->append($this->createMethod('shippingperproduct2', $multiplication_qty + ($_qouteitem_main_qty * ($_total_weight * 3.14)) + 19.95, 'Expedited (3 business days)'));
+	$result->append($this->createMethod('shippingperproduct3', $multiplication_qty + ($_qouteitem_main_qty * ($_total_weight * 4.19)) + 29.95, 'Two-Day Shipping (2 business days)'));
+	$result->append($this->createMethod('shippingperproduct4', $multiplication_qty + ($_qouteitem_main_qty * ($_total_weight * 5.24)) + 49.95, 'One-Day Shipping (1 business day)'));
         return $result;
          } }
        }
