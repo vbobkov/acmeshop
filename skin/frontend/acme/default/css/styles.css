@@ -2165,6 +2165,17 @@ a.product-image {
 	margin:2px 0px 2px 0px;
 }
 
+/*
+#AmazonInlineWidget {
+	display: none;
+}
+
+#opc-login #AmazonInlineWidget,
+#opc-payment #AmazonInlineWidget {
+	display: block;
+}
+*/
+
 .checkoutbyamazon-badge img {
 	-webkit-border-radius: 1em;
 	-moz-border-radius: 1em;
