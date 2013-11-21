@@ -20,10 +20,11 @@ $_productCollection = Mage::getResourceModel('reports/product_collection')
 						// ->setPageSize(12);
 // echo $_productCollection->getSelect()->__toString();
 $_productCollection->getSelect()->limit(12);
-// sizeof($_productCollection);
+sizeof($_productCollection);
 // $_productCollectionArray = $_productCollection->toArray();
 
 // print_r('<pre>');
+// print_r($_productCollection);
 // print_r($_productCollectionArray);
 // print_r($_productCollection->toArray());
 // print_r('</pre>');
@@ -38,28 +39,30 @@ $_productCollection->getSelect()->limit(12);
 		$_columnCount = 4;
 	?>
     <?php $i=0; foreach ($_productCollection as $_product): ?>
-        <?php if ($i++%$_columnCount==0): ?>
-        <ul class="products-grid">
-        <?php endif ?>
-            <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?>">
-                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $_product->getSmallImage(); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
-                <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php $_product->getName() ?>"><?php echo $_product->getName() ?></a></h2>
-                <?php if($_product->getRatingSummary()): ?>
-                <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
-                <?php endif; ?>
-                <?php echo $this->getPriceHtml($_product, true) ?>
-				<!--
-                <div class="actions">
-                    <?php if($_product->isSaleable()): ?>
-                        <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
-                    <?php else: ?>
-                        <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
-                    <?php endif; ?>
-                </div>
-				-->
-            </li>
-        <?php if ($i%$_columnCount==0 || $i==$_collectionSize): ?>
-        </ul>
-        <?php endif ?>
-        <?php endforeach ?>
+		<?php if(strpos($_product->getName(), 'ACME_') !== 0): // don't include limited-time/special combos (yet) ?>
+			<?php if ($i++ % $_columnCount == 0): ?>
+			<ul class="products-grid">
+			<?php endif ?>
+				<li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?>">
+					<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $_product->getSmallImage(); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+					<h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php $_product->getName() ?>"><?php echo $_product->getName() ?></a></h2>
+					<?php if($_product->getRatingSummary()): ?>
+					<?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+					<?php endif; ?>
+					<?php echo $this->getPriceHtml($_product, true) ?>
+					<!--
+					<div class="actions">
+						<?php if($_product->isSaleable()): ?>
+							<button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+						<?php else: ?>
+							<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+						<?php endif; ?>
+					</div>
+					-->
+				</li>
+			<?php if ($i % $_columnCount == 0 || $i == $_collectionSize): ?>
+			</ul>
+			<?php endif; ?>
+		<?php endif; ?>
+	<?php endforeach ?>
 </div>
