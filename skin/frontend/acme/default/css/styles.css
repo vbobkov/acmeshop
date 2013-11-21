@@ -649,7 +649,11 @@ tr.summary-details-excluded { font-style:italic; }
 .header .logo strong { position:absolute; top:-999em; left:-999em; width:0; height:0; font-size:0; line-height:0; text-indent:-999em; overflow:hidden; }
 .header h1.logo { margin:0; }
 .header .quick-access { float:right; width:600px; padding:28px 10px 0 0; }
-.header .welcome-msg { margin:0; color:#fff; text-align:right; }
+.header .welcome-msg {
+	color: rgb(0,255,255);
+	margin: 1em 0em -3em 0em;
+	text-align: left;
+}
 .header .welcome-msg a { color:#ebbc58; }
 .header .form-search {
 	background:url(../images/bkg_form-search.gif) 0 0 no-repeat;
