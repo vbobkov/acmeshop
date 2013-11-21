@@ -754,7 +754,16 @@ tr.summary-details-excluded { font-style:italic; }
 
 /* 2nd Level */
 #nav ul,
-#nav div { position:absolute; width:15em; top:27px; left:-10000px; border:1px solid #899ba5; }
+#nav div {
+	border:1px solid #899ba5;
+	left:-10000px;
+	max-height:400px;
+	overflow-x:hidden;
+	overflow-y:scroll;
+	position:absolute;
+	top:27px;
+	width:15em;
+}
 #nav div ul { position:static; width:auto; border:none; }
 
 /* 3rd+ Level */
@@ -2118,6 +2127,14 @@ tr.summary-details-excluded { font-style:italic; }
 .guest-select {width:305px !important;}
 
 
+
+.bestsellers ul, ol {
+    list-style: none outside none;
+}
+
+.bestsellers ul li.item {
+	padding: 12px 8px 40px;
+}
 
 a.product-image {
 	text-decoration: none;
