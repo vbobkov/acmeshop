@@ -34,7 +34,7 @@
     $_product = $this->getProduct();
     $_helper = $this->helper('catalog/output');
 ?>
-<?php if ($_product->getImage() != 'no_selection' && $_product->getImage()): ?>
+<?php if ($_product->getImage() != 'none' && $_product->getImage()): ?>
 <p class="product-image product-image-zoom">
     <?php
         // $_img = '<img id="image" src="'.$_product->getImage().'" alt="'.$this->escapeHtml($this->getImageLabel()).'" title="'.$this->escapeHtml($this->getImageLabel()).'" />';
@@ -53,7 +53,7 @@
 <script type="text/javascript">
 //<![CDATA[
     Event.observe(window, 'load', function() {
-        product_zoom = new Product.Zoom('image', 'track', 'handle', 'zoom_in', 'zoom_out', 'track_hint');
+        // product_zoom = new Product.Zoom('image', 'track', 'handle', 'zoom_in', 'zoom_out', 'track_hint');
     });
 //]]>
 </script>
