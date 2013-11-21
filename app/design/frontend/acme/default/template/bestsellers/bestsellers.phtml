@@ -36,7 +36,7 @@ sizeof($_productCollection);
 		$_columnCount = 4;
 	?>
     <?php $i=0; foreach ($_productCollection as $_product): ?>
-		<?php if(strpos($_product->getName(), 'ACME_') !== 0): // don't include limited-time/special combos (yet) ?>
+		<?php if(strpos($_product->getName(), 'ACME_') !== 0 && $_product->getStatus() == 1): // don't include limited-time/special combos (yet) ?>
 			<?php if ($i++ % $_columnCount == 0): ?>
 			<ul class="products-grid">
 			<?php endif ?>
