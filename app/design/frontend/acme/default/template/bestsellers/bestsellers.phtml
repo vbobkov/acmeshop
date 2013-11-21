@@ -1,8 +1,5 @@
  <?php
-/**
- * @author MagentoPycho <rajen_k_bhtt@hotmail.com>
- * GuruWebSoft www.guruwebsoft.com
- * */
+$_helper = $this->helper('catalog/output');
 $visibility = array(
 	Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH,
 	Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG
@@ -49,16 +46,12 @@ sizeof($_productCollection);
 					<?php if($_product->getRatingSummary()): ?>
 					<?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
 					<?php endif; ?>
-					<?php echo $this->getPriceHtml($_product, true) ?>
-					<!--
-					<div class="actions">
-						<?php if($_product->isSaleable()): ?>
-							<button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
-						<?php else: ?>
-							<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
-						<?php endif; ?>
+					<?php //echo $this->getPriceHtml($_product, true) ?>
+					<div class="price-box">
+						<span class="regular-price" id="product-price-1">
+							<span class="price">$<?php echo number_format($_product->getPrice(), 2); ?></span>
+						</span>
 					</div>
-					-->
 				</li>
 			<?php if ($i % $_columnCount == 0 || $i == $_collectionSize): ?>
 			</ul>
