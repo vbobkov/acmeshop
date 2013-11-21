@@ -2128,12 +2128,18 @@ tr.summary-details-excluded { font-style:italic; }
 
 
 
-.bestsellers ul, ol {
+.bestsellers ul.products-grid {
+	border:none;
+	height:240px;
+	margin-left:-32px;
     list-style: none outside none;
+	width:660px;
 }
 
 .bestsellers ul li.item {
-	padding: 12px 8px 40px;
+	border: 1px solid #D9DDD3;
+	margin: 0px 4px 0px 4px;
+	padding: 12px 8px 0px;
 }
 
 a.product-image {
