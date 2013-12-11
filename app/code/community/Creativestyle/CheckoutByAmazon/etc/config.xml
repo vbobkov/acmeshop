@@ -10,14 +10,14 @@
  *
  * @category   Creativestyle
  * @package    Creativestyle_CheckoutByAmazon
- * @copyright  Copyright (c) 2012 creativestyle GmbH (http://www.creativestyle.de)
+ * @copyright  Copyright (c) 2011 - 2013 creativestyle GmbH (http://www.creativestyle.de)
  * @author     Marek Zabrowarny / creativestyle GmbH <amazon@creativestyle.de>
  */
 -->
 <config>
     <modules>
         <Creativestyle_CheckoutByAmazon>
-            <version>1.5.0</version>
+            <version>1.5.2</version>
         </Creativestyle_CheckoutByAmazon>
     </modules>
     <global>
@@ -148,6 +148,11 @@
                 </statuses>
             </order>
         </sales>
+        <payment>
+            <groups>
+                <amazonpayments>Amazon Payments</amazonpayments>
+            </groups>
+        </payment>
         <creativestyle>
             <checkoutbyamazon>
                 <api>
@@ -305,14 +310,18 @@
                 <payment_action>authorize</payment_action>
             </amazonpayments>
             <checkoutbyamazon>
+                <group>amazonpayments</group>
                 <model>checkoutbyamazon/payment_checkoutByAmazon</model>
                 <title>Checkout by Amazon</title>
                 <payment_action>authorize</payment_action>
+                <active>1</active>
             </checkoutbyamazon>
             <checkoutbyamazon_sandbox>
+                <group>amazonpayments</group>
                 <model>checkoutbyamazon/payment_checkoutByAmazon_sandbox</model>
                 <title>Checkout by Amazon (Sandbox)</title>
                 <payment_action>authorize</payment_action>
+                <active>1</active>
             </checkoutbyamazon_sandbox>
         </payment>
         <checkoutbyamazon>

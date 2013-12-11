@@ -9,7 +9,7 @@
  *
  * @category   Creativestyle
  * @package    Creativestyle_CheckoutByAmazon
- * @copyright  Copyright (c) 2012 creativestyle GmbH (http://www.creativestyle.de)
+ * @copyright  Copyright (c) 2011 - 2013 creativestyle GmbH (http://www.creativestyle.de)
  * @author     Marek Zabrowarny / creativestyle GmbH <amazon@creativestyle.de>
  */
 
@@ -95,7 +95,7 @@ class Creativestyle_CheckoutByAmazon_CheckoutController extends Mage_Core_Contro
     }
 
     protected function _getOnepage() {
-        return Mage::getSingleton('checkout/type_onepage');
+        return Mage::getSingleton('checkoutbyamazon/checkout');
     }
 
     protected function _getProductId($item) {
@@ -128,6 +128,17 @@ class Creativestyle_CheckoutByAmazon_CheckoutController extends Mage_Core_Contro
         }
         if (in_array(strtoupper($countryCode), $availableCountries)) return true;
         return false;
+    }
+
+    protected function _logException(Exception $exception, $order = null) {
+        Creativestyle_CheckoutByAmazon_Model_Logger::logException(
+            $exception->getMessage(),
+            $exception->getCode(),
+            $exception->getTraceAsString(),
+            'Inline Checkout',
+            null,
+            $order
+        );
     }
 
     /**
@@ -278,6 +289,7 @@ class Creativestyle_CheckoutByAmazon_CheckoutController extends Mage_Core_Contro
                 $result['message'] = 'No valid shipping address';
             }
         } catch (Exception $e) {
+            $this->_logException($e);
             $result['error'] = 1;
             $result['message'] = $e->getMessage();
         }
@@ -321,6 +333,7 @@ class Creativestyle_CheckoutByAmazon_CheckoutController extends Mage_Core_Contro
         try {
             $result = $this->_getOnepage()->savePayment($this->_getPaymentMethod());
         } catch (Exception $e) {
+            $this->_logException($e);
             $result['error'] = 1;
             $result['message'] = $e->getMessage();
         }
@@ -437,14 +450,14 @@ class Creativestyle_CheckoutByAmazon_CheckoutController extends Mage_Core_Contro
 
         } catch (Mage_Core_Exception $e) {
             Mage::helper('checkoutbyamazon')->unlockExceptionLogging();
-            if (is_object($order) && is_callable(array($order, 'getId')) && ($order->getId())) $order->cancel()->save();
+            if (isset($order) && is_object($order) && is_callable(array($order, 'getId')) && ($order->getId())) $order->cancel()->save();
             Creativestyle_CheckoutByAmazon_Model_Logger::logException(
                 $e->getMessage(),
                 $e->getCode(),
                 $e->getTraceAsString(),
                 'Inline Checkout',
                 null,
-                (is_object($order) && is_callable(array($order, 'getId')) && ($order->getId())) ? $order->getId() : null
+                (isset($order) && is_object($order) && is_callable(array($order, 'getId')) && ($order->getId())) ? $order->getId() : null
             );
             $result['success'] = false;
             $result['error'] = true;
@@ -466,14 +479,14 @@ class Creativestyle_CheckoutByAmazon_CheckoutController extends Mage_Core_Contro
             $this->_getOnepage()->getQuote()->save();
         } catch (Exception $e) {
             Mage::helper('checkoutbyamazon')->unlockExceptionLogging();
-            if (is_object($order) && is_callable(array($order, 'getId')) && ($order->getId())) $order->cancel()->save();
+            if (isset($order) && is_object($order) && is_callable(array($order, 'getId')) && ($order->getId())) $order->cancel()->save();
             Creativestyle_CheckoutByAmazon_Model_Logger::logException(
                 $e->getMessage(),
                 $e->getCode(),
                 $e->getTraceAsString(),
                 'Inline Checkout',
                 null,
-                (is_object($order) && is_callable(array($order, 'getId')) && ($order->getId())) ? $order->getId() : null
+                (isset($order) && is_object($order) && is_callable(array($order, 'getId')) && ($order->getId())) ? $order->getId() : null
             );
             $result['success']  = false;
             $result['error']    = true;

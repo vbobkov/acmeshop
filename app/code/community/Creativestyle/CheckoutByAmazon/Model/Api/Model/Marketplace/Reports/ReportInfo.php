@@ -22,7 +22,7 @@
  *
  * @category   Creativestyle
  * @package    Creativestyle_CheckoutByAmazon
- * @copyright  Copyright (c) 2012 creativestyle GmbH (http://www.creativestyle.de)
+ * @copyright  Copyright (c) 2011 - 2013 creativestyle GmbH (http://www.creativestyle.de)
  * @author     Marek Zabrowarny / creativestyle GmbH <amazon@creativestyle.de>
 */
 class Creativestyle_CheckoutByAmazon_Model_Api_Model_Marketplace_Reports_ReportInfo extends Creativestyle_CheckoutByAmazon_Model_Api_Model_Marketplace_Reports_Abstract {

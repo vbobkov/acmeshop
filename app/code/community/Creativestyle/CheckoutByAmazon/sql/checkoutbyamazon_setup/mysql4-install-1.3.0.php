@@ -10,7 +10,7 @@
  *
  * @category   Creativestyle
  * @package    Creativestyle_CheckoutByAmazon
- * @copyright  Copyright (c) 2012 creativestyle GmbH (http://www.creativestyle.de)
+ * @copyright  Copyright (c) 2011 - 2013 creativestyle GmbH (http://www.creativestyle.de)
  * @author     Marek Zabrowarny / creativestyle GmbH <amazon@creativestyle.de>
  */
 if (version_compare(Mage::helper('checkoutbyamazon')->getMagentoVersion(), '1.4.2') > 0) {

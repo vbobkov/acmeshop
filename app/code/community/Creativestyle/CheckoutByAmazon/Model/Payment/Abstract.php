@@ -10,10 +10,19 @@
  *
  * @category   Creativestyle
  * @package    Creativestyle_CheckoutByAmazon
- * @copyright  Copyright (c) 2012 creativestyle GmbH (http://www.creativestyle.de)
+ * @copyright  Copyright (c) 2011 - 2013 creativestyle GmbH (http://www.creativestyle.de)
  * @author     Marek Zabrowarny / creativestyle GmbH <amazon@creativestyle.de>
  */
 class Creativestyle_CheckoutByAmazon_Model_Payment_Abstract extends Mage_Payment_Model_Method_Abstract {
+
+    const CHECK_USE_FOR_COUNTRY       = 1;
+    const CHECK_USE_FOR_CURRENCY      = 2;
+    const CHECK_USE_CHECKOUT          = 4;
+    const CHECK_USE_FOR_MULTISHIPPING = 8;
+    const CHECK_USE_INTERNAL          = 16;
+    const CHECK_ORDER_TOTAL_MIN_MAX   = 32;
+    const CHECK_RECURRING_PROFILES    = 64;
+    const CHECK_ZERO_TOTAL            = 128;
 
     protected $_code = 'amazonpayments_abstract';
 

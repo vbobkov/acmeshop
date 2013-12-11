@@ -10,7 +10,7 @@
  *
  * @category   Creativestyle
  * @package    Creativestyle_CheckoutByAmazon
- * @copyright  Copyright (c) 2012 creativestyle GmbH (http://www.creativestyle.de)
+ * @copyright  Copyright (c) 2011 - 2013 creativestyle GmbH (http://www.creativestyle.de)
  * @author     Marek Zabrowarny / creativestyle GmbH <amazon@creativestyle.de>
  */
 -->
@@ -82,6 +82,23 @@
                                 <children>
                                     <logger translate="title">
                                         <title>Checkout by Amazon logger</title>
+                                        <children>
+                                            <exceptions translate="title">
+                                                <title>Exceptions</title>
+                                            </exceptions>
+                                            <notifications translate="title" module="checkoutbyamazon">
+                                                <title>Notifications</title>
+                                            </notifications>
+                                            <feeds translate="title" module="checkoutbyamazon">
+                                                <title>Feeds</title>
+                                            </feeds>
+                                            <reports translate="title" module="checkoutbyamazon">
+                                                <title>Reports</title>
+                                            </reports>
+                                            <api translate="title" module="checkoutbyamazon">
+                                                <title>API calls</title>
+                                            </api>
+                                        </children>
                                     </logger>
                                     <debug translate="title">
                                         <title>Checkout by Amazon debug info</title>

@@ -10,7 +10,7 @@
  *
  * @category   Creativestyle
  * @package    Creativestyle_CheckoutByAmazon
- * @copyright  Copyright (c) 2011 creativestyle GmbH (http://www.creativestyle.de)
+ * @copyright  Copyright (c) 2011 - 2013 creativestyle GmbH (http://www.creativestyle.de)
  * @author     Marek Zabrowarny / creativestyle GmbH <amazon@creativestyle.de>
  */
 class Creativestyle_CheckoutByAmazon_Model_Manager extends Creativestyle_CheckoutByAmazon_Model_Abstract {
@@ -677,10 +677,6 @@ class Creativestyle_CheckoutByAmazon_Model_Manager extends Creativestyle_Checkou
                 $envelope->MessageType = 'OrderFulfillment';
                 $envelope->Message[0]->MessageID = 1;
                 $envelope->Message[0]->OrderFulfillment->AmazonOrderID = $order->getPayment()->getLastTransId();
-
-                if (preg_match('/\\d{1,20}/', $shipment->getIncrementId()))
-                    $envelope->Message[0]->OrderFulfillment->MerchantFulfillmentID =  $shipment->getIncrementId();
-
                 $envelope->Message[0]->OrderFulfillment->FulfillmentDate = $this->_getFormattedTimestamp($shipment->getCreatedAt());
 
                 $tracks = $shipment->getAllTracks();
@@ -710,8 +706,10 @@ class Creativestyle_CheckoutByAmazon_Model_Manager extends Creativestyle_Checkou
         return $result;
     }
 
-    public function sendRefundNotify($order) {
+    public function sendRefundNotify($payment) {
         $result = null;
+        $order = $payment->getOrder();
+        $creditmemo = $payment->getCreditmemo();
         if ($this->_isAmazonPaymentMethod($order->getPayment()->getMethod()) && $order->getPayment()->getLastTransId()) {
             $filePath = $this->_queueDir['refund'] . DS . $this->_getTimestamp() . '_order_' . $order->getIncrementId() . '.xml';
 
@@ -720,21 +718,21 @@ class Creativestyle_CheckoutByAmazon_Model_Manager extends Creativestyle_Checkou
             $envelope->Header->MerchantIdentifier = self::getConfigData('merchant_id');
             $envelope->MessageType = 'OrderAdjustment';
             $envelope->Message[0]->MessageID = 1;
-            $envelope->Message[0]->OrderAdjustment->AmazonOrderID = $order->getPayment()->getLastTransId();
+            $envelope->Message[0]->OrderAdjustment->AmazonOrderID = $payment->getLastTransId();
             $envelope->Message[0]->OrderAdjustment->MerchantOrderID = $order->getIncrementId();
             $i = 0;
-            foreach ($order->getAllItems() as $item) {
+            foreach ($creditmemo->getAllItems() as $item) {
                 $j = 0;
                 $envelope->Message[0]->OrderAdjustment->AdjustedItem[$i]->MerchantOrderItemID = $item->getId();
                 $envelope->Message[0]->OrderAdjustment->AdjustedItem[$i]->AdjustmentReason = Creativestyle_CheckoutByAmazon_Model_Api_Model_Marketplace_Feeds_Abstract::ADJUSTMENT_REASON_CUSTOMER_RETURN;
                 $envelope->Message[0]->OrderAdjustment->AdjustedItem[$i]->ItemPriceAdjustments->Component[$j]->Type = 'Principal';
                 $principalAmount = $envelope->Message[0]->OrderAdjustment->AdjustedItem[$i]->ItemPriceAdjustments->Component[$j]->addChild('Amount', Mage::helper('checkoutbyamazon')->sanitizePrice($item->getBaseRowTotalInclTax() - $item->getBaseDiscountAmount()));
-                $principalAmount->addAttribute('currency', $order->getBaseCurrencyCode());
+                $principalAmount->addAttribute('currency', $creditmemo->getBaseCurrencyCode());
                 if (!$i) {
-                    if ($order->getBaseShippingRefunded() > 0) {
+                    if ($creditmemo->getBaseShippingAmount() > 0) {
                         $envelope->Message[0]->OrderAdjustment->AdjustedItem[$i]->ItemPriceAdjustments->Component[++$j]->Type = 'Shipping';
-                        $shippingAmount = $envelope->Message[0]->OrderAdjustment->AdjustedItem[$i]->ItemPriceAdjustments->Component[$j]->addChild('Amount', Mage::helper('checkoutbyamazon')->sanitizePrice($order->getBaseShippingRefunded() + $order->getBaseShippingTaxRefunded()));
-                        $shippingAmount->addAttribute('currency', $order->getBaseCurrencyCode());
+                        $shippingAmount = $envelope->Message[0]->OrderAdjustment->AdjustedItem[$i]->ItemPriceAdjustments->Component[$j]->addChild('Amount', Mage::helper('checkoutbyamazon')->sanitizePrice($creditmemo->getBaseShippingAmount()));
+                        $shippingAmount->addAttribute('currency', $creditmemo->getBaseCurrencyCode());
                     }
                 }
                 $i++;

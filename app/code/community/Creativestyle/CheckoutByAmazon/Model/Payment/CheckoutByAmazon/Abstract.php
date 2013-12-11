@@ -10,7 +10,7 @@
  *
  * @category   Creativestyle
  * @package    Creativestyle_CheckoutByAmazon
- * @copyright  Copyright (c) 2012 creativestyle GmbH (http://www.creativestyle.de)
+ * @copyright  Copyright (c) 2011 - 2013 creativestyle GmbH (http://www.creativestyle.de)
  * @author     Marek Zabrowarny / creativestyle GmbH <amazon@creativestyle.de>
  */
 class Creativestyle_CheckoutByAmazon_Model_Payment_CheckoutByAmazon_Abstract extends Creativestyle_CheckoutByAmazon_Model_Payment_Abstract {
@@ -23,7 +23,7 @@ class Creativestyle_CheckoutByAmazon_Model_Payment_CheckoutByAmazon_Abstract ext
     protected $_canCapture = true;
     protected $_canCapturePartial = false;
     protected $_canRefund = true;
-    protected $_canRefundInvoicePartial = false;
+    protected $_canRefundInvoicePartial = true;
     protected $_canVoid = true;
     protected $_canUseInternal = false;
     protected $_canUseCheckout = false;
@@ -39,12 +39,18 @@ class Creativestyle_CheckoutByAmazon_Model_Payment_CheckoutByAmazon_Abstract ext
         return Mage::getSingleton('checkout/type_onepage');
     }
 
+    /**
+     * @deprecated after 1.5.0
+     */
     protected function _isAmazonCheckout() {
         $_module = Mage::app()->getRequest()->getModuleName();
         if ($this->_getCheckoutMethod() == Creativestyle_CheckoutByAmazon_Model_Abstract::CHECKOUT_METHOD_AMAZON && $_module == 'checkoutbyamazon') return true;
         return false;
     }
 
+    /**
+     * @deprecated after 1.5.0
+     */
     protected function _getCheckoutMethod() {
         return $this->_getCheckout()->getQuote()->getData('checkout_method');
     }
@@ -57,66 +63,13 @@ class Creativestyle_CheckoutByAmazon_Model_Payment_CheckoutByAmazon_Abstract ext
      */
     public function isAvailable($quote = null) {
         $checkResult = new StdClass;
-        $checkResult->isAvailable = Mage::helper('checkoutbyamazon')->getConfigData('active') ?
-                ($this->_isAmazonCheckout() ? true : false) :
-                false;
+        $checkResult->isAvailable = (bool)Mage::helper('checkoutbyamazon')->getConfigData('active');
         Mage::dispatchEvent('payment_method_is_active', array(
             'result' => $checkResult,
             'method_instance' => $this,
             'quote' => $quote,
         ));
         return $checkResult->isAvailable;
-    }
-
-    public function isApplicableToQuote($quote, $checksBitMask)
-    {
-        if ($checksBitMask & self::CHECK_USE_FOR_COUNTRY) {
-            if (!$this->canUseForCountry($quote->getBillingAddress()->getCountry())) {
-                return false;
-            }
-        }
-        if ($checksBitMask & self::CHECK_USE_FOR_CURRENCY) {
-            if (!$this->canUseForCurrency($quote->getStore()->getBaseCurrencyCode())) {
-                return false;
-            }
-        }
-        // if ($checksBitMask & self::CHECK_USE_CHECKOUT) {
-            // if (!$this->canUseCheckout()) {
-                // return false;
-            // }
-        // }
-        if ($checksBitMask & self::CHECK_USE_FOR_MULTISHIPPING) {
-            if (!$this->canUseForMultishipping()) {
-                return false;
-            }
-        }
-        if ($checksBitMask & self::CHECK_USE_INTERNAL) {
-            if (!$this->canUseInternal()) {
-                return false;
-            }
-        }
-        if ($checksBitMask & self::CHECK_ORDER_TOTAL_MIN_MAX) {
-            $total = $quote->getBaseGrandTotal();
-            $minTotal = $this->getConfigData('min_order_total');
-            $maxTotal = $this->getConfigData('max_order_total');
-            if (!empty($minTotal) && $total < $minTotal || !empty($maxTotal) && $total > $maxTotal) {
-                return false;
-            }
-        }
-        if ($checksBitMask & self::CHECK_RECURRING_PROFILES) {
-            if (!$this->canManageRecurringProfiles() && $quote->hasRecurringItems()) {
-                return false;
-            }
-        }
-        if ($checksBitMask & self::CHECK_ZERO_TOTAL) {
-            $total = $quote->getBaseSubtotal() + $quote->getShippingAddress()->getBaseShippingAmount();
-            if ($total < 0.0001 && $this->getCode() != 'free'
-                && !($this->canManageRecurringProfiles() && $quote->hasRecurringItems())
-            ) {
-                return false;
-            }
-        }
-        return true;
     }
 
     /**
@@ -164,8 +117,7 @@ class Creativestyle_CheckoutByAmazon_Model_Payment_CheckoutByAmazon_Abstract ext
      */
     public function refund(Varien_Object $payment, $amount) {
         if (!$this->canRefund()) Mage::helper('checkoutbyamazon')->throwException('Refund action is not available');
-        $order = $payment->getOrder();
-        Mage::getSingleton('checkoutbyamazon/manager')->sendRefundNotify($order);
+        Mage::getSingleton('checkoutbyamazon/manager')->sendRefundNotify($payment);
         return $this;
     }
 
