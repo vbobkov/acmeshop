@@ -68,7 +68,7 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
         <?php if ($addInfoBlock): ?>
             <?php echo $addInfoBlock->setItem($_item)->toHtml() ?>
         <?php endif;?>
-		<img src="<?php echo $this->getProduct()->getThumbnail(); ?>" width="75" height="75" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" />
+		<div class="cart-product-image"><a href="<?php echo $this->getProductUrl(); ?>"><img src="<?php echo $this->getProduct()->getThumbnail(); ?>" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /></a></div>
     </td>
     <td class="a-center">
         <?php if ($isVisibleProduct): ?>

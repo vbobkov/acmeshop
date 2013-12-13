@@ -2201,7 +2201,7 @@ a.product-image {
 	text-decoration: none;
 }
 
-.cart-table tbody tr td img,
+.cart-table tbody tr td .cart-product-image,
 .mini-products-list .product-image,
 .products-grid .product-image,
 .products-list .product-image,
@@ -2209,6 +2209,20 @@ a.product-image {
 	outline: 1px solid #1e7ec8;
 }
 
+.cart-table tbody tr td .cart-product-image {
+	height: 75px;
+	width: 75px;
+}
+.cart-table tbody tr td .cart-product-image a {
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+
+.mini-products-list .product-image {
+	height: 50px;
+	width: 50px;
+}
 
 .product-view .product-img-box .product-image a,
 .products-grid .product-image a {
