@@ -646,8 +646,8 @@ tr.summary-details-excluded { font-style:italic; }
 .footer-container,
 .header-container {
 	background:
-	radial-gradient(black 15%, transparent 16%) 0 0,
-	radial-gradient(black 15%, transparent 16%) 8px 8px,
+	radial-gradient(rgb(0,0,0) 15%, transparent 16%) 0 0,
+	radial-gradient(rgb(0,0,0) 15%, transparent 16%) 8px 8px,
 	radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
 	radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
 	background-color:#282828;
@@ -742,7 +742,12 @@ tr.summary-details-excluded { font-style:italic; }
 
 /********** < Navigation */
 .nav-container { /*background:#000;*/ }
-#nav { width:918px; margin:0 auto; padding:0 16px; font-size:13px; }
+#nav {
+	font-size:13px;
+	margin:0 auto;
+	padding:0 16px;
+	width:918px;
+}
 
 /* All Levels */ /* Style consistent throughout all nav levels */
 #nav li { position:relative; text-align:left; }
@@ -2195,6 +2200,10 @@ tr.summary-details-excluded { font-style:italic; }
 	background: -ms-linear-gradient(top,  rgba(224,255,224,1) 0%,rgba(224,255,224,0) 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  rgba(224,255,224,1) 0%,rgba(224,255,224,0) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e0ffe0', endColorstr='#00e0ffe0',GradientType=0 ); /* IE6-9 */
+
+	-webkit-border-radius: 1em 1em 50% 50%;
+	-moz-border-radius: 1em 1em 50% 50%;
+	border-radius: 1em 1em 50% 50%;
 }
 
 a.product-image {
