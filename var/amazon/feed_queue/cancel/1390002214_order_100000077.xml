@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<AmazonEnvelope><Header><DocumentVersion>1.01</DocumentVersion><MerchantIdentifier>A3NW5CBEVB81WR</MerchantIdentifier></Header><MessageType>OrderAcknowledgement</MessageType><Message><MessageID>1</MessageID><OrderAcknowledgement><AmazonOrderID>112-4857985-1141815</AmazonOrderID><MerchantOrderID>100000077</MerchantOrderID><StatusCode>Failure</StatusCode></OrderAcknowledgement></Message></AmazonEnvelope>
