@@ -1230,7 +1230,12 @@ tr.summary-details-excluded { font-style:italic; }
 /* Old price */
 .old-price { margin:0; }
 .old-price .price-label { white-space:nowrap; color:#999; }
-.old-price .price { font-weight:bold; color:#009900; text-decoration:line-through; }
+.old-price .price {
+	color:#009900;
+	display:none;
+	font-weight:bold;
+	text-decoration:line-through;
+}
 
 /* Special price */
 .special-price { margin:0; padding:3px 0; }
