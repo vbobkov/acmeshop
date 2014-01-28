@@ -133,17 +133,20 @@ ul,ol         { list-style:none; }
 	float:left;
 	margin-left: 2em;
 	padding:0 0 1px;
-	/*width:685px;*/
+	width:685px;
 }
 .col-right {
 	float:right;
 	margin-left: 2em;
 	padding:0 0 1px;
-	/*width:195px;*/
+	width:195px;
 }
 
 /* 1 Column Layout */
-.col1-layout .col-main { float:none; width:auto; }
+.col1-layout .col-main {
+	float:none;
+	/*width:auto;*/
+}
 
 /* 2 Columns Layout */
 .col2-left-layout .col-main { float:right; }
