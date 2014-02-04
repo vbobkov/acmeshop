@@ -2460,3 +2460,11 @@ a.product-image {
 	-moz-border-radius: 50%;
 	border-radius: 50%;
 }
+
+.sidebar .block-left-nav label {
+	visibility: collapse;
+}
+
+.sidebar .block-left-nav label a {
+	visibility: visible;
+}
