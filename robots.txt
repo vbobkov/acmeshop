@@ -1,4 +1,4 @@
-d: robots.txt,v magento-specific 2010/28/01 18:24:19 goba Exp $
+d: robots.txt,v magento-specific 2014/25/02 15:09:01 goba Exp $
 #
 # robots.txt
 #
