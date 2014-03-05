@@ -827,7 +827,7 @@ tr.summary-details-excluded { font-style:italic; }
 	background:#eee;
 	border:1px solid #899ba5;
 	left:-10000px;
-	max-height:31em;
+	/*max-height:31em;*/
 	position:absolute;
 	top:27px;
 }
