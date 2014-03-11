@@ -63,4 +63,8 @@
             </adminhtml>
         </routers>
     </admin>
+	<cache>
+		<backend>apc</backend>
+		<prefix>MYSTORE_</prefix>
+	</cache>
 </config>
