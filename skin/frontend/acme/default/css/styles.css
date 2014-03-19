@@ -2518,3 +2518,7 @@ a.product-image {
 .sidebar .block-left-nav label a {
 	visibility: visible;
 }
+
+.gsc-adBlock {
+	display: none !important;
+}
