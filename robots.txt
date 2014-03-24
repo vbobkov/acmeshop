@@ -21,12 +21,12 @@ Sitemap: http://acmelectronics.com/sitemap.xml
  
 # Crawlers Setup
 User-agent: *
-Crawl-delay: 30
+Crawl-delay: 2
 # Allowable Index
 Allow: /*?p=
 Allow: /index.php/blog/
 Allow: /catalog/seo_sitemap/category/
-Allow: /catalogsearch/result/
+Disallow: /catalogsearch/result/
 Allow: /media/
 # Directories
 Disallow: /404/
