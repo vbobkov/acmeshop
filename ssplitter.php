@@ -44,7 +44,8 @@ class SSplitter {
 			$sitemap_index .= $this->array2xml(
 				array(
 					'loc' => $url_base . $sitemap_filename,
-					'lastmod' => date('Y-m-d\TH:i:s', filemtime($sitemap_filename))
+					'lastmod' => date('Y-m-d', filemtime($sitemap_filename))
+					// 'lastmod' => date('Y-m-d\TH:i:s', filemtime($sitemap_filename))
 				),
 				new SimpleXMLElement('<sitemap></sitemap>')
 			);
