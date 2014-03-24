@@ -1,6 +1,6 @@
 #app/etc/local.xml
 
-sitemap.xml
+sitemap*.xml
 
 cgi-bin/
 
