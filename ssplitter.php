@@ -37,7 +37,7 @@ class SSplitter {
 
 		$k = 1;
 		$sitemap_filename;
-		$sitemap_index = '<?xml version="1.0" encoding="UTF-8"?>';
+		$sitemap_index = '<?xml version="1.0" encoding="UTF-8"?><sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 		foreach($sitemaps as $sitemap) {
 			$sitemap_filename = explode('.', $filename)[0] . '-' . $k . '.' . explode('.', $filename)[1];
 			file_put_contents($sitemap_filename, $sitemap);
@@ -50,7 +50,7 @@ class SSplitter {
 			);
 			$k++;
 		}
-		file_put_contents($index_filename, $sitemap_index);
+		file_put_contents($index_filename, $sitemap_index . '</sitemapindex>');
 	}
 
 
