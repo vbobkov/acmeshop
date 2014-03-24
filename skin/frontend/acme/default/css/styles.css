@@ -132,11 +132,28 @@ ul,ol         { list-style:none; }
 	-moz-box-shadow: 0em -2em 0em 2em rgb(0,0,0);
 	box-shadow: 0em -2em 0em 2em rgb(0,0,0);
 	*/
-	width:1000px;
+	width: 1000px;
 }
 
 .footer-container {
-	width: 100%;
+	width: 1000px;
+	padding-top: 2em;
+
+	/*background: #000;*/
+	background-size: 100% 20px;
+	background: #282828 repeat;
+	background: -moz-linear-gradient(top,  #000000 0%, #282828 2em);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#000000), color-stop(2em,#282828));
+	background: -webkit-linear-gradient(top,  #000000 0%,#282828 2em);
+	background: -o-linear-gradient(top,  #000000 0%,#282828 2em);
+	background: -ms-linear-gradient(top,  #000000 0%,#282828 2em);
+	background: linear-gradient(to bottom,  #000000 0%,#282828 2em);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#282828',GradientType=0 );
+	/*background-position:0px 20px;*/
+
+	-webkit-border-radius: 2em 2em 0em 0em;
+	-moz-border-radius: 2em 2em 0em 0em;
+	border-radius: 2em 2em 0em 0em;
 }
 
 .main-container {
@@ -709,7 +726,7 @@ tr.summary-details-excluded { font-style:italic; }
 	border-top:0.25em solid #282828;
 }
 .nav-container {
-	background: #000;
+	/*background: #000;*/
 	background: #282828;
 	background: -moz-linear-gradient(top,  #282828 0%, #000000 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#282828), color-stop(100%,#000000));
@@ -725,13 +742,22 @@ tr.summary-details-excluded { font-style:italic; }
 	border-radius: 0em 0em 2em 2em;
 }
 
-.header,
-.footer {
+.header {
 	background:
-	radial-gradient(rgb(0,0,0) 15%, transparent 16%) 0 0,
+	radial-gradient(rgb(0,0,0) 15%, transparent 16%) 0px 0px,
 	radial-gradient(rgb(0,0,0) 15%, transparent 16%) 8px 8px,
 	radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
 	radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+	background-color:#282828;
+	background-size:16px 16px;
+}
+
+.footer {
+	background:
+	radial-gradient(black 15%, transparent 16%) 4px 4px,
+	radial-gradient(black 15%, transparent 16%) 12px 12px,
+	radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 4px 5px,
+	radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 12px 13px;
 	background-color:#282828;
 	background-size:16px 16px;
 }
@@ -2162,8 +2188,9 @@ tr.summary-details-excluded { font-style:italic; }
 /* Footer ================================================================================ */
 .footer {
 	margin:0 auto;
-	padding:16px 0px 16px 0px;
-	/*width:100%;*/
+	/*padding:16px 0px 16px 0px;*/
+	padding-top: 1em;
+	width:100%;
 }
 .footer .store-switcher { display:inline; margin:0 5px 0 0; color:#fff; }
 .footer .store-switcher label { font-weight:bold; vertical-align:middle; }
