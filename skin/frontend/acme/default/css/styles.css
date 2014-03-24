@@ -165,8 +165,9 @@ ul,ol         { list-style:none; }
 	display: inline-block;
 	margin:0 auto;
 	min-height:400px;
-	padding:25px 0px;
+	padding-top: 2em;
 	/*
+	padding:25px 0px;
 	padding:25px 25px 80px;
 	width:900px;
 	*/
