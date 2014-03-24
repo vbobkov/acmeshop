@@ -1,5 +1,7 @@
 #app/etc/local.xml
 
+sitemap.xml
+
 cgi-bin/
 
 downloader/.cache/

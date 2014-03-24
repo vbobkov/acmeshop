@@ -17,7 +17,7 @@ d: robots.txt,v magento-specific 2014/25/02 15:09:01 goba Exp $
 # For syntax checking, see:
 # http://www.sxw.org.uk/computing/robots/check.html
 # Website Sitemap
-Sitemap: http://acmelectronics.com/sitemap.xml
+Sitemap: http://acmelectronics.com/sitemap_index.xml
  
 # Crawlers Setup
 User-agent: *
