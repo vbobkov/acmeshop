@@ -55,8 +55,8 @@ $catalogSearchHelper =  $this->helper('catalogsearch');
         <div id="search_autocomplete" class="search-autocomplete"></div>
         <script type="text/javascript">
         //<![CDATA[
-            var searchForm = new Varien.searchForm('search_mini_form', 'search', '<?php echo $this->__('Search...') ?>');
-            searchForm.initAutocomplete('<?php echo $catalogSearchHelper->getSuggestUrl() ?>', 'search_autocomplete');
+            // var searchForm = new Varien.searchForm('search_mini_form', 'search', '<?php echo $this->__('Search...') ?>');
+            // searchForm.initAutocomplete('<?php echo $catalogSearchHelper->getSuggestUrl() ?>', 'search_autocomplete');
         //]]>
         </script>
     </div>
@@ -64,6 +64,11 @@ $catalogSearchHelper =  $this->helper('catalogsearch');
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		jQuery('#search_mini_form').unbind('submit');
+		jQuery('#search_mini_form').bind('submit', function(event) {
+			console.log('wtf');
+		});
+
 		jQuery('#search_mini_form button[type="submit"]').unbind('click');
 		jQuery('#search_mini_form button[type="submit"]').bind('click', function(event) {
 			event.preventDefault();
