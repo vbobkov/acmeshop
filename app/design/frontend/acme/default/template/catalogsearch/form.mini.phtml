@@ -47,70 +47,68 @@ $catalogSearchHelper =  $this->helper('catalogsearch');
 </form>
 -->
 
-<form target="_blank" id="search_mini_form" action="https://www.google.com/search" method="get">
+<form target="_blank" id="search_mini_form" action="https://www.google.com/search" method="get" autocomplete="off">
     <div class="form-search">
         <label for="search"><?php echo $this->__('Search:') ?></label>
         <input id="search" type="text" name="q" value="<?php echo $catalogSearchHelper->getEscapedQueryText() ?>" class="input-text" />
         <button type="submit" title="<?php echo $this->__('Search') ?>" class="button"><span><span><?php echo $this->__('Search') ?></span></span></button>
         <div id="search_autocomplete" class="search-autocomplete"></div>
-        <script type="text/javascript">
-        //<![CDATA[
-            // var searchForm = new Varien.searchForm('search_mini_form', 'search', '<?php echo $this->__('Search...') ?>');
-            // searchForm.initAutocomplete('<?php echo $catalogSearchHelper->getSuggestUrl() ?>', 'search_autocomplete');
-        //]]>
-        </script>
     </div>
 </form>
 
 <script type="text/javascript">
-	function getAllEvents(element) {
-		var result = [];
-		for (var key in element) {
-			if (key.indexOf('on') === 0) {
-				// result.push(key);
-				result.push(key.replace(/on/g, ''));
-			}
-		}
-		return result.join(' ');
-	}
-
-	var searchForm;
 	jQuery(document).ready(function() {
-		// searchForm = new Varien.searchForm('search_mini_form', 'search', '<?php echo $this->__('Search...') ?>');
-		// searchForm.initAutocomplete('<?php echo $catalogSearchHelper->getSuggestUrl() ?>', 'search_autocomplete');
-		// console.log(searchForm);
-		// jQuery('#search_mini_form *').unbind();
+		// http://stackoverflow.com/questions/1909441/jquery-keyup-delay
+		var delay = (function(){
+			var timer = 0;
+			return function(callback, ms){
+				clearTimeout(timer);
+				timer = setTimeout(callback, ms);
+			};
+		})();
 
-		// jQuery('#search_autocomplete').bind('click', function(event) {
-			// jQuery(this).find('li').bind(getAllEvents(jQuery('#search_autocomplete')[0]), function(event) {
-				// console.log(event.type);
-			// });
-		// });
-		// jQuery('#search_autocomplete').bind(getAllEvents(jQuery('#search_autocomplete')[0]), function(event) {
-			// console.log(event.type);
-		// });
-		// jQuery('#search_mini_form').bind(getAllEvents(jQuery('#search_mini_form')[0]), function(event) {
-			// if(event.type == 'keyup') {
-			// console.log(event.type);
-			// console.log(event.which);
-			// }
-			// if(event.type == 'click') {
-				// console.log(event.type);
-			// }
-		// });
+		var last_input_change = 0;
+		var suggest_url = '<?php echo $catalogSearchHelper->getSuggestUrl() ?>';
 
-		jQuery('#search_mini_form button[type="submit"]').unbind('click');
-		jQuery('#search_mini_form button[type="submit"]').bind('click', function(event) {
+		jQuery('html').die('click');
+		jQuery('html').live('click', function(event) {
+			jQuery('#search_autocomplete').css('display', '');
+		});
+
+		jQuery('#search_mini_form #search').die('paste keyup');
+		jQuery('#search_mini_form #search').live('paste keyup', function(event) {
+			var input_value = jQuery(this).attr('value');
+			delay(function() {
+				if(input_value.length > 2) {
+					jQuery.get(suggest_url + '?q=' + input_value, function(response) {
+						jQuery('#search_autocomplete').html(response);
+						jQuery('#search_autocomplete ul li:gt(10)').remove();
+						jQuery('#search_autocomplete .amount').remove();
+						jQuery('#search_autocomplete').css('display', 'inline-block');
+					});
+				}
+			}, 500);
+		});
+
+		jQuery('#search_autocomplete ul li').die('click');
+		jQuery('#search_autocomplete ul li').live('click', function(event) {
+			event.stopPropagation();
+			jQuery('#search_mini_form #search').attr('value', jQuery(this).text());
+			jQuery('#search_mini_form button[type="submit"]').click();
+		});
+
+		jQuery('#search_mini_form button[type="submit"]').die('click');
+		jQuery('#search_mini_form button[type="submit"]').live('click', function(event) {
 			event.preventDefault();
 			event.stopPropagation();
 			var submit_form = jQuery(this).closest('form');
 			var search_input = submit_form.find('#search');
 			var search_input_old_value = search_input.attr('value');
-			search_input.attr('value', 'site:acmelectronics.com ' + search_input.attr('value'));
-
-			submit_form.trigger('submit');
-
-			search_input.attr('value', search_input_old_value);
+			if(search_input_old_value != null && search_input_old_value.replace(/ /g, '').length > 0) {
+				search_input.attr('value', 'site:acmelectronics.com ' + search_input.attr('value'));
+				submit_form.trigger('submit');
+				search_input.attr('value', search_input_old_value);
+			}
 		});
 	});
 </script>
