@@ -63,7 +63,42 @@ $catalogSearchHelper =  $this->helper('catalogsearch');
 </form>
 
 <script type="text/javascript">
+	function getAllEvents(element) {
+		var result = [];
+		for (var key in element) {
+			if (key.indexOf('on') === 0) {
+				// result.push(key);
+				result.push(key.replace(/on/g, ''));
+			}
+		}
+		return result.join(' ');
+	}
+
+	var searchForm;
 	jQuery(document).ready(function() {
+		// searchForm = new Varien.searchForm('search_mini_form', 'search', '<?php echo $this->__('Search...') ?>');
+		// searchForm.initAutocomplete('<?php echo $catalogSearchHelper->getSuggestUrl() ?>', 'search_autocomplete');
+		// console.log(searchForm);
+		// jQuery('#search_mini_form *').unbind();
+
+		// jQuery('#search_autocomplete').bind('click', function(event) {
+			// jQuery(this).find('li').bind(getAllEvents(jQuery('#search_autocomplete')[0]), function(event) {
+				// console.log(event.type);
+			// });
+		// });
+		// jQuery('#search_autocomplete').bind(getAllEvents(jQuery('#search_autocomplete')[0]), function(event) {
+			// console.log(event.type);
+		// });
+		// jQuery('#search_mini_form').bind(getAllEvents(jQuery('#search_mini_form')[0]), function(event) {
+			// if(event.type == 'keyup') {
+			// console.log(event.type);
+			// console.log(event.which);
+			// }
+			// if(event.type == 'click') {
+				// console.log(event.type);
+			// }
+		// });
+
 		jQuery('#search_mini_form button[type="submit"]').unbind('click');
 		jQuery('#search_mini_form button[type="submit"]').bind('click', function(event) {
 			event.preventDefault();
