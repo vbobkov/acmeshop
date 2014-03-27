@@ -2561,3 +2561,7 @@ a.product-image {
 #search_results {
 	position: absolute;
 }
+
+#search_autocomplete ul li.selected {
+	background-color: #99ff99;
+}

@@ -47,7 +47,7 @@ $catalogSearchHelper =  $this->helper('catalogsearch');
 </form>
 -->
 
-<form target="_blank" id="search_mini_form" action="https://www.google.com/search" method="get" autocomplete="off">
+<form target="_blank" id="search_mini_form" action="https://www.google.com/search" method="get" autocomplete="off" onkeypress="return event.keyCode != 13;">
     <div class="form-search">
         <label for="search"><?php echo $this->__('Search:') ?></label>
         <input id="search" type="text" name="q" value="<?php echo $catalogSearchHelper->getEscapedQueryText() ?>" class="input-text" />
@@ -75,19 +75,55 @@ $catalogSearchHelper =  $this->helper('catalogsearch');
 			jQuery('#search_autocomplete').css('display', '');
 		});
 
+		jQuery('#search_autocomplete ul li').live('hover', function(event) {
+			jQuery('#search_autocomplete ul li').removeClass('selected');
+			jQuery('#search_autocomplete ul li:hover').addClass('selected');
+		});
+
 		jQuery('#search_mini_form #search').die('paste keyup');
 		jQuery('#search_mini_form #search').live('paste keyup', function(event) {
 			var input_value = jQuery(this).attr('value');
-			delay(function() {
-				if(input_value.length > 2) {
-					jQuery.get(suggest_url + '?q=' + input_value, function(response) {
-						jQuery('#search_autocomplete').html(response);
-						jQuery('#search_autocomplete ul li:gt(10)').remove();
-						jQuery('#search_autocomplete .amount').remove();
-						jQuery('#search_autocomplete').css('display', 'inline-block');
-					});
+			if([13,38,40].indexOf(event.which) != -1) {
+				var selected_autocomplete_entry = jQuery('#search_autocomplete ul li.selected');
+				selected_autocomplete_entry.removeClass('selected');
+				if(event.which == 13) {
+					if(selected_autocomplete_entry.length > 0) {
+						jQuery(this).attr('value', selected_autocomplete_entry.text());
+					}
+					jQuery('#search_mini_form button[type="submit"]').click();
 				}
-			}, 500);
+				else if(event.which == 38) {
+					var previous_entry = selected_autocomplete_entry.prev()
+					if(selected_autocomplete_entry.length > 0 && previous_entry.length > 0) {
+						previous_entry.addClass('selected');
+					}
+					else {
+						jQuery('#search_autocomplete ul li:last').addClass('selected');
+					}
+				}
+				else if(event.which == 40) {
+					var next_entry = selected_autocomplete_entry.next()
+					if(selected_autocomplete_entry.length > 0 && next_entry.length > 0) {
+						next_entry.addClass('selected');
+					}
+					else {
+						jQuery('#search_autocomplete ul li:first').addClass('selected');
+					}
+				}
+			}
+			else {
+				delay(function() {
+					if(input_value.length > 2) {
+						jQuery.get(suggest_url + '?q=' + input_value, function(response) {
+							jQuery('#search_autocomplete').html(response);
+							jQuery('#search_autocomplete ul li:first').remove();
+							jQuery('#search_autocomplete ul li:gt(10)').remove();
+							jQuery('#search_autocomplete .amount').remove();
+							jQuery('#search_autocomplete').css('display', 'inline-block');
+						});
+					}
+				}, 500);
+			}
 		});
 
 		jQuery('#search_autocomplete ul li').die('click');
