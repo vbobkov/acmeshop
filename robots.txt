@@ -26,7 +26,7 @@ Crawl-delay: 2
 Allow: /*?p=
 Allow: /index.php/blog/
 Allow: /catalog/seo_sitemap/category/
-Disallow: /catalogsearch/result/
+#Allow: /catalogsearch/result/
 Allow: /media/
 # Directories
 Disallow: /404/
@@ -51,6 +51,8 @@ Disallow: /catalog/product_compare/
 Disallow: /catalog/category/view/
 Disallow: /catalog/product/view/
 Disallow: /catalogsearch/
+Disallow: /catalogsearch/result/
+Disallow: /catalogsearch/term/
 Disallow: /checkout/
 Disallow: /control/
 Disallow: /contacts/
