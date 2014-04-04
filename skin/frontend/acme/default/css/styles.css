@@ -1216,7 +1216,10 @@ tr.summary-details-excluded { font-style:italic; }
 .products-grid .product-name { /*min-height:2.7em;*/ margin:0 0 5px; font-weight:bold; font-size:13px; color:#203548; }
 .products-grid .product-name a { color:#203548; }
 .products-grid .price-box {
-	margin:0px;
+	/*margin:0px;*/
+	height: 1em;
+	margin: 0em 0em 1em 0em;
+	padding: 0em;
 }
 .products-grid .availability { line-height:21px; }
 .products-grid .actions {
@@ -1310,6 +1313,9 @@ tr.summary-details-excluded { font-style:italic; }
 
 .price-box { margin:5px 0; }
 .price-box .price { font-weight:bold; color:#009900; }
+.price-box a[id*="msrp-click"] {
+	visibility: hidden;
+}
 
 /* Regular price */
 .regular-price { color:#009900; }
