@@ -1444,7 +1444,11 @@ tr.summary-details-excluded { font-style:italic; }
 
 .product-view { border:1px solid #c4c6c8; }
 
-.product-essential { padding:25px; background:#fff; }
+.product-essential {
+	background:#fff;
+	/*padding:25px;*/
+	padding: 2em 2em 0em 2em;
+}
 .product-essential h2 { font:bold 13px/1.35 Arial, Helvetica, sans-serif; }
 
 .product-collateral { background:#faf7ee; padding:25px; }
