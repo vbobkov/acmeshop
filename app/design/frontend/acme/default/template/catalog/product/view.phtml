@@ -68,6 +68,7 @@
 				</div>
             <?php elseif (!$this->hasOptions()):?>
 				<?php echo $this->getChildHtml('product_type_data') ?>
+				(Not satisfied with what you see?  Please <a href="/contacts/" target="_blank" style="color:black">contact us</a>.)
                 <div class="add-to-box">
                     <?php if($_product->isSaleable()): ?>
                         <?php echo $this->getChildHtml('addtocart') ?>
