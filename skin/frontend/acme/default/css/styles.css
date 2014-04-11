@@ -835,7 +835,8 @@ tr.summary-details-excluded { font-style:italic; }
 .header .links { float:right; margin:0 0 6px; }
 .header .links li {
 	float:left;
-	font-size:11px;
+	/*font-size:11px;*/
+	font-size:16px;
 	padding:0 8px 0 7px;
 }
 .header .links li a {
@@ -2596,4 +2597,17 @@ a.product-image {
 
 #search_autocomplete ul li.selected {
 	background-color: #99ff99;
+}
+
+.ssl-logos {
+	border: 1px solid #faa819;
+	margin-top: 1em;
+
+	-webkit-border-radius: 2em;
+	-moz-border-radius: 2em;
+	border-radius: 2em;
+}
+
+.ssl-logos .ssl-logo-txt {
+	text-align: center;
 }
