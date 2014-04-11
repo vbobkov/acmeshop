@@ -85,3 +85,6 @@ Disallow: /*?limit=all
 #User-agent: Googlebot-Image
 #Disallow: /
 
+# forum (SMF)
+Allow: /forum/index.php?topic=*
+Disallow: /forum/
