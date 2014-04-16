@@ -2611,3 +2611,12 @@ a.product-image {
 .ssl-logos .ssl-logo-txt {
 	text-align: center;
 }
+
+.nav-container .menu-icon {
+	float: left;
+}
+
+.links li.forum-link a span {
+	font-weight: bold;
+	padding: 0em 1em 0em 1em;
+}
