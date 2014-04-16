@@ -24,3 +24,5 @@ var/log/
 var/locks/
 var/package/tmp/
 var/report/
+
+forum/cache/data_*
