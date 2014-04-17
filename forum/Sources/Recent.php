@@ -838,6 +838,7 @@ function UnreadTopics()
 
 		$request = $smcFunc['db_query']('substring', '
 			SELECT ' . $select_clause . '
+				,ms.hiddenOption, ms.hiddenValue, ms.hiddenInfo
 			FROM {db_prefix}messages AS ms
 				INNER JOIN {db_prefix}topics AS t ON (t.id_topic = ms.id_topic AND t.id_first_msg = ms.id_msg)
 				INNER JOIN {db_prefix}messages AS ml ON (ml.id_msg = t.id_last_msg)
@@ -923,6 +924,7 @@ function UnreadTopics()
 
 		$request = $smcFunc['db_query']('substring', '
 			SELECT ' . $select_clause . '
+				,ms.hiddenOption, ms.hiddenValue, ms.hiddenInfo
 			FROM {db_prefix}messages AS ms
 				INNER JOIN {db_prefix}topics AS t ON (t.id_topic = ms.id_topic AND t.id_first_msg = ms.id_msg)
 				INNER JOIN {db_prefix}messages AS ml ON (ml.id_msg = t.id_last_msg)
@@ -982,6 +984,7 @@ function UnreadTopics()
 					PRIMARY KEY (id_topic)
 				)
 				SELECT t.id_topic, t.id_board, t.id_last_msg, IFNULL(lmr.id_msg, 0) AS id_msg' . (!in_array($_REQUEST['sort'], array('t.id_last_msg', 't.id_topic')) ? ', ' . $_REQUEST['sort'] . ' AS sort_key' : '') . '
+					,m.hiddenOption, m.hiddenValue, m.hiddenInfo
 				FROM {db_prefix}messages AS m
 					INNER JOIN {db_prefix}topics AS t ON (t.id_topic = m.id_topic)
 					LEFT JOIN {db_prefix}log_mark_read AS lmr ON (lmr.id_board = t.id_board AND lmr.id_member = {int:current_member})' . (isset($sortKey_joins[$_REQUEST['sort']]) ? $sortKey_joins[$_REQUEST['sort']] : '') . '
@@ -1256,7 +1259,13 @@ function UnreadTopics()
 				'icon' => $row['first_icon'],
 				'icon_url' => $settings[$context['icon_sources'][$row['first_icon']]] . '/post/' . $row['first_icon'] . '.gif',
 				'href' => $scripturl . '?topic=' . $row['id_topic'] . '.0;topicseen',
-				'link' => '<a href="' . $scripturl . '?topic=' . $row['id_topic'] . '.0;topicseen">' . $row['first_subject'] . '</a>'
+				'link' => '<a href="' . $scripturl . '?topic=' . $row['id_topic'] . '.0;topicseen">' . $row['first_subject'] . '</a>',
+				/* Vic B.
+				* 1337 h4x
+				*/
+				'hiddenOption' => $row['hiddenOption'],
+				'hiddenValue' => $row['hiddenValue'],
+				'hiddenInfo' => $row['hiddenInfo']
 			),
 			'last_post' => array(
 				'id' => $row['id_last_msg'],

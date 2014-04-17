@@ -164,6 +164,10 @@ function template_unread()
 
 		foreach ($context['topics'] as $topic)
 		{
+			if(!$context['user']['can_mod'] && $topic['first_post']['hiddenOption'] > 0) {
+				continue;
+			}
+
 			// Calculate the color class of the topic.
 			$color_class = '';
 			if (strpos($topic['class'], 'sticky') !== false)
