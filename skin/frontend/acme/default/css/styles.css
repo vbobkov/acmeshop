@@ -2620,3 +2620,40 @@ a.product-image {
 	font-weight: bold;
 	padding: 0em 1em 0em 1em;
 }
+
+.home-categories {
+	font-size: 1em;
+	text-align: left;
+}
+
+.home-categories li {
+	display: inline-block;
+	list-style-type: none;
+}
+
+/*
+.home-categories >ul >li,
+.home-categories >ul >li >ul >li,
+*/
+.home-categories >ul >li >ul >li >ul >li {
+	border: 1px solid black;
+	margin: 0.25em;
+}
+
+/*.home-categories >ul >li >a {*/
+.home-categories >ul >li >a,
+.home-categories >ul >li >ul >li >a,
+.home-categories >ul >li >ul >li >ul >li >a {
+	display: block;
+	height: 5em;
+	width: 10em;
+}
+
+.home-categories >ul >li >ul >li >ul >li li {
+	margin-right: 0.5em;
+}
+
+.home-categories >ul >li >ul >li >ul >li li:not(:last-child):after {
+	content: ",";
+	font-weight: bold;
+}
