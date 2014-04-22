@@ -2646,7 +2646,7 @@ a.product-image {
 
 .acme-categories .sprite-li {
 	border-top: 1px solid #ccc;
-	display: block;
+	/*display: block;*/
 	margin: 0.25em 0.25em 1em 0.25em;
 
 	background: #f0f0f0; /* Old browsers */
@@ -2662,11 +2662,11 @@ a.product-image {
 .acme-categories .sprite-a-img {
 	background-image: url(/skin/frontend/acme/default/images/categories-sprite.png);
 	background-repeat: no-repeat;
-	background-size: 128px 64px;
+	/*background-size: 256px 128px;*/
 	display: block;
-	height: 64px;
+	height: 128px;
 	outline: none;
-	width: 128px;
+	width: 256px;
 }
 
 .acme-categories .sprite-a-text {
@@ -2689,10 +2689,89 @@ a.product-image {
 	font-weight: bold;
 }
 
-/*
-background-position: 0px 0px;
-*/
 .acme-categories .all-products,
 .acme-categories .by-manufacturer {
 	background-position: 0px 0px;
+}
+
+.acme-categories .amplifiers {
+	background-position: 0px 0px;
+}
+.acme-categories .cassistive-listening-systems {
+	background-position: 0px 128px;
+}
+.acme-categories .cables {
+	background-position: 0px 256px;
+}
+.acme-categories .cd-dvd-blu-ray-players {
+	background-position: 0px 384px;
+}
+.acme-categories .conference-systems {
+	background-position: 0px 512px;
+}
+.acme-categories .controllers {
+	background-position: 0px 640px;
+}
+.acme-categories .digital-devices {
+	background-position: 0px 768px;
+}
+.acme-categories .distribution-amplifiers {
+	background-position: 0px 896px;
+}
+.acme-categories .dj-gear {
+	background-position: 0px 1024px;
+}
+.acme-categories .hardware {
+	background-position: 0px 1152px;
+}
+.acme-categories .headphones {
+	background-position: 0px 1280px;
+}
+.acme-categories .in-ear-systems {
+	background-position: 0px 1408px;
+}
+.acme-categories .microphones {
+	background-position: 0px 1536px;
+}
+.acme-categories .mixers--consoles {
+	background-position: 0px 1664px;
+}
+.acme-categories .networked-devices {
+	background-position: 0px 1792px;
+}
+.acme-categories .preamps {
+	background-position: 0px 1920px;
+}
+.acme-categories .projection-screens {
+	background-position: 0px 2048px;
+}
+.acme-categories .projectors {
+	background-position: 0px 2176px;
+}
+.acme-categories .recorders {
+	background-position: 0px 2304px;
+}
+.acme-categories .signal-processing {
+	background-position: 0px 2432px;
+}
+.acme-categories .sound-systems {
+	background-position: 0px 2560px;
+}
+.acme-categories .speakers {
+	background-position: 0px 2688px;
+}
+.acme-categories .switchers-and-routers {
+	background-position: 0px 2816px;
+}
+.acme-categories .teleconference {
+	background-position: 0px 2944px;
+}
+.acme-categories .turntables {
+	background-position: 0px 3072px;
+}
+.acme-categories .tv-monitors {
+	background-position: 0px 3200px;
+}
+.acme-categories .wireless {
+	background-position: 0px 3328px;
 }
