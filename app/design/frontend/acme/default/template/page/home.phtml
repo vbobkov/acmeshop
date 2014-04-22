@@ -55,13 +55,27 @@ function &searchCatTree($id, &$array) {
 }
 
 function getCategoryTreeHTML($cat_tree, $image_categories) {
+	$is_image_cat;
 	$html = '<ul>';
 	foreach($cat_tree as $key => $cat) {
-		$entry = '<li>';
+		if(in_array($cat_tree['name'], $image_categories)) {
+			$is_image_cat = true;
+		}
+		else {
+			$is_image_cat = false;
+		}
+
+		if($is_image_cat) {
+			$entry = '<li class="sprite-li">';
+		}
+		else {
+			$entry = '<li>';
+		}
 
 		if(isset($cat['name'])) {
-			if(in_array($cat_tree['name'], $image_categories)) {
-				$entry .= '<a class="category-sprite ' . $cat['class'] . '" href="' . $cat['url'] . '">' . $cat['name'] . '</a>';
+			if($is_image_cat) {
+				$entry .= '<a class="sprite-a-img ' . $cat['class'] . '" href="' . $cat['url'] . '"></a>';
+				$entry .= '<a class="sprite-a-text" href="' . $cat['url'] . '">' . $cat['name'] . '</a>';
 			}
 			else {
 				$entry .= '<a href="' . $cat['url'] . '">' . $cat['name'] . '</a>';
@@ -128,6 +142,8 @@ $category_tree = buildCategoryTree($categories, $category_tree);
 // print_r(searchCatTree(1, $category_tree));
 // print_r(searchCatTree(2, $category_tree));
 // print_r('</pre>');
+// echo getCategoryTreeHTML($category_tree);
+// echo getCategoryTreeHTML($category_tree, array('Root Catalog'));
 echo getCategoryTreeHTML($category_tree, array('Default Category'));
 ?>
 

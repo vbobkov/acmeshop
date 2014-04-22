@@ -2636,51 +2636,62 @@ a.product-image {
 	list-style-type: none;
 }
 
-/*
-.acme-categories >ul >li,
-.acme-categories >ul >li >ul >li,
-*/
-.acme-categories >ul >li >ul >li >ul >li {
-	border: 1px solid black;
-	margin: 0.25em;
+.acme-categories li a {
+	color: #333;
 }
 
-/*.acme-categories >ul >li >a {*/
-.acme-categories >ul >li >a,
-.acme-categories >ul >li >ul >li >a,
-.acme-categories >ul >li >ul >li >ul >li >a {
-	/*
+.acme-categories li a:hover {
+	color: #000;
+}
+
+.acme-categories .sprite-li {
+	border-top: 1px solid #ccc;
 	display: block;
-	height: 5em;
-	width: 10em;
-	*/
+	margin: 0.25em 0.25em 1em 0.25em;
+
+	background: #f0f0f0; /* Old browsers */
+	background: -moz-linear-gradient(top,  #f0f0f0 0px, #ffffff 64px); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0px,#f0f0f0), color-stop(64px,#ffffff)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #f0f0f0 0px,#ffffff 64px); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #f0f0f0 0px,#ffffff 64px); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #f0f0f0 0px,#ffffff 64px); /* IE10+ */
+	background: linear-gradient(to bottom,  #f0f0f0 0px,#ffffff 64px); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
 }
 
-.acme-categories >ul >li >ul >li >ul >li li {
-	margin-right: 0.5em;
-}
-
-.acme-categories >ul >li >ul >li >ul >li li:not(:last-child):after {
-	content: ",";
-	font-weight: bold;
-}
-
-
-/* Vic B.
-* category tree images
-*/
-/*
-category-sprite
-*/
-.acme-categories .category-sprite {
+.acme-categories .sprite-a-img {
 	background-image: url(/skin/frontend/acme/default/images/categories-sprite.png);
-	/*background-repeat: no-repeat;*/
+	background-repeat: no-repeat;
+	background-size: 128px 64px;
 	display: block;
 	height: 64px;
 	outline: none;
 	width: 128px;
 }
 
+.acme-categories .sprite-a-text {
+	color: #33f;
+	font-size: 125%;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.acme-categories .sprite-a-text:hover {
+	color: #33f;
+}
+
+.acme-categories li:not(.sprite-a) {
+	margin-right: 1em;
+}
+
+ .acme-categories li:not(.sprite-li):not(:last-child):after {
+	content: ",";
+	font-weight: bold;
+}
+
+/*
+background-position: 0px 0px;
+*/
 .acme-categories .all-products,
 .acme-categories .by-manufacturer {
 	background-position: 0px 0px;
