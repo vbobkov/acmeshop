@@ -1,0 +1,136 @@
+<div class="acme-categories">
+
+
+
+<?php
+/* Vic B.
+* home.phtml
+* 2014-04-17
+*/
+
+function buildCategoryTree($all_cats, $cat_tree) {
+	$cats = $all_cats;
+	$cat_tree = array();
+	while(sizeof($cats) > 0) {
+		foreach($cats as $cat_id => $cat) {
+			if(!isset($all_cats[$cat['parent_id']])) {
+				$cat_tree[$cat_id] = array(
+					'name' => $cat['name'],
+					'url' => $cat['url_path'],
+					'class' => $cat['url_key']
+				);
+			}
+			else {
+				$parent_cat = &searchCatTree($cat['parent_id'], $cat_tree);
+				if(is_array($parent_cat)) {
+					$parent_cat[$cat_id] = array(
+						'name' => $cat['name'],
+						'url' => $cat['url_path'],
+						'class' => $cat['url_key']
+					);
+				}
+			}
+			unset($cats[$cat_id]);
+		}
+	}
+	return $cat_tree;
+}
+
+function &searchCatTree($id, &$array) {
+	// if(!is_array($array) || sizeof($array) < 1) {
+	if($array == null) {
+		return null;
+	}
+	foreach ($array as $key => $val) {
+		if($key == $id) {
+			return $array[$key];
+		}
+		else {
+			$match = &searchCatTree($id, $array[$key]);
+			if($match != null) {
+				return $match;
+			}
+		}
+	}
+}
+
+function getCategoryTreeHTML($cat_tree, $image_categories) {
+	$html = '<ul>';
+	foreach($cat_tree as $key => $cat) {
+		$entry = '<li>';
+
+		if(isset($cat['name'])) {
+			if(in_array($cat_tree['name'], $image_categories)) {
+				$entry .= '<a class="category-sprite ' . $cat['class'] . '" href="' . $cat['url'] . '">' . $cat['name'] . '</a>';
+			}
+			else {
+				$entry .= '<a href="' . $cat['url'] . '">' . $cat['name'] . '</a>';
+			}
+		}
+
+		if(is_array($cat)) {
+			$entry .= getCategoryTreeHTML($cat, $image_categories);
+		}
+		$entry .= '</li>';
+		if(strip_tags($entry) == '') {
+			$entry = '';
+		}
+		$html .= $entry;
+	}
+	$html .= '</ul>';
+
+	if(strip_tags($html) == '') {
+		return '';
+	}
+	else {
+		return $html;
+	}
+}
+
+
+
+$hidden_categories = array(
+	// 'Root Catalog',
+	// 'Default Category',
+	// 'All Products',
+	// 'By Manufacturer'
+);
+
+$category = Mage::getModel('catalog/category');
+$tree = $category->getTreeModel(); 
+$tree->load();
+
+$ids = $tree->getCollection()->getAllIds();
+$all_categories = array();
+
+if($ids){
+	foreach ($ids as $id){
+		$cat = Mage::getModel('catalog/category');
+		$cat->load($id);
+		// array_push($all_categories, $cat);
+		$all_categories[$cat->_data['entity_id']] = $cat->_data;
+		$cat = null;
+	}
+}
+
+foreach($all_categories as $category) {
+	if(!in_array($all_categories[$category['entity_id']]['name'], $hidden_categories)
+	&& !in_array($all_categories[$category['parent_id']]['name'], $hidden_categories)) {
+		$categories[$category['entity_id']] = $category;
+	}
+}
+$all_categories = null;
+$category_tree = buildCategoryTree($categories, $category_tree);
+
+// print_r('<pre>');
+// print_r($categories);
+// print_r($category_tree);
+// print_r(searchCatTree(1, $category_tree));
+// print_r(searchCatTree(2, $category_tree));
+// print_r('</pre>');
+echo getCategoryTreeHTML($category_tree, array('Default Category'));
+?>
+
+
+
+</div>

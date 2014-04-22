@@ -2621,39 +2621,67 @@ a.product-image {
 	padding: 0em 1em 0em 1em;
 }
 
-.home-categories {
+
+
+/* Vic B.
+* category tree
+*/
+.acme-categories {
 	font-size: 1em;
 	text-align: left;
 }
 
-.home-categories li {
+.acme-categories li {
 	display: inline-block;
 	list-style-type: none;
 }
 
 /*
-.home-categories >ul >li,
-.home-categories >ul >li >ul >li,
+.acme-categories >ul >li,
+.acme-categories >ul >li >ul >li,
 */
-.home-categories >ul >li >ul >li >ul >li {
+.acme-categories >ul >li >ul >li >ul >li {
 	border: 1px solid black;
 	margin: 0.25em;
 }
 
-/*.home-categories >ul >li >a {*/
-.home-categories >ul >li >a,
-.home-categories >ul >li >ul >li >a,
-.home-categories >ul >li >ul >li >ul >li >a {
+/*.acme-categories >ul >li >a {*/
+.acme-categories >ul >li >a,
+.acme-categories >ul >li >ul >li >a,
+.acme-categories >ul >li >ul >li >ul >li >a {
+	/*
 	display: block;
 	height: 5em;
 	width: 10em;
+	*/
 }
 
-.home-categories >ul >li >ul >li >ul >li li {
+.acme-categories >ul >li >ul >li >ul >li li {
 	margin-right: 0.5em;
 }
 
-.home-categories >ul >li >ul >li >ul >li li:not(:last-child):after {
+.acme-categories >ul >li >ul >li >ul >li li:not(:last-child):after {
 	content: ",";
 	font-weight: bold;
+}
+
+
+/* Vic B.
+* category tree images
+*/
+/*
+category-sprite
+*/
+.acme-categories .category-sprite {
+	background-image: url(/skin/frontend/acme/default/images/categories-sprite.png);
+	/*background-repeat: no-repeat;*/
+	display: block;
+	height: 64px;
+	outline: none;
+	width: 128px;
+}
+
+.acme-categories .all-products,
+.acme-categories .by-manufacturer {
+	background-position: 0px 0px;
 }
