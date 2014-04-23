@@ -51,6 +51,7 @@ $catalogSearchHelper =  $this->helper('catalogsearch');
     <div class="form-search">
         <label for="search"><?php echo $this->__('Search:') ?></label>
         <input id="search" type="text" name="q" value="<?php echo $catalogSearchHelper->getEscapedQueryText() ?>" class="input-text" />
+		<input type="hidden" name="filter" value="0">
         <button type="submit" title="<?php echo $this->__('Search') ?>" class="button"><span><span><?php echo $this->__('Search') ?></span></span></button>
         <div id="search_autocomplete" class="search-autocomplete"></div>
     </div>
