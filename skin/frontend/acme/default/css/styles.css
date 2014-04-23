@@ -2691,87 +2691,129 @@ a.product-image {
 
 .acme-categories .all-products,
 .acme-categories .by-manufacturer {
-	background-position: 0px 0px;
+	background-position: 0px -256px;
 }
 
 .acme-categories .amplifiers {
 	background-position: 0px 0px;
+	/*
+	ICON2.png
+	*/
 }
-.acme-categories .cassistive-listening-systems {
-	background-position: 0px 128px;
+.acme-categories .assistive-listening-systems {
+	background-position: 0px -128px;
 }
 .acme-categories .cables {
-	background-position: 0px 256px;
+	background-position: 0px -256px;
+	/*
+	Ethernet-Cable-icon.png
+	*/
 }
 .acme-categories .cd-dvd-blu-ray-players {
-	background-position: 0px 384px;
+	background-position: 0px -384px;
+	/*
+	BluRay-Player-Disc-icon.png
+	*/
 }
 .acme-categories .conference-systems {
-	background-position: 0px 512px;
+	background-position: 0px -512px;
 }
 .acme-categories .controllers {
-	background-position: 0px 640px;
+	background-position: 0px -640px;
 }
 .acme-categories .digital-devices {
-	background-position: 0px 768px;
+	background-position: 0px -768px;
 }
 .acme-categories .distribution-amplifiers {
-	background-position: 0px 896px;
+	background-position: 0px -896px;
 }
 .acme-categories .dj-gear {
-	background-position: 0px 1024px;
+	background-position: 0px -1024px;
+	/*
+	denon-dn-mc6000-review.jpg
+	*/
 }
 .acme-categories .hardware {
-	background-position: 0px 1152px;
+	background-position: 0px -1152px;
 }
 .acme-categories .headphones {
-	background-position: 0px 1280px;
+	background-position: 0px -1280px;
+	/*
+	Sennheiser_HD700_Headphones-w.jpg
+	*/
 }
 .acme-categories .in-ear-systems {
-	background-position: 0px 1408px;
+	background-position: 0px -1408px;
 }
 .acme-categories .microphones {
-	background-position: 0px 1536px;
+	background-position: 0px -1536px;
+	/*
+	Microphone.png
+	*/
 }
 .acme-categories .mixers--consoles {
-	background-position: 0px 1664px;
+	background-position: 0px -1664px;
 }
 .acme-categories .networked-devices {
-	background-position: 0px 1792px;
+	background-position: 0px -1792px;
 }
 .acme-categories .preamps {
-	background-position: 0px 1920px;
+	background-position: 0px -1920px;
 }
 .acme-categories .projection-screens {
-	background-position: 0px 2048px;
+	background-position: 0px -2048px;
+	/*
+	projectorscreen-700x700.jpg
+	*/
 }
 .acme-categories .projectors {
-	background-position: 0px 2176px;
+	background-position: 0px -2176px;
+	/*
+	digital_projector.png
+	*/
 }
 .acme-categories .recorders {
-	background-position: 0px 2304px;
+	background-position: 0px -2304px;
+	/*
+	pmd201_T.jpg
+	*/
 }
 .acme-categories .signal-processing {
-	background-position: 0px 2432px;
+	background-position: 0px -2432px;
 }
 .acme-categories .sound-systems {
-	background-position: 0px 2560px;
+	background-position: 0px -2560px;
+	/*
+	sony-htddw7000-420x0.jpg
+	*/
 }
 .acme-categories .speakers {
-	background-position: 0px 2688px;
+	background-position: 0px -2688px;
+	/*
+	nexo_geo_t.jpg
+	*/
 }
 .acme-categories .switchers-and-routers {
-	background-position: 0px 2816px;
+	background-position: 0px -2816px;
 }
 .acme-categories .teleconference {
-	background-position: 0px 2944px;
+	background-position: 0px -2944px;
 }
 .acme-categories .turntables {
-	background-position: 0px 3072px;
+	background-position: 0px -3072px;
+	/*
+	Technics_SL-1200.jpg
+	*/
 }
 .acme-categories .tv-monitors {
-	background-position: 0px 3200px;
+	background-position: 0px -3200px;
+	/*
+	in_LS19C150FS-XL_002_R-Perspective-45(CIS).jpg
+	*/
 }
 .acme-categories .wireless {
-	background-position: 0px 3328px;
+	background-position: 0px -3328px;
+	/*
+	94004_l.jpg
+	*/
 }
