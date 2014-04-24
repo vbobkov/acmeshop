@@ -10,7 +10,11 @@
 
 function buildCategoryTree($all_cats, $cat_tree) {
 	$cats = $all_cats;
-	$cat_tree = array();
+	$cat_tree = array(
+		'name' => 'All Products',
+		'url' => 'all-products.html',
+		'class' => 'all-products.html'
+	);
 	while(sizeof($cats) > 0) {
 		foreach($cats as $cat_id => $cat) {
 			if(!isset($all_cats[$cat['parent_id']])) {
@@ -104,10 +108,10 @@ function getCategoryTreeHTML($cat_tree, $image_categories) {
 
 
 $hidden_categories = array(
-	// 'Root Catalog',
-	// 'Default Category',
+	'Root Catalog',
+	'Default Category',
 	// 'All Products',
-	// 'By Manufacturer'
+	'By Manufacturer'
 );
 
 $category = Mage::getModel('catalog/category');
@@ -137,14 +141,13 @@ $all_categories = null;
 $category_tree = buildCategoryTree($categories, $category_tree);
 
 // print_r('<pre>');
+// print_r($all_categories);
 // print_r($categories);
 // print_r($category_tree);
 // print_r(searchCatTree(1, $category_tree));
 // print_r(searchCatTree(2, $category_tree));
 // print_r('</pre>');
-// echo getCategoryTreeHTML($category_tree);
-// echo getCategoryTreeHTML($category_tree, array('Root Catalog'));
-echo getCategoryTreeHTML($category_tree, array('Default Category'));
+echo getCategoryTreeHTML($category_tree, array('All Products'));
 ?>
 
 
