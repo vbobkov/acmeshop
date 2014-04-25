@@ -2631,6 +2631,18 @@ a.product-image {
 	text-align: left;
 }
 
+.acme-categories >ul {
+	width: 100%;
+}
+
+/*
+:not(.acme-categories) >ul {
+*/
+.acme-categories .sprite-li ul {
+	margin: 0em;
+	width: auto;
+}
+
 .acme-categories li {
 	display: inline-block;
 	list-style-type: none;
@@ -2646,8 +2658,10 @@ a.product-image {
 
 .acme-categories .sprite-li {
 	border-top: 1px solid #ccc;
-	/*display: block;*/
+	display: inline-block;
 	margin: 0.25em 0.25em 1em 0.25em;
+	vertical-align: top;
+	width: 320px;
 
 	background: #f0f0f0; /* Old browsers */
 	background: -moz-linear-gradient(top,  #f0f0f0 0px, #ffffff 64px); /* FF3.6+ */
@@ -2684,18 +2698,12 @@ a.product-image {
 	margin-right: 1em;
 }
 
+/*
  .acme-categories li:not(.sprite-li):not(:last-child):after {
 	content: ",";
 	font-weight: bold;
 }
-
-.acme-categories .all-products,
-.acme-categories .by-manufacturer {
-	background-position: 0px 0px;
-	/*
-	\Users\vic\Downloads\magento\categories\
-	*/
-}
+*/
 
 .acme-categories .amplifiers {
 	background-position: 0px 0px;
@@ -2775,7 +2783,7 @@ a.product-image {
 	Microphone.png
 	*/
 }
-.acme-categories .mixers-consoles {
+.acme-categories .mixers-and-consoles {
 	background-position: 0px -1664px;
 	/*
 	Yamaha_M7CL-48.jpg
@@ -2857,5 +2865,19 @@ a.product-image {
 	background-position: 0px -3328px;
 	/*
 	94004_l.jpg
+	*/
+}
+
+.acme-categories .power {
+	background-position: 0px -3456px;
+	/*
+	35683.jpg
+	*/
+}
+
+.acme-categories .media {
+	background-position: 0px -3584px;
+	/*
+	Multi-Media-512x-1.png
 	*/
 }
