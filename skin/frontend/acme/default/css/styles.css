@@ -101,7 +101,10 @@ ul,ol         { list-style:none; }
 
 
 /* Layout ================================================================================ */
-.wrapper { min-width:954px; }
+.wrapper {
+	/*min-width:954px;*/
+	min-width:912px;
+}
 .page {}
 .page-print { background:#fff; padding:25px 30px; text-align:left; }
 .page-empty { background:#fff; padding:20px; text-align:left; }
@@ -121,22 +124,25 @@ ul,ol         { list-style:none; }
 .nav-container,
 .main-container,
 .footer-container {
+	/*
 	margin-left: auto;
 	margin-right: auto;
+	*/
+	margin: 0em 5em 0em 5em;
 }
 
 .header-container,
 .nav-container {
 	/*
+	width: 1000px;
 	-webkit-box-shadow: 0em -2em 0em 2em rgb(0,0,0);
 	-moz-box-shadow: 0em -2em 0em 2em rgb(0,0,0);
 	box-shadow: 0em -2em 0em 2em rgb(0,0,0);
 	*/
-	width: 1000px;
 }
 
 .footer-container {
-	width: 1000px;
+	/*width: 1000px;*/
 	padding-top: 2em;
 
 	/*background: #000;*/
@@ -2628,6 +2634,7 @@ a.product-image {
 */
 .acme-categories {
 	font-size: 1em;
+	margin: 1em 5em 1em 5em;
 	text-align: left;
 }
 
@@ -2635,12 +2642,9 @@ a.product-image {
 	width: 100%;
 }
 
-/*
-:not(.acme-categories) >ul {
-*/
 .acme-categories .sprite-li ul {
 	margin: 0em;
-	width: auto;
+	max-width: 256px;
 }
 
 .acme-categories li {
@@ -2654,14 +2658,31 @@ a.product-image {
 
 .acme-categories li a:hover {
 	color: #000;
+	text-decoration: underline;
+	/*
+	-webkit-box-shadow: 0em 0em 1em rgb(192,192,192);
+	-moz-box-shadow: 0em 0em 1em rgb(192,192,192);
+	box-shadow: 0em 0em 1em rgb(192,192,192);
+	*/
 }
+
+/*
+.acme-categories ul >li:first-child {
+	padding-left: 2em;
+}
+
+.acme-categories ul >li.sprite-li {
+	padding-left: 0em;
+}
+*/
 
 .acme-categories .sprite-li {
 	border-top: 1px solid #ccc;
 	display: inline-block;
-	margin: 0.25em 0.25em 1em 0.25em;
+	/*margin: 0.25em 0.25em 1em 0.25em;*/
+	padding: 1em 0em 1em 0em;
 	vertical-align: top;
-	width: 320px;
+	width: 256px;
 
 	background: #f0f0f0; /* Old browsers */
 	background: -moz-linear-gradient(top,  #f0f0f0 0px, #ffffff 64px); /* FF3.6+ */
@@ -2694,16 +2715,14 @@ a.product-image {
 	color: #33f;
 }
 
-.acme-categories li:not(.sprite-a) {
+.acme-categories li:not(.sprite-li) {
 	margin-right: 1em;
 }
 
-/*
  .acme-categories li:not(.sprite-li):not(:last-child):after {
 	content: ",";
 	font-weight: bold;
 }
-*/
 
 .acme-categories .amplifiers {
 	background-position: 0px 0px;
@@ -2822,7 +2841,7 @@ a.product-image {
 .acme-categories .signal-processing {
 	background-position: 0px -2432px;
 	/*
-	DSP-4-700x700.jpg
+	6a00d8341c333253ef012877669824970c.jpg
 	*/
 }
 .acme-categories .sound-systems {

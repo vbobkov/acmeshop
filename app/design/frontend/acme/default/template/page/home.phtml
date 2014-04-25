@@ -58,7 +58,12 @@ function &searchCatTree($id, &$array) {
 	}
 }
 
-function getCategoryTreeHTML($cat_tree, $image_categories) {
+function getCategoryTreeHTML($cat_tree, $image_categories, $depth = -1) {
+	if($depth <= 0) {
+		return null;
+	}
+	$depth--;
+
 	$is_image_cat;
 	$html = '<ul>';
 	foreach($cat_tree as $key => $cat) {
@@ -87,7 +92,7 @@ function getCategoryTreeHTML($cat_tree, $image_categories) {
 		}
 
 		if(is_array($cat)) {
-			$entry .= getCategoryTreeHTML($cat, $image_categories);
+			$entry .= getCategoryTreeHTML($cat, $image_categories, $depth);
 		}
 		$entry .= '</li>';
 		if(strip_tags($entry) == '') {
@@ -147,7 +152,7 @@ $category_tree = buildCategoryTree($categories, $category_tree);
 // print_r(searchCatTree(1, $category_tree));
 // print_r(searchCatTree(2, $category_tree));
 // print_r('</pre>');
-echo getCategoryTreeHTML($category_tree, array('All Products'));
+echo getCategoryTreeHTML($category_tree, array('All Products'), 2);
 ?>
 
 
