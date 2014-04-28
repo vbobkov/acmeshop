@@ -770,6 +770,7 @@ tr.summary-details-excluded { font-style:italic; }
 }
 
 .header {
+	height: 5em;
 	margin:0 auto;
 	padding:10px;
 	position:relative;
@@ -779,16 +780,18 @@ tr.summary-details-excluded { font-style:italic; }
 }
 .header .logo {
 	float:left;
-	margin:1em 0em -2em 1em;
+	margin:0em 0em 0em 1em;
 	text-decoration:none !important;
 }
 .header .logo strong { position:absolute; top:-999em; left:-999em; width:0; height:0; font-size:0; line-height:0; text-indent:-999em; overflow:hidden; }
 .header h1.logo { margin:0; }
 .header .quick-access { float:right; width:600px; padding:28px 10px 0 0; }
 .header .welcome-msg {
+	bottom: 1em;
 	color: rgb(0,255,255);
-	margin: 1em 0em -3em 0em;
-	text-align: left;
+	left: 15em;
+	margin: 0em;
+	position: absolute;
 }
 .header .welcome-msg a { color:#ebbc58; }
 .header .form-search {
@@ -838,7 +841,13 @@ tr.summary-details-excluded { font-style:italic; }
 .header .form-language label { font-weight:bold; padding-right:5px; color:#a7c6dd; vertical-align:middle; }
 .header .form-language select { padding:0; }
 .header .form-language select.flags option { background-position:4px 50%; background-repeat:no-repeat; padding-left:25px; }
-.header .links { float:right; margin:0 0 6px; }
+.header .links {
+	float: right;
+	margin: 0em;
+	position: absolute;
+	right: 2em;
+	top: 4em;
+}
 .header .links li {
 	float:left;
 	/*font-size:11px;*/
@@ -2254,7 +2263,10 @@ tr.summary-details-excluded { font-style:italic; }
 .footer address { margin:0 0 20px; color:#ecf3f6; }
 .footer address a { color:#ecf3f6; text-decoration:underline; }
 .footer address a:hover { text-decoration:none; }
-.footer ul { display:inline; }
+.footer ul {
+	display: inline;
+	font-size: 125%;
+}
 .footer ul.links { display:block; }
 .footer li {
 	display:inline;
