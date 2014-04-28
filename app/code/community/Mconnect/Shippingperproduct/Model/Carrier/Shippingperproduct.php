@@ -114,7 +114,7 @@ implements Mage_Shipping_Model_Carrier_Interface
 					$result->append($this->createMethod(
 						'shippingperproduct',
 						$multiplication_qty,
-						'Standard (3-5 business days)'
+						'Standard (7-10 business days)'
 					));
 					$result->append($this->createMethod(
 						'shippingperproduct2',
