@@ -868,9 +868,12 @@ tr.summary-details-excluded { font-style:italic; }
 .nav-container { /*background:#000;*/ }
 #nav {
 	font-size:13px;
+	margin-left: 4em;
+	/*
 	margin:0 auto;
 	padding:0 16px;
 	width:918px;
+	*/
 }
 
 /* All Levels */ /* Style consistent throughout all nav levels */
