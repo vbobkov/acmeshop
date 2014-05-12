@@ -33,7 +33,8 @@ implements Mage_Shipping_Model_Carrier_Interface
 				//echo "</pre>";
 				foreach($items as $item) {
 					if($item->getWeight() > 0) {
-						$_total_weight += $item->getWeight();
+						// $_total_weight += $item->getWeight();
+						$_total_weight += $item->getWeight() * $item->getQty();
 					}
 
 					$type_id = Mage::getModel('catalog/product')->load($item->getProductId())->getTypeId();
