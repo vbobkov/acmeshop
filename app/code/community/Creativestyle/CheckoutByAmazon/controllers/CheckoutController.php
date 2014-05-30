@@ -391,10 +391,13 @@ class Creativestyle_CheckoutByAmazon_CheckoutController extends Mage_Core_Contro
                 $productId = $this->_getProductId($item);
                 if (!$productId) continue;
                 $product = Mage::getModel('catalog/product')->load($productId);
-                $itemUnitPrice = $item->getBasePriceInclTax();
-                if (!$itemUnitPrice) {
-                    $itemUnitPrice = ($item->getBaseRowTotal() + $item->getBaseTaxAmount()) / $item->getQtyOrdered();
-                }
+
+                // $itemUnitPrice = $item->getBasePriceInclTax();
+                // if (!$itemUnitPrice) {
+                    // $itemUnitPrice = ($item->getBaseRowTotal() + $item->getBaseTaxAmount()) / $item->getQtyOrdered();
+                // }
+				$itemUnitPrice = $item->getBaseRowTotal() / $item->getQtyOrdered();
+
                 $amazonItem = Mage::getModel('checkoutbyamazon/api_model_checkout_purchaseItem', array(
                     'MerchantItemId' => $item->getId(),
                     'SKU' => Mage::helper('checkoutbyamazon')->sanitizeSku($item->getSku()),
