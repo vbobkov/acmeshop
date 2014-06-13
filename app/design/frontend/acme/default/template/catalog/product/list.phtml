@@ -40,23 +40,47 @@
 			$search_query = null;
 		}
 
-		$p1_name = $p1->_data['name'];
-		$p1_desc = $p1->_data['description'];
-		$p1_short_desc = $p1->_data['short_description'];
-		$p2_name = $p1->_data['name'];
-		$p2_desc = $p1->_data['description'];
-		$p2_short_desc = $p1->_data['short_description'];
-		$p1_score = array(
-			'name' => partialStringMatch($search_query, $p1->_data['name'])
-		);
+		$p1_score = bestMatchScore($p1->_data);
+		$p2_score = bestMatchScore($p2->_data);
+		$score_comparison = array();
+		foreach($p1_score as $name => $value) {
+			if($p1_score[$name] > $p2_score[$name]) {
+				$score_comparison[$name] = 1;
+			}
+			else if($p1_score[$name] < $p2_score[$name]) {
+				$score_comparison[$name] = -1;
+			}
+			else {
+				$score_comparison[$name] = 0;
+			}
+		}
 
-		if(false) {
+		$comparison_result = 0;
+		foreach($score_comparison as $idx => $value) {
+			if($value != 0) {
+				$comparison_result = $value;
+				break;
+			}
 		}
-		else if(false) {
+
+		return $comparison_result;
+	}
+
+	function bestMatchScore(&$product_data) {
+		$score = array(
+			'name' => partialStringMatch($search_query, $product_data['name']),
+			'description' => partialStringMatch($search_query, $product_data['description']),
+			'short_description' => partialStringMatch($search_query, $product_data['short_description']),
+			'name_segments' => array(),
+			'description_segments' => array(),
+			'short_description_segments' => array()
+		);
+		foreach(explode(' ', $search_query) as $segment) {
+			$score['name_segments'][] = partialStringMatch($search_query, $product_data['name']);
+			$score['description_segments'][] = partialStringMatch($search_query, $product_data['description']);
+			$score['short_description_segments'][] = partialStringMatch($search_query, $product_data['short_description']);
 		}
-		else {
-		}
-		return 1;
+		return $score;
 	}
 
 	function partialStringMatch($needle, $haystack) {
@@ -89,11 +113,15 @@
 	else {
 		$page_number = 1;
 	}
+	$start_index = ($page_number - 1) * $products_per_page;
+	$end_index = $start_index + $products_per_page;
 
     // $_productCollection = $this->getLoadedProductCollection();
 	$all_products = array();
+	$current_products = array();
     $_helper = $this->helper('catalog/output');
 
+	/*
 	$get_all_products = Mage::getModel('catalog/product')
 		->getCollection()
 		->addAttributeToSelect('*')
@@ -103,26 +131,30 @@
 		// ->addAttributeToSelect('short_description')
 		->addAttributeToFilter('entity_id', array('in' => $this->getLoadedProductCollection()->getAllIds()));
 	$get_all_products->getSelect()->order("find_in_set(entity_id,'".implode(',',$productIds)."')");
+	*/
+	$get_all_products = $this->getLoadedProductCollection();
+	$total_results = $get_all_products->getSize();
+	// $get_all_products->clear()->setPageSize($total_results)->load();
+
 	foreach ($get_all_products as $product) {
-		$all_products[] = $product;
+		// $all_products[] = $product;
+		$current_products[] = $product;
 	}
 	// usort($all_products, 'bestMatch');
 
-	$current_products = array();
-	$start_index = ($page_number - 1) * $products_per_page;
-	$end_index = $start_index + $products_per_page;
-	for($i = $start_index; $i < $end_index; $i++) {
-		if($i < sizeof($all_products)) {
-			$current_products[] = $all_products[$i];
-		}
-	}
-	$get_all_products = null;
+	// $current_products = $all_products;
+	// for($i = $start_index; $i < $end_index; $i++) {
+		// if($i < sizeof($all_products)) {
+			// $current_products[] = $all_products[$i];
+		// }
+	// }
 	// $all_products = null;
+	$get_all_products = null;
 
 // print_r('<pre>');
 // print_r(partialStringMatch('haxx', 'wtfhacxx????'));
-// print_r(sizeof($all_products) . "\n");
-// print_r($all_products);
+// print_r(sizeof($get_all_products) . "\n");
+// print_r($get_all_products);
 // print_r(sizeof($current_products) . "\n");
 // print_r($current_products);
 // print_r('</pre>');
@@ -243,3 +275,9 @@
     </div>
 </div>
 <?php endif; ?>
+
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		// jQuery('.toolbar .amount').html('Items <?php echo $start_index + 1; ?> to <?php echo $end_index; ?> of <?php echo $total_results; ?> total');
+	});
+</script>
