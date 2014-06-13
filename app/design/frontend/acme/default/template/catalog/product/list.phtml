@@ -32,10 +32,105 @@
  */
 ?>
 <?php
-    $_productCollection=$this->getLoadedProductCollection();
+	function bestMatch(&$p1, &$p2) {
+		if(isset($_GET['q'])) {
+			$search_query = $_GET['q'];
+		}
+		else {
+			$search_query = null;
+		}
+
+		$p1_name = $p1->_data['name'];
+		$p1_desc = $p1->_data['description'];
+		$p1_short_desc = $p1->_data['short_description'];
+		$p2_name = $p1->_data['name'];
+		$p2_desc = $p1->_data['description'];
+		$p2_short_desc = $p1->_data['short_description'];
+		$p1_score = array(
+			'name' => partialStringMatch($search_query, $p1->_data['name'])
+		);
+
+		if(false) {
+		}
+		else if(false) {
+		}
+		else {
+		}
+		return 1;
+	}
+
+	function partialStringMatch($needle, $haystack) {
+		$characters_matched = 0;
+		$j = 0;
+		for($i = 0; $i < strlen($haystack); $i++) {
+			print_r($needle[$j] . "\n");
+			if($needle[$j] == $haystack[$i]) {
+				$j++;
+			}
+			else {
+				if($characters_matched < $j) {
+					$characters_matched = $j;
+				}
+				$j = 0;
+			}
+		}
+		return $characters_matched;
+	}
+
+	if(isset($_GET['limit'])) {
+		$products_per_page = $_GET['limit'];
+	}
+	else {
+		$products_per_page = 9;
+	}
+	if(isset($_GET['p'])) {
+		$page_number = $_GET['p'];
+	}
+	else {
+		$page_number = 1;
+	}
+
+    // $_productCollection = $this->getLoadedProductCollection();
+	$all_products = array();
     $_helper = $this->helper('catalog/output');
+
+	$get_all_products = Mage::getModel('catalog/product')
+		->getCollection()
+		->addAttributeToSelect('*')
+		// ->addAttributeToSelect('name')
+		// ->addAttributeToSelect('url_key')
+		// ->addAttributeToSelect('descriptionj')
+		// ->addAttributeToSelect('short_description')
+		->addAttributeToFilter('entity_id', array('in' => $this->getLoadedProductCollection()->getAllIds()));
+	$get_all_products->getSelect()->order("find_in_set(entity_id,'".implode(',',$productIds)."')");
+	foreach ($get_all_products as $product) {
+		$all_products[] = $product;
+	}
+	// usort($all_products, 'bestMatch');
+
+	$current_products = array();
+	$start_index = ($page_number - 1) * $products_per_page;
+	$end_index = $start_index + $products_per_page;
+	for($i = $start_index; $i < $end_index; $i++) {
+		if($i < sizeof($all_products)) {
+			$current_products[] = $all_products[$i];
+		}
+	}
+	$get_all_products = null;
+	// $all_products = null;
+
+// print_r('<pre>');
+// print_r(partialStringMatch('haxx', 'wtfhacxx????'));
+// print_r(sizeof($all_products) . "\n");
+// print_r($all_products);
+// print_r(sizeof($current_products) . "\n");
+// print_r($current_products);
+// print_r('</pre>');
 ?>
-<?php if(!$_productCollection->count()): ?>
+<?php
+	// if(!$_productCollection->count()):
+	if(sizeof($current_products) < 1):
+?>
 <p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
 <?php else: ?>
 <div class="category-products">
@@ -44,8 +139,11 @@
     <?php if($this->getMode()!='grid'): ?>
     <?php $_iterator = 0; ?>
     <ol class="products-list" id="products-list">
-    <?php foreach ($_productCollection as $_product): ?>
-        <li class="item<?php if( ++$_iterator == sizeof($_productCollection) ): ?> last<?php endif; ?>">
+    <?php foreach ($current_products as $_product): ?>
+        <li class="item<?php
+			// if( ++$_iterator == sizeof($_productCollection) ):
+			if( ++$_iterator == sizeof($current_products) ):
+		?> last<?php endif; ?>">
             <?php // Product Image ?>
             <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $_product->getSmallImage(); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
             <?php // Product description ?>
@@ -93,9 +191,12 @@
 
     <?php // Grid Mode ?>
 
-    <?php $_collectionSize = $_productCollection->count() ?>
+    <?php
+		// $_collectionSize = $_productCollection->count();
+		$_collectionSize = sizeof($current_products);
+	?>
     <?php $_columnCount = $this->getColumnCount(); ?>
-    <?php $i=0; foreach ($_productCollection as $_product): ?>
+    <?php $i=0; foreach ($current_products as $_product): ?>
         <?php if ($i++%$_columnCount==0): ?>
         <ul class="products-grid">
         <?php endif ?>
