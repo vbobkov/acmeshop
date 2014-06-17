@@ -4,7 +4,7 @@
 		<ACMElectronics_CatalogSearch>
 			<codePool>local</codePool>
 			<active>true</active>
-			<depends> <!-- Dependencies -->
+			<depends>
 				<Mage_CatalogSearch />
 			</depends>
 		</ACMElectronics_CatalogSearch>

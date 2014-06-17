@@ -1,23 +1,21 @@
 <?xml version="1.0"?>
 <config>
+<!--
 	<modules>
-	<ACMElectronics_CatalogSearch>
-		<version>0.1.0</version>
-	</ACMElectronics_CatalogSearch>
+		<ACMElectronics_CatalogSearch>
+			<version>0.1.0</version>
+		</ACMElectronics_CatalogSearch>
 	</modules>
-
 	<frontend>
-	<routers>
-	<catalogsearch>
-	<args>
-	<modules>
-	<!--
-	<ACMElectronics_CatalogSearch_ResultController before="Mage_CatalogSearch_ResultController">ACMElectronics_CatalogSearch_ResultController</ACMElectronics_CatalogSearch_ResultController>
-	-->
-	<ACMElectronics_CatalogSearch before="Mage_CatalogSearch">ACMElectronics_CatalogSearch</ACMElectronics_CatalogSearch>
-	</modules>
-	</args>
-	</catalogsearch>
-	</routers>
-</frontend>
+		<routers>
+			<catalogsearch>
+				<args>
+					<modules>
+						<ACMElectronics_CatalogSearch before="Mage_CatalogSearch">ACMElectronics_CatalogSearch</ACMElectronics_CatalogSearch>
+					</modules>
+				</args>
+			</catalogsearch>
+		</routers>
+	</frontend>
+-->
 </config>

@@ -171,23 +171,27 @@
 	// }
 	// $current_product_ids = $all_products;
 
-	$all_products = array_values($this->getLoadedProductCollection()->getAllIDsAndTitles());
-	// $all_products = array_values($this->getLoadedProductCollection()->getAllIDsAndTitles(1000, 0));
+	// $all_products = array_values($this->getLoadedProductCollection()->getAllIDsAndTitles());
+	$all_products = array_values($this->getLoadedProductCollection()->getAllIDsAndTitles(1000, 0));
+	// $all_products = array_values($this->getLoadedProductCollection()->getAllIDsAndTitles(5, 0));
+	// $all_products = array();
+
+	usort($all_products, 'bestMatch');
 	$total_results = sizeof($all_products);
-	// usort($all_products, 'bestMatch');
 	for($i = $start_index; $i < $end_index; $i++) {
 		if($i < sizeof($all_products)) {
 			$current_product_ids[] = $all_products[$i]['entity_id'];
 		}
 	}
 
-	// $all_products = null;
+	$all_products = null;
 	// $get_all_products = null;
-	$current_products = Mage::getModel('catalog/product')->getCollection()->addAttributeToSelect('*')->addAttributeToFilter('entity_id', array('in' => $current_product_ids));
 	// $current_products->getSelect()->order("find_in_set(entity_id,'".implode(',',$current_product_ids)."')");
+	$current_products = Mage::getModel('catalog/product')->getCollection()->addAttributeToSelect('*')->addAttributeToFilter('entity_id', array('in' => $current_product_ids));
 	$current_products->clear()->setPageSize($current_products->getSize())->load();
+	// $current_products = $this->getLoadedProductCollection();
 
-	print_r('<pre>');
+	// print_r('<pre>');
 	// echo get_class(Mage::getResourceModel('catalog/product_collection')) . '<br />';
 	// print_r(sizeof($all_products));
 	// print_r($all_products);
@@ -196,9 +200,9 @@
 	// print_r($get_all_products);
 	// print_r(sizeof($current_products) . "\n");
 	// print_r($current_products);
-	print_r($current_product_ids);
+	// print_r($current_product_ids);
 	// $prev_product = null;
-	foreach($current_products as $_product) {
+	// foreach($current_products as $_product) {
 		// print_r($_product->getData());
 		// print_r(bestMatchScore($_GET['q'], $_product->getData()));
 		// if($prev_product != null) {
@@ -206,8 +210,8 @@
 			// print_r(bestMatch($prev_product, $_product));
 		// }
 		// $prev_product = $_product;
-	}
-	print_r('</pre>');
+	// }
+	// print_r('</pre>');
 ?>
 <?php
 	// if(!$_productCollection->count()):

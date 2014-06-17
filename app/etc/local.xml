@@ -54,6 +54,18 @@
         </resources>
         <session_save><![CDATA[files]]></session_save>
 
+		<!--
+		<blocks>
+			<catalogsearch>
+				<rewrite>
+					<result>ACMElectronics_CatalogSearch_Block_Result</result>
+				</rewrite>
+				<rewrite>
+					<advanced_result>ACMElectronics_CatalogSearch_Block_Advanced_Result</advanced_result>
+				</rewrite>
+			</catalogsearch>
+		</blocks>
+		-->
 		<models>
 			<catalogsearch_resource>
 				<rewrite>
