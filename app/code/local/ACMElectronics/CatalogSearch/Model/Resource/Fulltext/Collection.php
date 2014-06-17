@@ -10,6 +10,16 @@ class ACMElectronics_CatalogSearch_Model_Resource_Fulltext_Collection extends Ma
         $pSelect->columns('e.' . $this->getEntity()->getIdFieldName());
         $pSelect->limit($limit, $offset);
         $pSelect->resetJoinLeft();
+
+		// if($limit != null && $limit > 0) {
+			// $limit_clause = ' LIMIT ' . $limit;
+			// if($offset != null && $offset > 0) {
+				// $limit_clause .= ' OFFSET ' . $offset;
+			// }
+		// }
+		// else {
+			// $limit_clause = '';
+		// }
 		$new_query = str_replace("SELECT `e`.`entity_id`", "SELECT `e`.`entity_id`,catalog_product_entity_varchar.value AS name", (string)$pSelect);
 /*
 SELECT `e`.`entity_id`,catalog_product_entity_varchar.value AS name FROM `catalog_product_entity` AS `e` 
@@ -20,6 +30,8 @@ INNER JOIN `catalog_category_product_index` AS `cat_index` ON cat_index.product_
 */
 		// print_r(strpos((string)$pSelect, "INNER JOIN `catalogsearch_result` AS `search_result` ON search_result.product_id=e.entity_id AND search_result.query_id='1561'"));
 		// print_r('<br /><br />');
+		// print_r($pSelect);
+		// print_r('<br /><br />');
 		// print_r((string)$pSelect);
 		// print_r('<br /><br />');
 		// print_r($new_query);
@@ -27,13 +39,19 @@ INNER JOIN `catalog_category_product_index` AS `cat_index` ON cat_index.product_
 		$new_query = substr_replace(
 			$new_query,
 			"INNER JOIN `catalog_product_entity_varchar` ON catalog_product_entity_varchar.entity_id=e.entity_id  AND catalog_product_entity_varchar.attribute_id = 71\n ",
-			strpos($new_query, "INNER JOIN `catalogsearch_result` AS `search_result` ON search_result.product_id=e.entity_id AND search_result.query_id='1561'"),
+			strpos($new_query, "INNER JOIN `catalogsearch_result` AS `search_result` ON search_result.product_id=e.entity_id AND search_result.query_id='"),
 			0
 		);
 		// print_r($new_query);
 		// print_r('<br /><br />');
 
-        // return $this->getConnection()->fetchCol($pSelect, $this->_bindParams);
-		return $this->getConnection()->fetchPairs($new_query);
+		$zend_db_adapter = $this->getConnection();
+		// $zend_db_adapter->setFetchMode(Zend_Db::FETCH_NUM);
+
+		// return null;
+        // return $zend_db_adapter->fetchCol($pSelect, $this->_bindParams);
+		// return $zend_db_adapter->fetchPairs($new_query);
+		return $zend_db_adapter->fetchAssoc($new_query);
+		// return $zend_db_adapter->fetchAll($new_query);
     }
 }
