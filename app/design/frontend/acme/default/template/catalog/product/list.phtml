@@ -127,37 +127,40 @@
 		->addAttributeToSelect('*')
 		// ->addAttributeToSelect('name')
 		// ->addAttributeToSelect('url_key')
-		// ->addAttributeToSelect('descriptionj')
+		// ->addAttributeToSelect('description')
 		// ->addAttributeToSelect('short_description')
 		->addAttributeToFilter('entity_id', array('in' => $this->getLoadedProductCollection()->getAllIds()));
 	$get_all_products->getSelect()->order("find_in_set(entity_id,'".implode(',',$productIds)."')");
 	*/
-	$get_all_products = $this->getLoadedProductCollection();
+	// $get_all_products = $this->getLoadedProductCollection();
+	$get_all_products = $this->getLoadedProductCollection()->getAllIDsAndTitles();
+
 	$total_results = $get_all_products->getSize();
 	// $get_all_products->clear()->setPageSize($total_results)->load();
 
 	foreach ($get_all_products as $product) {
-		// $all_products[] = $product;
-		$current_products[] = $product;
+		$all_products[] = $product;
 	}
 	// usort($all_products, 'bestMatch');
 
 	// $current_products = $all_products;
-	// for($i = $start_index; $i < $end_index; $i++) {
-		// if($i < sizeof($all_products)) {
-			// $current_products[] = $all_products[$i];
-		// }
-	// }
-	// $all_products = null;
+	for($i = $start_index; $i < $end_index; $i++) {
+		if($i < sizeof($all_products)) {
+			$current_products[] = $all_products[$i];
+		}
+	}
+	$all_products = null;
 	$get_all_products = null;
 
-// print_r('<pre>');
-// print_r(partialStringMatch('haxx', 'wtfhacxx????'));
-// print_r(sizeof($get_all_products) . "\n");
-// print_r($get_all_products);
-// print_r(sizeof($current_products) . "\n");
-// print_r($current_products);
-// print_r('</pre>');
+	print_r('<pre>');
+	// echo get_class(Mage::getResourceModel('catalog/product_collection')) . '<br />';
+	// print_r($this->getLoadedProductCollection()->getAllIDsAndTitles());
+	// print_r(partialStringMatch('haxx', 'wtfhacxx????'));
+	// print_r(sizeof($get_all_products) . "\n");
+	// print_r($get_all_products);
+	// print_r(sizeof($current_products) . "\n");
+	print_r($current_products);
+	print_r('</pre>');
 ?>
 <?php
 	// if(!$_productCollection->count()):

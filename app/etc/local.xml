@@ -53,6 +53,15 @@
             </default_setup>
         </resources>
         <session_save><![CDATA[files]]></session_save>
+
+		<models>
+			<catalogsearch_resource>
+				<rewrite>
+					<fulltext_collection>ACMElectronics_CatalogSearch_Model_Resource_Fulltext_Collection</fulltext_collection>
+				</rewrite>
+			</catalogsearch_resource>
+		</models>
+
     </global>
     <admin>
         <routers>
