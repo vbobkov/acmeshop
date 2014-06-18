@@ -191,7 +191,13 @@
 	$current_products->clear()->setPageSize($current_products->getSize())->load();
 	// $current_products = $this->getLoadedProductCollection();
 
-	// print_r('<pre>');
+	$toolbar_html = preg_replace(
+		'/\<p class="amount"\>(.*?)\<\/p\>/s',
+		'<p class="amount">Items ' . ($start_index + 1) . ' to ' . $end_index . ' of ' . $total_results . ' total</p>',
+		$this->getToolbarHtml()
+	);
+
+	print_r('<pre>');
 	// echo get_class(Mage::getResourceModel('catalog/product_collection')) . '<br />';
 	// print_r(sizeof($all_products));
 	// print_r($all_products);
@@ -211,7 +217,8 @@
 		// }
 		// $prev_product = $_product;
 	// }
-	// print_r('</pre>');
+	// print_r(htmlentities($toolbar_html));
+	print_r('</pre>');
 ?>
 <?php
 	// if(!$_productCollection->count()):
@@ -220,7 +227,10 @@
 <p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
 <?php else: ?>
 <div class="category-products">
-    <?php echo $this->getToolbarHtml() ?>
+    <?php
+		// echo $this->getToolbarHtml()
+		echo $toolbar_html;
+	?>
     <?php // List mode ?>
     <?php if($this->getMode()!='grid'): ?>
     <?php $_iterator = 0; ?>
@@ -325,7 +335,10 @@
     <?php endif; ?>
 
     <div class="toolbar-bottom">
-        <?php echo $this->getToolbarHtml() ?>
+	<?php
+		// echo $this->getToolbarHtml()
+		echo $toolbar_html;
+	?>
     </div>
 </div>
 <?php endif; ?>
