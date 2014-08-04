@@ -13,10 +13,12 @@ $_productCollection = Mage::getResourceModel('reports/product_collection')
 						// ->setStoreId($storeId)
 						// ->addStoreFilter($storeId)
 						->setOrder('ordered_qty', 'desc')
-						->setPage(1, 12);
+						->setPage(1, 100);
+						// ->setPage(1, 12);
 						// ->setPageSize(12);
 // echo $_productCollection->getSelect()->__toString();
-$_productCollection->getSelect()->limit(12);
+// $_productCollection->getSelect()->limit(12);
+// $_productCollection->getSelect()->limit(100);
 sizeof($_productCollection);
 // $_productCollectionArray = $_productCollection->toArray();
 
@@ -29,7 +31,7 @@ sizeof($_productCollection);
 // echo sizeof($_productCollectionArray);
 ?>
 
-<div class="bestsellers products-grid">
+<div class="bestsellers products-grid" style="display:none">
     <?php
 		$_collectionSize = $_productCollection->count();
 		// $_columnCount = $this->getColumnCount();
@@ -47,6 +49,7 @@ sizeof($_productCollection);
 					<?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
 					<?php endif; ?>
 					<?php //echo $this->getPriceHtml($_product, true) ?>
+					<div>ordered_qty: <?php echo $_product->getOrderedQty(); ?></div>
 					<!--
 					<div class="price-box">
 						<span class="regular-price" id="product-price-1">
@@ -61,3 +64,47 @@ sizeof($_productCollection);
 		<?php endif; ?>
 	<?php endforeach ?>
 </div>
+
+<style>
+#bs1 {
+	border-collapse:collapse;
+}
+#bs1 td {
+	border:1px solid black;
+}
+</style>
+<table id="bs1">
+	<thead>
+		<tr>
+			<!--
+			<th>Product</th>
+			-->
+			<th>Name</th>
+			<th>Ordered Qty</th>
+		</tr>
+	</thead>
+	<tbody>
+    <?php
+		$_collectionSize = $_productCollection->count();
+		// $_columnCount = $this->getColumnCount();
+		$_columnCount = 4;
+	?>
+    <?php $i=0; foreach ($_productCollection as $_product): ?>
+		<?php if(strpos($_product->getName(), 'ACME_') !== 0 && $_product->getStatus() == 1): // don't include limited-time/special combos (yet) ?>
+			<tr>
+				<!--
+				<td>
+					<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $_product->getSmallImage(); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+				</td>
+				-->
+				<td>
+					<h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php $_product->getName() ?>"><?php echo $_product->getName() ?></a></h2>
+				</td>
+				<td>
+					<?php echo $_product->getOrderedQty(); ?>
+				</td>
+			</tr>
+		<?php endif; ?>
+	<?php endforeach ?>
+	</tbody>
+</table>
