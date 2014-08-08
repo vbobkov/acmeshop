@@ -32,6 +32,7 @@
  */
 ?>
 <?php
+	/*
 	function bestMatch(&$p1, &$p2) {
 		if(isset($_GET['q'])) {
 			$search_query = $_GET['q'];
@@ -151,17 +152,15 @@
 	$current_products = array();
     $_helper = $this->helper('catalog/output');
 
-	/*
-	$get_all_products = Mage::getModel('catalog/product')
-		->getCollection()
-		->addAttributeToSelect('*')
+	// $get_all_products = Mage::getModel('catalog/product')
+		// ->getCollection()
+		// ->addAttributeToSelect('*')
 		// ->addAttributeToSelect('name')
 		// ->addAttributeToSelect('url_key')
 		// ->addAttributeToSelect('description')
 		// ->addAttributeToSelect('short_description')
-		->addAttributeToFilter('entity_id', array('in' => $this->getLoadedProductCollection()->getAllIds()));
-	$get_all_products->getSelect()->order("find_in_set(entity_id,'".implode(',',$productIds)."')");
-	*/
+		// ->addAttributeToFilter('entity_id', array('in' => $this->getLoadedProductCollection()->getAllIds()));
+	// $get_all_products->getSelect()->order("find_in_set(entity_id,'".implode(',',$productIds)."')");
 	// $get_all_products = $this->getLoadedProductCollection();
 	// $total_results = $get_all_products->getSize();
 	// $get_all_products->clear()->setPageSize($total_results)->load();
@@ -219,26 +218,32 @@
 	// }
 	// print_r(htmlentities($toolbar_html));
 	print_r('</pre>');
+	*/
+
+
+
+	$_productCollection = $this->getLoadedProductCollection();
+	$_helper = $this->helper('catalog/output');
 ?>
 <?php
-	// if(!$_productCollection->count()):
-	if(sizeof($current_products) < 1):
+	if(!$_productCollection->count()):
+	// if(sizeof($current_products) < 1):
 ?>
 <p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
 <?php else: ?>
 <div class="category-products">
     <?php
-		// echo $this->getToolbarHtml()
-		echo $toolbar_html;
+		echo $this->getToolbarHtml()
+		// echo $toolbar_html;
 	?>
     <?php // List mode ?>
     <?php if($this->getMode()!='grid'): ?>
     <?php $_iterator = 0; ?>
     <ol class="products-list" id="products-list">
-    <?php foreach ($current_products as $_product): ?>
+    <?php foreach ($_productCollection as $_product): ?>
         <li class="item<?php
-			// if( ++$_iterator == sizeof($_productCollection) ):
-			if( ++$_iterator == sizeof($current_products) ):
+			if( ++$_iterator == sizeof($_productCollection) ):
+			// if( ++$_iterator == sizeof($current_products) ):
 		?> last<?php endif; ?>">
             <?php // Product Image ?>
             <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $_product->getSmallImage(); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
@@ -288,11 +293,11 @@
     <?php // Grid Mode ?>
 
     <?php
-		// $_collectionSize = $_productCollection->count();
-		$_collectionSize = sizeof($current_products);
+		$_collectionSize = $_productCollection->count();
+		// $_collectionSize = sizeof($current_products);
 	?>
     <?php $_columnCount = $this->getColumnCount(); ?>
-    <?php $i=0; foreach ($current_products as $_product): ?>
+    <?php $i=0; foreach ($_productCollection as $_product): ?>
         <?php if ($i++%$_columnCount==0): ?>
         <ul class="products-grid">
         <?php endif ?>
@@ -336,8 +341,8 @@
 
     <div class="toolbar-bottom">
 	<?php
-		// echo $this->getToolbarHtml()
-		echo $toolbar_html;
+		echo $this->getToolbarHtml()
+		// echo $toolbar_html;
 	?>
     </div>
 </div>
