@@ -224,13 +224,47 @@
 
 	$_productCollection = $this->getLoadedProductCollection();
 	$_helper = $this->helper('catalog/output');
+
+
+
+	if(isset($_GET['q'])) {
+		$search_query = $_GET['q'];
+	}
+	else {
+		$search_query = null;
+	}
+	// $get_all_products = Mage::getModel('catalog/product')
+		// ->getCollection()
+		// ->addAttributeToSelect('id')
+		// ->addAttributeToSelect('name')
+		// ->addAttributeToSelect('description')
+		// ->addAttributeToSelect('short_description')
+		// ->setPageSize(40000);
+	$w = Mage::getSingleton('core/resource')->getConnection('core_write');
+	// $get_all_products = $w->query("SELECT entity_id,value FROM catalog_product_entity_varchar WHERE attribute_id = 71")->fetchAll(PDO::FETCH_ASSOC);
+	// $get_all_product_descriptions = $w->query("SELECT entity_id,value FROM catalog_product_entity_text WHERE attribute_id IN(72,73)")->fetchAll(PDO::FETCH_ASSOC);
+	$get_products = $w->query(
+		"SELECT value
+		FROM catalog_product_entity_varchar
+		WHERE attribute_id = 71 AND value LIKE '%" . $search_query . "%'"
+	)->fetchAll(PDO::FETCH_ASSOC);
+	print_r('<pre>');
+	print_r($get_products);
+	// print_r($get_all_products);
+	// print_r($get_all_product_descriptions);
+	// print_r($get_all_products);
+	// print_r($get_all_products->count());
+	// foreach($get_all_products as $product) {
+		// print_r($product);
+	// }
+	print_r('</pre>');
 ?>
 <?php
 	if(!$_productCollection->count()):
 	// if(sizeof($current_products) < 1):
 ?>
 <p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
-<?php else: ?>
+<?php elseif(false) : ?>
 <div class="category-products">
     <?php
 		echo $this->getToolbarHtml()
@@ -346,6 +380,9 @@
 	?>
     </div>
 </div>
+
+<?php else: ?>
+
 <?php endif; ?>
 
 <script type="text/javascript">
