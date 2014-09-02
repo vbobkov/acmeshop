@@ -48,10 +48,10 @@ $catalogSearchHelper =  $this->helper('catalogsearch');
 <!--
 <form target="_blank" id="search_mini_form" action="https://www.google.com/search" method="get" autocomplete="off" onkeypress="return event.keyCode != 13;">
     <div class="form-search">
-        <label for="search"><?php echo $this->__('Search:') ?></label>
-        <input id="search" type="text" name="q" value="<?php echo $catalogSearchHelper->getEscapedQueryText() ?>" class="input-text" />
+        <label for="search"><?php //echo $this->__('Search:') ?></label>
+        <input id="search" type="text" name="q" value="<?php //echo $catalogSearchHelper->getEscapedQueryText() ?>" class="input-text" />
 		<input type="hidden" name="filter" value="0">
-        <button type="submit" title="<?php echo $this->__('Search') ?>" class="button"><span><span><?php echo $this->__('Search') ?></span></span></button>
+        <button type="submit" title="<?php //echo $this->__('Search') ?>" class="button"><span><span><?php //echo $this->__('Search') ?></span></span></button>
         <div id="search_autocomplete" class="search-autocomplete"></div>
     </div>
 </form>

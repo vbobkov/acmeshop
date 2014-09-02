@@ -32,6 +32,9 @@
  */
 ?>
 <?php
+	// $_productCollection = $this->getLoadedProductCollection();
+	// $_helper = $this->helper('catalog/output');
+
 	/*
 	function bestMatch(&$p1, &$p2) {
 		if(isset($_GET['q'])) {
@@ -130,116 +133,28 @@
 		}
 		return $characters_matched;
 	}
-
-	if(isset($_GET['limit'])) {
-		$products_per_page = $_GET['limit'];
-	}
-	else {
-		$products_per_page = 9;
-	}
-	if(isset($_GET['p'])) {
-		$page_number = $_GET['p'];
-	}
-	else {
-		$page_number = 1;
-	}
-	$start_index = ($page_number - 1) * $products_per_page;
-	$end_index = $start_index + $products_per_page;
-
-    // $_productCollection = $this->getLoadedProductCollection();
-	$all_products = array();
-	$current_product_ids = array();
-	$current_products = array();
-    $_helper = $this->helper('catalog/output');
-
-	// $get_all_products = Mage::getModel('catalog/product')
-		// ->getCollection()
-		// ->addAttributeToSelect('*')
-		// ->addAttributeToSelect('name')
-		// ->addAttributeToSelect('url_key')
-		// ->addAttributeToSelect('description')
-		// ->addAttributeToSelect('short_description')
-		// ->addAttributeToFilter('entity_id', array('in' => $this->getLoadedProductCollection()->getAllIds()));
-	// $get_all_products->getSelect()->order("find_in_set(entity_id,'".implode(',',$productIds)."')");
-	// $get_all_products = $this->getLoadedProductCollection();
-	// $total_results = $get_all_products->getSize();
-	// $get_all_products->clear()->setPageSize($total_results)->load();
-
-	// foreach ($get_all_products as $product_id => $product) {
-		// $all_products[] = $product;
-	// }
-	// $current_product_ids = $all_products;
-
-	// $all_products = array_values($this->getLoadedProductCollection()->getAllIDsAndTitles());
-	$all_products = array_values($this->getLoadedProductCollection()->getAllIDsAndTitles(1000, 0));
-	// $all_products = array_values($this->getLoadedProductCollection()->getAllIDsAndTitles(5, 0));
-	// $all_products = array();
-
-	usort($all_products, 'bestMatch');
-	$total_results = sizeof($all_products);
-	for($i = $start_index; $i < $end_index; $i++) {
-		if($i < sizeof($all_products)) {
-			$current_product_ids[] = $all_products[$i]['entity_id'];
-		}
-	}
-
-	$all_products = null;
-	// $get_all_products = null;
-	// $current_products->getSelect()->order("find_in_set(entity_id,'".implode(',',$current_product_ids)."')");
-	$current_products = Mage::getModel('catalog/product')->getCollection()->addAttributeToSelect('*')->addAttributeToFilter('entity_id', array('in' => $current_product_ids));
-	$current_products->clear()->setPageSize($current_products->getSize())->load();
-	// $current_products = $this->getLoadedProductCollection();
-
-	$toolbar_html = preg_replace(
-		'/\<p class="amount"\>(.*?)\<\/p\>/s',
-		'<p class="amount">Items ' . ($start_index + 1) . ' to ' . $end_index . ' of ' . $total_results . ' total</p>',
-		$this->getToolbarHtml()
-	);
-
-	print_r('<pre>');
-	// echo get_class(Mage::getResourceModel('catalog/product_collection')) . '<br />';
-	// print_r(sizeof($all_products));
-	// print_r($all_products);
-	// print_r(partialStringMatch('haxx', 'wtfhacxx????'));
-	// print_r(sizeof($get_all_products) . "\n");
-	// print_r($get_all_products);
-	// print_r(sizeof($current_products) . "\n");
-	// print_r($current_products);
-	// print_r($current_product_ids);
-	// $prev_product = null;
-	// foreach($current_products as $_product) {
-		// print_r($_product->getData());
-		// print_r(bestMatchScore($_GET['q'], $_product->getData()));
-		// if($prev_product != null) {
-			// print_r(getScoreComparison(bestMatchScore($_GET['q'], $prev_product->getData()), bestMatchScore($_GET['q'], $_product->getData())));
-			// print_r(bestMatch($prev_product, $_product));
-		// }
-		// $prev_product = $_product;
-	// }
-	// print_r(htmlentities($toolbar_html));
-	print_r('</pre>');
 	*/
 
+	function generateProductURL($home_url, $product_title) {
+		return $home_url . strtolower(
+			preg_replace('/-{2,}/', '-',
+				preg_replace('/^-/', '',
+					preg_replace('/-$/', '',
+						preg_replace('/[^0-9A-Za-z-]/', '-', $product_title)
+					)
+				)
+			)
+		) . ".html";
+	}
 
-
-	// $_productCollection = $this->getLoadedProductCollection();
-	// $_helper = $this->helper('catalog/output');
-
-
-
+	$home_url = Mage::helper('core/url')->getHomeUrl();
+	$match_limit = 1000;
 	if(isset($_GET['q'])) {
 		$search_query = $_GET['q'];
 	}
 	else {
 		$search_query = null;
 	}
-	// $get_all_products = Mage::getModel('catalog/product')
-		// ->getCollection()
-		// ->addAttributeToSelect('id')
-		// ->addAttributeToSelect('name')
-		// ->addAttributeToSelect('description')
-		// ->addAttributeToSelect('short_description')
-		// ->setPageSize(40000);
 	$w = Mage::getSingleton('core/resource')->getConnection('core_write');
 	// $get_all_products = $w->query("SELECT entity_id,value FROM catalog_product_entity_varchar WHERE attribute_id = 71")->fetchAll(PDO::FETCH_ASSOC);
 	// $get_all_product_descriptions = $w->query("SELECT entity_id,value FROM catalog_product_entity_text WHERE attribute_id IN(72,73)")->fetchAll(PDO::FETCH_ASSOC);
@@ -248,17 +163,26 @@
 		FROM catalog_product_entity_varchar
 		WHERE attribute_id = 71 AND value LIKE '%" . $search_query . "%'"
 	)->fetchAll(PDO::FETCH_ASSOC);
-	print_r('<pre>');
-	print_r($get_products);
-	// print_r($get_all_products);
-	// print_r($get_all_product_descriptions);
-	// print_r($get_all_products);
-	// print_r($get_all_products->count());
-	// foreach($get_all_products as $product) {
-		// print_r($product);
-	// }
-	print_r('</pre>');
+	// usort($get_products, 'bestMatch');
+	// print_r('<pre>');
+	// print_r($get_products);
+	// print_r($home_url);
+	// print_r('</pre>');
 ?>
+<div>Found <?php echo sizeof($get_products) ?> matches<?php if(sizeof($get_products) > $match_limit) { echo ', showing first ' . $match_limit; } ?>.</div>
+<div>(Currently, products are only searchable by manufacturer/model.)</div>
+<?php for($i = 0; $i < sizeof($get_products); $i++) {
+	if($i >= $match_limit) {
+		break;
+	}
+	$product_url = generateProductURL($home_url, $get_products[$i]['value']); ?>
+	<ul class="acme-products-grid">
+		<li class="acme-item">
+			<h2 class="product-name"><a href="<?php echo $product_url; ?>" title="<?php echo $get_products[$i]['value']; ?>" target="_blank"><?php echo $get_products[$i]['value']; ?></a></h2>
+		</li>
+	</ul>
+<?php } ?>
+
 
 <script type="text/javascript">
 	// jQuery(document).ready(function() {
