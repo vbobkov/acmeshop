@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <config>
-<!--
 	<modules>
 		<ACMElectronics_CatalogSearch>
 			<version>0.1.0</version>
@@ -17,5 +16,13 @@
 			</catalogsearch>
 		</routers>
 	</frontend>
--->
+	<global>
+		<blocks>
+			<catalogsearch>
+				<rewrite>
+					<result>ACMElectronics_CatalogSearch_Block_Result</result>
+				</rewrite>
+			</catalogsearch>
+		</blocks>
+	</global>
 </config>
