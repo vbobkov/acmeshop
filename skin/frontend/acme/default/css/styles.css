@@ -2915,3 +2915,12 @@ a.product-image {
 	Multi-Media-512x-1.png
 	*/
 }
+
+.acme-products-grid {
+	list-style-type: disc;
+}
+
+.acme-products-grid .acme-item {
+	font-size: 125%;
+	margin: 1em 0em 0em 2em;
+}

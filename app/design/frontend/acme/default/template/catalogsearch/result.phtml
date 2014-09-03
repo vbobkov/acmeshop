@@ -95,7 +95,7 @@
 		// print_r('</pre>');
 		?>
 		<div class="acme-search-title">Found <?php echo sizeof($get_products) ?> matches<?php if(sizeof($get_products) > $match_limit) { echo ', showing first ' . $match_limit; } ?>.</div>
-		<div>(Currently, products are only searchable by manufacturer/model.)</div>
+		<div><i>(Currently, products are only searchable by manufacturer/model.)</i></div>
 		<?php
 		for($i = 0; $i < sizeof($get_products); $i++) {
 			if($i >= $match_limit) {
