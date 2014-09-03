@@ -32,123 +32,11 @@
  */
 ?>
 <?php
-	// $_productCollection = $this->getLoadedProductCollection();
-	// $_helper = $this->helper('catalog/output');
+// $_productCollection = $this->getLoadedProductCollection();
+// $_helper = $this->helper('catalog/output');
 
-	/*
-	function bestMatch(&$p1, &$p2) {
-		if(isset($_GET['q'])) {
-			$search_query = $_GET['q'];
-		}
-		else {
-			$search_query = null;
-		}
-
-		$p1_score = bestMatchScore($search_query, $p1);
-		$p2_score = bestMatchScore($search_query, $p2);
-		$score_comparison = getScoreComparison($p1_score, $p2_score);
-		// print_r('<pre>');
-		// print_r($score_comparison);
-		// print_r('</pre>');
-
-		return getScoreComparisonResult($score_comparison);
-	}
-
-	function getScoreComparison(&$p1_score, &$p2_score) {
-		$score_comparison = array();
-		foreach($p1_score as $name => $value) {
-			if(is_array($value)) {
-				$score_comparison[$name] = getScoreComparison($p1_score[$name], $p2_score[$name]);
-			}
-			else {
-				if($p1_score[$name] > $p2_score[$name]) {
-					$score_comparison[$name] = 1;
-				}
-				else if($p1_score[$name] < $p2_score[$name]) {
-					$score_comparison[$name] = -1;
-				}
-				else {
-					$score_comparison[$name] = 0;
-				}
-			}
-		}
-		return $score_comparison;
-	}
-
-	function getScoreComparisonResult(&$score_comparison) {
-		$comparison_result = 0;
-		foreach($score_comparison as $name => $value) {
-			if($comparison_result != 0) {
-				break;
-			}
-			if(is_array($value)) {
-				$comparison_result = getScoreComparisonResult($value);
-			}
-			else if($value != 0) {
-				$comparison_result = $value;
-			}
-		}
-		return $comparison_result;
-	}
-
-	function bestMatchScore($search_query, &$product_data) {
-		$lowercase_sq = strtolower($search_query);
-		$lowercase_name = strtolower($product_data['name']);
-		// $lowercase_description = strtolower($product_data['description']);
-		// $lowercase_short_description = strtolower($product_data['short_description']);
-		$score = array(
-			'full_match' => -1 * partialStringMatch($search_query, $lowercase_name),
-			// 'description' => partialStringMatch($search_query, $lowercase_description),
-			// 'short_description' => partialStringMatch($search_query, $lowercase_short_description),
-			'name_segments' => 0,
-			// 'name_segments' => array(),
-			// 'description_segments' => array(),
-			// 'short_description_segments' => array(),
-			'entity_id' => $product_data['entity_id']
-		);
-		foreach(explode(' ', $search_query) as $segment) {
-			if(strlen($segment) > 1) {
-				$score['name_segments'] -= partialStringMatch($segment, $lowercase_name);
-			}
-			// $score['name_segments'][] = partialStringMatch($segment, $lowercase_name);
-			// $score['description_segments'][] = partialStringMatch($segment, $lowercase_description);
-			// $score['short_description_segments'][] = partialStringMatch($segment, $lowercase_short_description);
-		}
-		return $score;
-	}
-
-	function partialStringMatch($needle, $haystack) {
-		$characters_matched = 0;
-		$j = 0;
-		for($i = 0; $i < strlen($haystack); $i++) {
-			if($needle[$j] == $haystack[$i]) {
-				$j++;
-			}
-			else {
-				if($characters_matched < $j) {
-					$characters_matched = $j;
-				}
-				$j = 0;
-			}
-		}
-		return $characters_matched;
-	}
-	*/
-
-	function generateProductURL($home_url, $product_title) {
-		return $home_url . strtolower(
-			preg_replace('/-{2,}/', '-',
-				preg_replace('/^-/', '',
-					preg_replace('/-$/', '',
-						preg_replace('/[^0-9A-Za-z-]/', '-', $product_title)
-					)
-				)
-			)
-		) . ".html";
-	}
-
-	$home_url = Mage::helper('core/url')->getHomeUrl();
-	$match_limit = 1000;
+/*
+function bestMatch(&$p1, &$p2) {
 	if(isset($_GET['q'])) {
 		$search_query = $_GET['q'];
 	}
@@ -156,163 +44,220 @@
 		$search_query = null;
 	}
 
-	if($search_query != null) {
-		$w = Mage::getSingleton('core/resource')->getConnection('core_write');
-		// $get_all_products = $w->query("SELECT entity_id,value FROM catalog_product_entity_varchar WHERE attribute_id = 71")->fetchAll(PDO::FETCH_ASSOC);
-		// $get_all_product_descriptions = $w->query("SELECT entity_id,value FROM catalog_product_entity_text WHERE attribute_id IN(72,73)")->fetchAll(PDO::FETCH_ASSOC);
-		$get_products = $w->query(
-			"SELECT value
-			FROM catalog_product_entity_varchar
-			WHERE attribute_id = 71 AND value LIKE '%" . $search_query . "%'"
-		)->fetchAll(PDO::FETCH_ASSOC);
-		// usort($get_products, 'bestMatch');
-		print_r('<pre>');
-		// print_r($get_products);
-		// print_r($home_url);
-		print_r($this->getLoadedProductCollection()->count());
-		print_r('</pre>');
-		?>
-		<div class="acme-search-title">Found <?php echo sizeof($get_products) ?> matches<?php if(sizeof($get_products) > $match_limit) { echo ', showing first ' . $match_limit; } ?>.</div>
-		<div>(Currently, products are only searchable by manufacturer/model.)</div>
-		<?php
-		for($i = 0; $i < sizeof($get_products); $i++) {
-			if($i >= $match_limit) {
-				break;
+	$p1_score = bestMatchScore($search_query, $p1);
+	$p2_score = bestMatchScore($search_query, $p2);
+	$score_comparison = getScoreComparison($p1_score, $p2_score);
+	// print_r('<pre>');
+	// print_r($score_comparison);
+	// print_r('</pre>');
+
+	return getScoreComparisonResult($score_comparison);
+}
+
+function getScoreComparison(&$p1_score, &$p2_score) {
+	$score_comparison = array();
+	foreach($p1_score as $name => $value) {
+		if(is_array($value)) {
+			$score_comparison[$name] = getScoreComparison($p1_score[$name], $p2_score[$name]);
+		}
+		else {
+			if($p1_score[$name] > $p2_score[$name]) {
+				$score_comparison[$name] = 1;
 			}
-			$product_url = generateProductURL($home_url, $get_products[$i]['value']); ?>
-			<ul class="acme-products-grid">
-				<li class="acme-item">
-					<h2 class="product-name"><a href="<?php echo $product_url; ?>" title="<?php echo $get_products[$i]['value']; ?>" target="_blank"><?php echo $get_products[$i]['value']; ?></a></h2>
-				</li>
-			</ul>
-			<?php
+			else if($p1_score[$name] < $p2_score[$name]) {
+				$score_comparison[$name] = -1;
+			}
+			else {
+				$score_comparison[$name] = 0;
+			}
 		}
 	}
-	else {
-		$_productCollection=$this->getLoadedProductCollection();
-		$_helper = $this->helper('catalog/output');
-		if(!$_productCollection->count()):
-		// if(sizeof($current_products) < 1):
-		?>
-		<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
-		<?php else: ?>
-		<div class="category-products">
-			<?php
-				echo $this->getToolbarHtml()
-				// echo $toolbar_html;
-			?>
-			<?php // List mode ?>
-			<?php if($this->getMode()!='grid'): ?>
-			<?php $_iterator = 0; ?>
-			<ol class="products-list" id="products-list">
-			<?php foreach ($_productCollection as $_product): ?>
-				<li class="item<?php
-					if( ++$_iterator == sizeof($_productCollection) ):
-					// if( ++$_iterator == sizeof($current_products) ):
-				?> last<?php endif; ?>">
-					<?php // Product Image ?>
-					<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $_product->getSmallImage(); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
-					<?php // Product description ?>
-					<div class="product-shop">
-						<div class="f-fix">
-							<?php $_productNameStripped = $this->stripTags($_product->getName(), null, true); ?>
-							<h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>"><?php echo $_helper->productAttribute($_product, $_product->getName() , 'name'); ?></a></h2>
-							<?php if($_product->getRatingSummary()): ?>
-							<?php echo $this->getReviewsSummaryHtml($_product) ?>
-							<?php endif; ?>
+	return $score_comparison;
+}
 
-							<?php if($_product->getData('custom_layout_update') == '[[no_cart]]'): ?>
-								<div class="add-to-box-no-cart" style="">
-									(Not available for online purchase.<br />
-									Please <a href="/contacts/" target="_blank" style="color:black">CONTACT US</a> for price and availability.)
-								</div>
-							<?php else: ?>
-								<?php echo $this->getPriceHtml($_product, true) ?>
-								<?php if($_product->isSaleable()): ?>
-									<p><button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button></p>
-								<?php else: ?>
-									<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
-								<?php endif; ?>
-								<div class="desc std">
-									<?php echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
-									<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped ?>" class="link-learn"><?php echo $this->__('Learn More') ?></a>
-								</div>
-								<ul class="add-to-links">
-									<?php if ($this->helper('wishlist')->isAllow()) : ?>
-										<li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
-									<?php endif; ?>
-									<?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
-										<li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
-									<?php endif; ?>
-								</ul>
-							<?php endif; ?>
+function getScoreComparisonResult(&$score_comparison) {
+	$comparison_result = 0;
+	foreach($score_comparison as $name => $value) {
+		if($comparison_result != 0) {
+			break;
+		}
+		if(is_array($value)) {
+			$comparison_result = getScoreComparisonResult($value);
+		}
+		else if($value != 0) {
+			$comparison_result = $value;
+		}
+	}
+	return $comparison_result;
+}
+
+function bestMatchScore($search_query, &$product_data) {
+	$lowercase_sq = strtolower($search_query);
+	$lowercase_name = strtolower($product_data['name']);
+	// $lowercase_description = strtolower($product_data['description']);
+	// $lowercase_short_description = strtolower($product_data['short_description']);
+	$score = array(
+		'full_match' => -1 * partialStringMatch($search_query, $lowercase_name),
+		// 'description' => partialStringMatch($search_query, $lowercase_description),
+		// 'short_description' => partialStringMatch($search_query, $lowercase_short_description),
+		'name_segments' => 0,
+		// 'name_segments' => array(),
+		// 'description_segments' => array(),
+		// 'short_description_segments' => array(),
+		'entity_id' => $product_data['entity_id']
+	);
+	foreach(explode(' ', $search_query) as $segment) {
+		if(strlen($segment) > 1) {
+			$score['name_segments'] -= partialStringMatch($segment, $lowercase_name);
+		}
+		// $score['name_segments'][] = partialStringMatch($segment, $lowercase_name);
+		// $score['description_segments'][] = partialStringMatch($segment, $lowercase_description);
+		// $score['short_description_segments'][] = partialStringMatch($segment, $lowercase_short_description);
+	}
+	return $score;
+}
+
+function partialStringMatch($needle, $haystack) {
+	$characters_matched = 0;
+	$j = 0;
+	for($i = 0; $i < strlen($haystack); $i++) {
+		if($needle[$j] == $haystack[$i]) {
+			$j++;
+		}
+		else {
+			if($characters_matched < $j) {
+				$characters_matched = $j;
+			}
+			$j = 0;
+		}
+	}
+	return $characters_matched;
+}
+*/
+
+$_productCollection=$this->getLoadedProductCollection();
+$_helper = $this->helper('catalog/output');
+if(!$_productCollection->count()):
+// if(sizeof($current_products) < 1):
+?>
+<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+<?php else: ?>
+<div class="category-products">
+	<?php
+		echo $this->getToolbarHtml()
+		// echo $toolbar_html;
+	?>
+	<?php // List mode ?>
+	<?php if($this->getMode()!='grid'): ?>
+	<?php $_iterator = 0; ?>
+	<ol class="products-list" id="products-list">
+	<?php foreach ($_productCollection as $_product): ?>
+		<li class="item<?php
+			if( ++$_iterator == sizeof($_productCollection) ):
+			// if( ++$_iterator == sizeof($current_products) ):
+		?> last<?php endif; ?>">
+			<?php // Product Image ?>
+			<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $_product->getSmallImage(); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+			<?php // Product description ?>
+			<div class="product-shop">
+				<div class="f-fix">
+					<?php $_productNameStripped = $this->stripTags($_product->getName(), null, true); ?>
+					<h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>"><?php echo $_helper->productAttribute($_product, $_product->getName() , 'name'); ?></a></h2>
+					<?php if($_product->getRatingSummary()): ?>
+					<?php echo $this->getReviewsSummaryHtml($_product) ?>
+					<?php endif; ?>
+
+					<?php if($_product->getData('custom_layout_update') == '[[no_cart]]'): ?>
+						<div class="add-to-box-no-cart" style="">
+							(Not available for online purchase.<br />
+							Please <a href="/contacts/" target="_blank" style="color:black">CONTACT US</a> for price and availability.)
 						</div>
-					</div>
-				</li>
-			<?php endforeach; ?>
-			</ol>
-			<script type="text/javascript">decorateList('products-list', 'none-recursive')</script>
-
-			<?php else: ?>
-
-			<?php // Grid Mode ?>
-
-			<?php
-				$_collectionSize = $_productCollection->count();
-				// $_collectionSize = sizeof($current_products);
-			?>
-			<?php $_columnCount = $this->getColumnCount(); ?>
-			<?php $i=0; foreach ($_productCollection as $_product): ?>
-				<?php if ($i++%$_columnCount==0): ?>
-				<ul class="products-grid">
-				<?php endif ?>
-					<li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?>">
-						<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $_product->getSmallImage(); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
-						<h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
-						<?php if($_product->getRatingSummary()): ?>
-						<?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
-						<?php endif; ?>
-
-						<?php if($_product->getData('custom_layout_update') == '[[no_cart]]'): ?>
-							<div class="add-to-box-no-cart" style="">
-								(Not available for online purchase.<br />
-								Please <a href="/contacts/" target="_blank" style="color:black">CONTACT US</a> for price and availability.)
-							</div>
+					<?php else: ?>
+						<?php echo $this->getPriceHtml($_product, true) ?>
+						<?php if($_product->isSaleable()): ?>
+							<p><button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button></p>
 						<?php else: ?>
-							<?php echo $this->getPriceHtml($_product, true) ?>
-							<div class="actions">
-								<?php if($_product->isSaleable()): ?>
-									<button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
-								<?php else: ?>
-									<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
-								<?php endif; ?>
-								<ul class="add-to-links">
-									<?php if ($this->helper('wishlist')->isAllow()) : ?>
-										<li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
-									<?php endif; ?>
-									<?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
-										<li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
-									<?php endif; ?>
-								</ul>
-							</div>
+							<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
 						<?php endif; ?>
-					</li>
-				<?php if ($i%$_columnCount==0 || $i==$_collectionSize): ?>
-				</ul>
-				<?php endif ?>
-				<?php endforeach ?>
-				<script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>
-			<?php endif; ?>
-
-			<div class="toolbar-bottom">
-			<?php
-				echo $this->getToolbarHtml()
-				// echo $toolbar_html;
-			?>
+						<div class="desc std">
+							<?php echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
+							<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped ?>" class="link-learn"><?php echo $this->__('Learn More') ?></a>
+						</div>
+						<ul class="add-to-links">
+							<?php if ($this->helper('wishlist')->isAllow()) : ?>
+								<li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+							<?php endif; ?>
+							<?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+								<li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
+							<?php endif; ?>
+						</ul>
+					<?php endif; ?>
+				</div>
 			</div>
-		</div>
-		<?php endif; ?>
-	<?php } ?>
+		</li>
+	<?php endforeach; ?>
+	</ol>
+	<script type="text/javascript">decorateList('products-list', 'none-recursive')</script>
+
+	<?php else: ?>
+
+	<?php // Grid Mode ?>
+
+	<?php
+		$_collectionSize = $_productCollection->count();
+		// $_collectionSize = sizeof($current_products);
+	?>
+	<?php $_columnCount = $this->getColumnCount(); ?>
+	<?php $i=0; foreach ($_productCollection as $_product): ?>
+		<?php if ($i++%$_columnCount==0): ?>
+		<ul class="products-grid">
+		<?php endif ?>
+			<li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?>">
+				<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $_product->getSmallImage(); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+				<h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
+				<?php if($_product->getRatingSummary()): ?>
+				<?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+				<?php endif; ?>
+
+				<?php if($_product->getData('custom_layout_update') == '[[no_cart]]'): ?>
+					<div class="add-to-box-no-cart" style="">
+						(Not available for online purchase.<br />
+						Please <a href="/contacts/" target="_blank" style="color:black">CONTACT US</a> for price and availability.)
+					</div>
+				<?php else: ?>
+					<?php echo $this->getPriceHtml($_product, true) ?>
+					<div class="actions">
+						<?php if($_product->isSaleable()): ?>
+							<button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+						<?php else: ?>
+							<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+						<?php endif; ?>
+						<ul class="add-to-links">
+							<?php if ($this->helper('wishlist')->isAllow()) : ?>
+								<li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+							<?php endif; ?>
+							<?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+								<li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
+							<?php endif; ?>
+						</ul>
+					</div>
+				<?php endif; ?>
+			</li>
+		<?php if ($i%$_columnCount==0 || $i==$_collectionSize): ?>
+		</ul>
+		<?php endif ?>
+		<?php endforeach ?>
+		<script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>
+	<?php endif; ?>
+
+	<div class="toolbar-bottom">
+	<?php
+		echo $this->getToolbarHtml()
+		// echo $toolbar_html;
+	?>
+	</div>
+</div>
+<?php endif; ?>
 
 
 

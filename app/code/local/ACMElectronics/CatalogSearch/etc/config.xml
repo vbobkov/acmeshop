@@ -24,5 +24,12 @@
 				</rewrite>
 			</catalogsearch>
 		</blocks>
+		<models>
+			<catalogsearch>
+				<rewrite>
+					<layer>ACMElectronics_CatalogSearch_Model_Layer</layer>
+				</rewrite>
+			</catalogsearch>
+		</models>
 	</global>
 </config>
