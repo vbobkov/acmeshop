@@ -54,4 +54,30 @@ INNER JOIN `catalog_category_product_index` AS `cat_index` ON cat_index.product_
 		return $zend_db_adapter->fetchAssoc($new_query);
 		// return $zend_db_adapter->fetchAll($new_query);
     }
+
+	// public function getProductCollection() {
+		// return null;
+	// }
+
+    protected function _getQuery()
+    {
+        // return Mage::helper('catalogsearch')->getQuery();
+		return null;
+    }
+
+    public function addSearchFilter($query)
+    {
+        return $this;
+    }
+
+    public function setOrder($attribute, $dir = 'desc')
+    {
+        return $this;
+    }
+
+    public function setGeneralDefaultQuery()
+    {
+        return $this;
+    }
+
 }

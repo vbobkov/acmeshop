@@ -167,9 +167,10 @@
 	// print_r('<pre>');
 	// print_r($get_products);
 	// print_r($home_url);
+	// print_r($this->getLoadedProductCollection()->count());
 	// print_r('</pre>');
 ?>
-<div>Found <?php echo sizeof($get_products) ?> matches<?php if(sizeof($get_products) > $match_limit) { echo ', showing first ' . $match_limit; } ?>.</div>
+<div class="acme-search-title">Found <?php echo sizeof($get_products) ?> matches<?php if(sizeof($get_products) > $match_limit) { echo ', showing first ' . $match_limit; } ?>.</div>
 <div>(Currently, products are only searchable by manufacturer/model.)</div>
 <?php for($i = 0; $i < sizeof($get_products); $i++) {
 	if($i >= $match_limit) {
