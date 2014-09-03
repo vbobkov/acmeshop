@@ -59,6 +59,7 @@ INNER JOIN `catalog_category_product_index` AS `cat_index` ON cat_index.product_
 		// return null;
 	// }
 
+	/*
     protected function _getQuery()
     {
         // return Mage::helper('catalogsearch')->getQuery();
@@ -79,5 +80,5 @@ INNER JOIN `catalog_category_product_index` AS `cat_index` ON cat_index.product_
     {
         return $this;
     }
-
+	*/
 }
