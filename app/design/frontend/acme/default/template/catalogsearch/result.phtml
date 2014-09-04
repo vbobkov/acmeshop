@@ -99,7 +99,7 @@
 		$id_count = 0;
 		foreach(
 			$w->query(
-				"SELECT entity_id FROM catalog_product_entity_varchar WHERE attribute_id = 71 AND value LIKE '%" . $_GET['q'] . "%'"
+				"SELECT entity_id FROM catalog_product_entity_varchar WHERE attribute_id = 71 AND value LIKE '%" . $search_query . "%'"
 			)->fetchAll(PDO::FETCH_ASSOC)
 			as
 			$row
@@ -111,6 +111,9 @@
 			$id_count++;
 		}
 		$entity_ids = implode(',', $entity_ids);
+		if($entity_ids == '') {
+			$entity_ids = '0';
+		}
 
 		$get_products_descriptions = $w->query(
 			"SELECT entity_id,attribute_id,value
