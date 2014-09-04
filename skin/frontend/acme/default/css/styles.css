@@ -2922,7 +2922,6 @@ a.product-image {
 
 .acme-products-grid .acme-products-row {
 	border: 1px solid #d9ddd3;
-	height: 135px;
 	padding: 0.5em;
 }
 
@@ -2938,17 +2937,23 @@ a.product-image {
 	width: 135px;
 }
 
-.acme-products-grid .acme-products-row .acme-image,
-.acme-products-grid .acme-products-row .acme-item {
-	float: left;
+.acme-products-grid .acme-products-row .product-name {
+	font-size: 125%;
 }
 
 .acme-products-grid .acme-products-row .acme-item {
+	height: 135px;
 	margin-left: 1em;
 }
 
-.acme-products-grid .acme-products-row .acme-item h2 {
-	font-size: 125%;
+.acme-products-grid .acme-products-row .acme-item .acme-description,
+.acme-products-grid .acme-products-row .acme-item .acme-image-link {
+	float: left;
+}
+
+.acme-products-grid .acme-products-row .product-name,
+.acme-products-grid .acme-products-row .acme-item .acme-description {
+	word-wrap: break-word;
 }
 
 .acme-products-grid .acme-products-row .acme-item .acme-description {
@@ -2956,7 +2961,8 @@ a.product-image {
 	background: url(../images/loading-bar2.gif) no-repeat;
 	background-position: 50%;
 	*/
-	height: 112px;
-	width: 300px;
+	max-height: 1px;
+	min-height: 135px;
 	overflow: hidden;
+	width: 300px;
 }

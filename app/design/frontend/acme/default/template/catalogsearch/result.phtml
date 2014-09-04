@@ -156,6 +156,9 @@
 			$product_title = $get_products[$i]['value'];
 			$product_url = generateProductURL($home_url, $product_title);
 			$product_image = $products_details['images'][$get_products[$i]['entity_id']];
+			if($product_image == null || $product_image == '' || $product_image == 'none') {
+				$product_image = '/skin/frontend/acme/default/images/catalog/product/placeholder/image.png';
+			}
 			$product_description = '';
 			foreach($products_details['descriptions'][$get_products[$i]['entity_id']] as $description) {
 				if(strlen($product_description) < strlen($description)) {
@@ -168,11 +171,11 @@
 					<!--
 					<input name="entity_id" type="hidden" value="<?php echo $get_products[$i]['entity_id'];?>">
 					-->
+					<h2 class="product-name"><a href="<?php echo $product_url; ?>" title="<?php echo $product_title; ?>" target="_blank"><?php echo $product_title; ?></a></h2>
 					<div class="acme-item">
-						<h2 class="product-name"><a href="<?php echo $product_url; ?>" title="<?php echo $product_title; ?>" target="_blank"><?php echo $product_title; ?></a></h2>
 						<div class="acme-description"><?php echo $product_description; ?></div>
+						<a class="acme-image-link" href="<?php echo $product_url; ?>" title="<?php echo $product_title; ?>" target="_blank"><img class="acme-image" src="<?php echo $product_image; ?>"></a>
 					</div>
-					<a href="<?php echo $product_url; ?>" title="<?php echo $product_title; ?>" target="_blank"><img class="acme-image" src="<?php echo $product_image; ?>"></a>
 				</li>
 			</ul>
 			<?php
