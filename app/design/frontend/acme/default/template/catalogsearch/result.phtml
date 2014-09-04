@@ -141,12 +141,19 @@
 					return false;
 				}
 				var current_description;
+				var best_description;
 				var current_image;
 
 				jQuery.each(products_details['descriptions'], function(entity_id, descriptions) {
 					current_description = jQuery('.acme-products-grid input[value="' + entity_id + '"]').closest('.acme-products-row').find('.acme-description');
 					current_description.css('background', 'none');
-					current_description.html(descriptions[0]);
+					best_description = '';
+					jQuery.each(descriptions, function(idx, description) {
+						if(best_description.length < description.length) {
+							best_description = description;
+						}
+					});
+					current_description.html(best_description);
 				});
 				jQuery.each(products_details['images'], function(entity_id, image) {
 					// current_image = jQuery('.acme-products-grid input[value="' + entity_id + '"]').closest('.acme-products-row').find('.acme-image');
