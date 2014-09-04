@@ -2927,8 +2927,10 @@ a.product-image {
 }
 
 .acme-products-grid .acme-image {
+	/*
 	background: url(../images/loading-bar2.gif) no-repeat;
 	background-position: 50%;
+	*/
 	/*background-size: 135px 135px;*/
 	outline: 1px solid #1e7ec8;
 	display: inline-block;
@@ -2950,8 +2952,10 @@ a.product-image {
 }
 
 .acme-products-grid .acme-products-row .acme-item .acme-description {
+	/*
 	background: url(../images/loading-bar2.gif) no-repeat;
 	background-position: 50%;
+	*/
 	height: 112px;
 	width: 300px;
 	overflow: hidden;

@@ -86,6 +86,7 @@
 
 	if($search_query != null) {
 		$w = Mage::getSingleton('core/resource')->getConnection('core_write');
+
 		// $get_all_products = $w->query("SELECT entity_id,value FROM catalog_product_entity_varchar WHERE attribute_id = 71")->fetchAll(PDO::FETCH_ASSOC);
 		// $get_all_product_descriptions = $w->query("SELECT entity_id,value FROM catalog_product_entity_text WHERE attribute_id IN(72,73)")->fetchAll(PDO::FETCH_ASSOC);
 		$get_products = $w->query(
@@ -93,6 +94,47 @@
 			FROM catalog_product_entity_varchar
 			WHERE attribute_id = 71 AND value LIKE '%" . $search_query . "%'"
 		)->fetchAll(PDO::FETCH_ASSOC);
+
+		$entity_ids = array();
+		$id_count = 0;
+		foreach(
+			$w->query(
+				"SELECT entity_id FROM catalog_product_entity_varchar WHERE attribute_id = 71 AND value LIKE '%" . $_GET['q'] . "%'"
+			)->fetchAll(PDO::FETCH_ASSOC)
+			as
+			$row
+		) {
+			if($id_count >= $match_limit) {
+				break;
+			}
+			$entity_ids[] = $row['entity_id'];
+			$id_count++;
+		}
+		$entity_ids = implode(',', $entity_ids);
+
+		$get_products_descriptions = $w->query(
+			"SELECT entity_id,attribute_id,value
+			FROM catalog_product_entity_text
+			WHERE attribute_id IN(72,73) AND entity_id IN(" . $entity_ids . ")"
+		)->fetchAll(PDO::FETCH_ASSOC);
+		$get_products_images = $w->query(
+			"SELECT entity_id,attribute_id,value
+			FROM catalog_product_entity_varchar
+			WHERE attribute_id = 85 AND entity_id IN(" . $entity_ids . ")"
+		)->fetchAll(PDO::FETCH_ASSOC);
+
+		$products_details = array(
+			'descriptions' => array(),
+			'images' => array()
+		);
+		foreach($get_products_descriptions as $description) {
+			// $products_details['descriptions'][$description['entity_id']][$description['attribute_id']] = $description['value'];
+			$products_details['descriptions'][$description['entity_id']][] = $description['value'];
+		}
+		foreach($get_products_images as $image) {
+			$products_details['images'][$image['entity_id']] = $image['value'];
+		}
+
 		// usort($get_products, 'bestMatch');
 		// print_r('<pre>');
 		// print_r($get_products);
@@ -103,19 +145,34 @@
 		<div class="acme-search-title">Found <?php echo sizeof($get_products) ?> matches<?php if(sizeof($get_products) > $match_limit) { echo ', showing first ' . $match_limit; } ?>.</div>
 		<div><i>(Currently, products are only searchable by manufacturer/model.)</i></div>
 		<?php
+		$product_title;
+		$product_url;
+		$product_image;
+		$product_description;
 		for($i = 0; $i < sizeof($get_products); $i++) {
 			if($i >= $match_limit) {
 				break;
 			}
-			$product_url = generateProductURL($home_url, $get_products[$i]['value']); ?>
+			$product_title = $get_products[$i]['value'];
+			$product_url = generateProductURL($home_url, $product_title);
+			$product_image = $products_details['images'][$get_products[$i]['entity_id']];
+			$product_description = '';
+			foreach($products_details['descriptions'][$get_products[$i]['entity_id']] as $description) {
+				if(strlen($product_description) < strlen($description)) {
+					 $product_description = $description;
+				}
+			}
+		?>
 			<ul class="acme-products-grid">
 				<li class="acme-products-row">
+					<!--
 					<input name="entity_id" type="hidden" value="<?php echo $get_products[$i]['entity_id'];?>">
+					-->
 					<div class="acme-item">
-						<h2 class="product-name"><a href="<?php echo $product_url; ?>" title="<?php echo $get_products[$i]['value']; ?>" target="_blank"><?php echo $get_products[$i]['value']; ?></a></h2>
-						<div class="acme-description"></div>
+						<h2 class="product-name"><a href="<?php echo $product_url; ?>" title="<?php echo $product_title; ?>" target="_blank"><?php echo $product_title; ?></a></h2>
+						<div class="acme-description"><?php echo $product_description; ?></div>
 					</div>
-					<a href="<?php echo $product_url; ?>" title="<?php echo $get_products[$i]['value']; ?>" target="_blank"><img class="acme-image"></a>
+					<a href="<?php echo $product_url; ?>" title="<?php echo $product_title; ?>" target="_blank"><img class="acme-image" src="<?php echo $product_image; ?>"></a>
 				</li>
 			</ul>
 			<?php
@@ -124,12 +181,9 @@
 ?>
 
 <script type="text/javascript">
-	// TO DO: some kind of weird/annoying 5-10 second delay between submit button click/enter and search form submission, when there is an ajax request running
-	// searches are supposed to start loading immediately, but if the images/descriptions are not finished AJAX-ing, it takes an extra 5-10 seconds for the browser to
-	// stop the AJAX 1st.  Extremely annoying, there has to be a workaround.
+	/*
 	jQuery(document).ready(function() {
-		SEARCH_RESULTS_DETAILS_AJAX_ABORTED = false;
-		SEARCH_RESULTS_DETAILS_AJAX = jQuery.ajax({
+		jQuery.ajax({
 			type: 'GET',
 			url: '/catalogsearch/result',
 			data: {'fetch_details': 1, 'q': "<?php echo $search_query ;?>"},
@@ -165,4 +219,5 @@
 			}
 		});
 	});
+	*/
 </script>

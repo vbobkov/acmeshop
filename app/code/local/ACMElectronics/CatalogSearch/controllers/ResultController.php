@@ -16,15 +16,28 @@ class ACMElectronics_CatalogSearch_ResultController extends Mage_CatalogSearch_R
 			session_write_close();
 
 			$w = Mage::getSingleton('core/resource')->getConnection('core_write');
+
+			$entity_ids = array();
+			foreach(
+				$w->query(
+					"SELECT entity_id FROM catalog_product_entity_varchar WHERE attribute_id = 71 AND value LIKE '%" . $_GET['q'] . "%'"
+				)->fetchAll(PDO::FETCH_ASSOC)
+				as
+				$row
+			) {
+				$entity_ids[] = $row['entity_id'];
+			}
+			$entity_ids = implode(',', $entity_ids);
+
 			$get_products_descriptions = $w->query(
 				"SELECT entity_id,attribute_id,value
 				FROM catalog_product_entity_text
-				WHERE attribute_id IN(72,73) AND entity_id IN(SELECT entity_id FROM catalog_product_entity_varchar WHERE value LIKE '%" . $_GET['q'] . "%')"
+				WHERE attribute_id IN(72,73) AND entity_id IN(" . $entity_ids . ")"
 			)->fetchAll(PDO::FETCH_ASSOC);
 			$get_products_images = $w->query(
 				"SELECT entity_id,attribute_id,value
 				FROM catalog_product_entity_varchar
-				WHERE attribute_id = 85 AND entity_id IN(SELECT entity_id FROM catalog_product_entity_varchar WHERE value LIKE '%" . $_GET['q'] . "%')"
+				WHERE attribute_id = 85 AND entity_id IN(" . $entity_ids . ")"
 			)->fetchAll(PDO::FETCH_ASSOC);
 
 			$products_details = array(
