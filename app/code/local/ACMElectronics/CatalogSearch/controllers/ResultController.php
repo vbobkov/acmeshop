@@ -8,24 +8,13 @@ include(Mage::getBaseDir()."/app/code/core/Mage/CatalogSearch/controllers/Result
 class ACMElectronics_CatalogSearch_ResultController extends Mage_CatalogSearch_ResultController {
     public function indexAction() {
 		if(isset($_GET['fetch_details']) && $_GET['fetch_details'] == 1) {
-			// catalog_product_entity_varchar, attribute_id = 85 - image
-			// catalog_product_entity_text, attribute_id IN(72,73) - descriptions
-			// SELECT entity_id,value FROM catalog_product_entity_text WHERE attribute_id IN(72,73) AND entity_id IN(SELECT entity_id FROM catalog_product_entity_varchar WHERE value LIKE '%audio technica atw%');
 			/*
-SELECT count(value) FROM catalog_product_entity_text 
-UNION 
-SELECT count(value) FROM catalog_product_entity_varchar 
-WHERE attribute_id IN(72,73,85) AND entity_id IN(SELECT entity_id FROM catalog_product_entity_varchar WHERE value LIKE '%audio technica atw%');
-
-SELECT entity_id,attribute_id,value 
-FROM (SELECT entity_id,attribute_id,value FROM catalog_product_entity_text 
-UNION ALL 
-SELECT entity_id,attribute_id,value FROM catalog_product_entity_varchar) as cpe 
-WHERE attribute_id IN(72,73,85) AND entity_id IN(SELECT entity_id FROM catalog_product_entity_varchar WHERE value LIKE '%audio technica atw%');
-
-SELECT entity_id,attribute_id,value FROM catalog_product_entity_text WHERE attribute_id IN(72,73) AND entity_id IN(SELECT entity_id FROM catalog_product_entity_varchar WHERE value LIKE '%audio technica atw%');
-SELECT entity_id,attribute_id,value FROM catalog_product_entity_varchar WHERE attribute_id = 85 AND entity_id IN(SELECT entity_id FROM catalog_product_entity_varchar WHERE value LIKE '%audio technica atw%');
+			This little gem of a function solves a certain AJAX latency problem:
+			http://stackoverflow.com/questions/941889/browser-waits-for-ajax-call-to-complete-even-after-abort-has-been-called-jquery
+			http://php.net/manual/en/function.session-write-close.php#96982
 			*/
+			session_write_close();
+
 			$w = Mage::getSingleton('core/resource')->getConnection('core_write');
 			$get_products_descriptions = $w->query(
 				"SELECT entity_id,attribute_id,value
