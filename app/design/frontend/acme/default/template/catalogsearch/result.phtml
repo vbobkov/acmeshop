@@ -24,6 +24,18 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+
+<?php
+	if(isset($_GET['q'])) {
+		$search_query = $_GET['q'];
+	}
+	else {
+		$search_query = null;
+	}
+?>
+
+
+
 <?php if($this->getResultCount()): ?>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <div class="page-title">
@@ -71,19 +83,13 @@
 
 	$home_url = Mage::helper('core/url')->getHomeUrl();
 	$match_limit = 1000;
-	if(isset($_GET['q'])) {
-		$search_query = $_GET['q'];
-	}
-	else {
-		$search_query = null;
-	}
 
 	if($search_query != null) {
 		$w = Mage::getSingleton('core/resource')->getConnection('core_write');
 		// $get_all_products = $w->query("SELECT entity_id,value FROM catalog_product_entity_varchar WHERE attribute_id = 71")->fetchAll(PDO::FETCH_ASSOC);
 		// $get_all_product_descriptions = $w->query("SELECT entity_id,value FROM catalog_product_entity_text WHERE attribute_id IN(72,73)")->fetchAll(PDO::FETCH_ASSOC);
 		$get_products = $w->query(
-			"SELECT value
+			"SELECT entity_id, value
 			FROM catalog_product_entity_varchar
 			WHERE attribute_id = 71 AND value LIKE '%" . $search_query . "%'"
 		)->fetchAll(PDO::FETCH_ASSOC);
@@ -103,11 +109,62 @@
 			}
 			$product_url = generateProductURL($home_url, $get_products[$i]['value']); ?>
 			<ul class="acme-products-grid">
-				<li class="acme-item">
-					<h2 class="product-name"><a href="<?php echo $product_url; ?>" title="<?php echo $get_products[$i]['value']; ?>" target="_blank"><?php echo $get_products[$i]['value']; ?></a></h2>
+				<li class="acme-products-row">
+					<input name="entity_id" type="hidden" value="<?php echo $get_products[$i]['entity_id'];?>">
+					<div class="acme-item">
+						<h2 class="product-name"><a href="<?php echo $product_url; ?>" title="<?php echo $get_products[$i]['value']; ?>" target="_blank"><?php echo $get_products[$i]['value']; ?></a></h2>
+						<div class="acme-description"></div>
+					</div>
+					<a href="<?php echo $product_url; ?>" title="<?php echo $get_products[$i]['value']; ?>" target="_blank"><img class="acme-image"></a>
 				</li>
 			</ul>
 			<?php
 		}
 	}
 ?>
+
+<script type="text/javascript">
+	// TO DO: some kind of weird/annoying 5-10 second delay between submit button click/enter and search form submission, when there is an ajax request running
+	// searches are supposed to start loading immediately, but if the images/descriptions are not finished AJAX-ing, it takes an extra 5-10 seconds for the browser to
+	// stop the AJAX 1st.  Extremely annoying, there has to be a workaround.
+	jQuery(document).ready(function() {
+		SEARCH_RESULTS_DETAILS_AJAX_ABORTED = false;
+		SEARCH_RESULTS_DETAILS_AJAX = jQuery.ajax({
+			type: 'GET',
+			url: '/catalogsearch/result',
+			data: {'fetch_details': 1, 'q': "<?php echo $search_query ;?>"},
+			success: function(response, textStatus, jqXHR) {
+				try {
+					var products_details = JSON.parse(response);
+				}
+				catch(e) {
+					return false;
+				}
+				var current_description;
+				var current_image;
+
+				jQuery.each(products_details['descriptions'], function(entity_id, descriptions) {
+					current_description = jQuery('.acme-products-grid input[value="' + entity_id + '"]').closest('.acme-products-row').find('.acme-description');
+					current_description.css('background', 'none');
+					current_description.html(descriptions[0]);
+				});
+				jQuery.each(products_details['images'], function(entity_id, image) {
+					// current_image = jQuery('.acme-products-grid input[value="' + entity_id + '"]').closest('.acme-products-row').find('.acme-image');
+					// current_image.css('background', 'url(' + image + ') no-repeat');
+					current_image = jQuery('.acme-products-grid input[value="' + entity_id + '"]').closest('.acme-products-row').find('.acme-image');
+					current_image.css('background', 'none');
+					current_image.attr('src', image);
+				});
+			}
+		});
+
+		// jQuery('#search_mini_form').live('submit', function(event) {
+			// if(typeof SEARCH_RESULTS_DETAILS_AJAX === 'object' && !SEARCH_RESULTS_DETAILS_AJAX_ABORTED) {
+				// event.preventDefault();
+				// SEARCH_RESULTS_DETAILS_AJAX.abort();
+				// SEARCH_RESULTS_DETAILS_AJAX_ABORTED = true;
+				// jQuery(this).submit();
+			// }
+		// });
+	});
+</script>

@@ -2917,10 +2917,42 @@ a.product-image {
 }
 
 .acme-products-grid {
-	list-style-type: disc;
+	/*list-style-type: disc;*/
 }
 
-.acme-products-grid .acme-item {
+.acme-products-grid .acme-products-row {
+	border: 1px solid #d9ddd3;
+	height: 135px;
+	padding: 0.5em;
+}
+
+.acme-products-grid .acme-image {
+	background: url(../images/loading-bar2.gif) no-repeat;
+	background-position: 50%;
+	/*background-size: 135px 135px;*/
+	outline: 1px solid #1e7ec8;
+	display: inline-block;
+	height: 135px;
+	width: 135px;
+}
+
+.acme-products-grid .acme-products-row .acme-image,
+.acme-products-grid .acme-products-row .acme-item {
+	float: left;
+}
+
+.acme-products-grid .acme-products-row .acme-item {
+	margin-left: 1em;
+}
+
+.acme-products-grid .acme-products-row .acme-item h2 {
 	font-size: 125%;
-	margin: 1em 0em 0em 2em;
+}
+
+.acme-products-grid .acme-products-row .acme-item .acme-description {
+	background: url(../images/loading-bar2.gif) no-repeat;
+	background-position: 50%;
+	height: 112px;
+	width: 300px;
+	overflow: hidden;
 }

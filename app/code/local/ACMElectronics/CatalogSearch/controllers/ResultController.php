@@ -7,7 +7,52 @@
 include(Mage::getBaseDir()."/app/code/core/Mage/CatalogSearch/controllers/ResultController.php");
 class ACMElectronics_CatalogSearch_ResultController extends Mage_CatalogSearch_ResultController {
     public function indexAction() {
-		if(!isset($_GET['q'])) {
+		if(isset($_GET['fetch_details']) && $_GET['fetch_details'] == 1) {
+			// catalog_product_entity_varchar, attribute_id = 85 - image
+			// catalog_product_entity_text, attribute_id IN(72,73) - descriptions
+			// SELECT entity_id,value FROM catalog_product_entity_text WHERE attribute_id IN(72,73) AND entity_id IN(SELECT entity_id FROM catalog_product_entity_varchar WHERE value LIKE '%audio technica atw%');
+			/*
+SELECT count(value) FROM catalog_product_entity_text 
+UNION 
+SELECT count(value) FROM catalog_product_entity_varchar 
+WHERE attribute_id IN(72,73,85) AND entity_id IN(SELECT entity_id FROM catalog_product_entity_varchar WHERE value LIKE '%audio technica atw%');
+
+SELECT entity_id,attribute_id,value 
+FROM (SELECT entity_id,attribute_id,value FROM catalog_product_entity_text 
+UNION ALL 
+SELECT entity_id,attribute_id,value FROM catalog_product_entity_varchar) as cpe 
+WHERE attribute_id IN(72,73,85) AND entity_id IN(SELECT entity_id FROM catalog_product_entity_varchar WHERE value LIKE '%audio technica atw%');
+
+SELECT entity_id,attribute_id,value FROM catalog_product_entity_text WHERE attribute_id IN(72,73) AND entity_id IN(SELECT entity_id FROM catalog_product_entity_varchar WHERE value LIKE '%audio technica atw%');
+SELECT entity_id,attribute_id,value FROM catalog_product_entity_varchar WHERE attribute_id = 85 AND entity_id IN(SELECT entity_id FROM catalog_product_entity_varchar WHERE value LIKE '%audio technica atw%');
+			*/
+			$w = Mage::getSingleton('core/resource')->getConnection('core_write');
+			$get_products_descriptions = $w->query(
+				"SELECT entity_id,attribute_id,value
+				FROM catalog_product_entity_text
+				WHERE attribute_id IN(72,73) AND entity_id IN(SELECT entity_id FROM catalog_product_entity_varchar WHERE value LIKE '%" . $_GET['q'] . "%')"
+			)->fetchAll(PDO::FETCH_ASSOC);
+			$get_products_images = $w->query(
+				"SELECT entity_id,attribute_id,value
+				FROM catalog_product_entity_varchar
+				WHERE attribute_id = 85 AND entity_id IN(SELECT entity_id FROM catalog_product_entity_varchar WHERE value LIKE '%" . $_GET['q'] . "%')"
+			)->fetchAll(PDO::FETCH_ASSOC);
+
+			$products_details = array(
+				'descriptions' => array(),
+				'images' => array()
+			);
+			foreach($get_products_descriptions as $description) {
+				// $products_details['descriptions'][$description['entity_id']][$description['attribute_id']] = $description['value'];
+				$products_details['descriptions'][$description['entity_id']][] = $description['value'];
+			}
+			foreach($get_products_images as $image) {
+				$products_details['images'][$image['entity_id']] = $image['value'];
+			}
+			echo json_encode($products_details);
+			return null;
+		}
+		else if(!isset($_GET['q'])) {
 			$this->loadLayout();
 			// $this->_initLayoutMessages('catalog/session');
 			// $this->_initLayoutMessages('checkout/session');

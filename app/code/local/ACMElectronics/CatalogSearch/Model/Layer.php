@@ -22,7 +22,7 @@ class ACMElectronics_CatalogSearch_Model_Layer extends Mage_CatalogSearch_Model_
 
     public function prepareProductCollection($collection)
     {
-		return null;
+		return $this;
 
         $collection
             ->addAttributeToSelect(Mage::getSingleton('catalog/config')->getProductAttributes())
