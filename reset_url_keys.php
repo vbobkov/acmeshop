@@ -30,3 +30,4 @@ foreach ($products as $product) {
 		echo "[" . $product->getName() . "] " . $prev_key . " set to " . $product->getUrlKey() . " [" . $amount . "/" . $total . "]\n";
 	}
 }
+echo "[" . $amount . "/" . $total . "]\n";
