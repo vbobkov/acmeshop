@@ -7,6 +7,7 @@ $products = $model->getCollection();
 foreach ($products as $product) {
     $model->load($product->getId());
     $product->setUrlKey($model->getName())->save();
-    set_time_limit();
+    // set_time_limit();
     $amount++;
+	echo $amount . ' product URLs processed';
 }
