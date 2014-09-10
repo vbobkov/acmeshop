@@ -18,6 +18,7 @@ $total = 0;
 $model = Mage::getModel('catalog/product');
 echo "fetching the entire product collection\n";
 $products = $model->getCollection()->addAttributeToSelect('url_key')->addAttributeToSelect('name');
+echo "fetched " . $products->count() . " products\n";
 foreach ($products as $product) {
 	$total++;
 	if($product->getUrlKey() != generateURLKey($product->getName())) {
