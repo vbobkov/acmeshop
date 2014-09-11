@@ -1,4 +1,12 @@
 <?php
+require('app/Mage.php');
+Mage::app();
+
+$w = Mage::getSingleton('core/resource')->getConnection('core_write');
+$w->query("UPDATE catalog_product_entity_varchar SET value = '' WHERE attribute_id IN(97,98)");
+
+
+/*
 function generateURLKey($product_title) {
 	return strtolower(
 		preg_replace('/-{2,}/', '-',
@@ -11,8 +19,6 @@ function generateURLKey($product_title) {
 	);
 }
 
-require('app/Mage.php');
-Mage::app();
 $amount = 0;
 $total = 0;
 $model = Mage::getModel('catalog/product');
@@ -32,3 +38,4 @@ foreach ($products as $product) {
 	}
 }
 echo "[" . $amount . "/" . $total . "]\n";
+*/
